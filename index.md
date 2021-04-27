@@ -248,11 +248,13 @@ kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{ran
 # install component
 gcloud components install app-engine-go
 
-#  app.yml to define the runtime: go115 
+# deploy  app's code and configuration to the App Engine server
 gcloud app deploy
+
+#  app.yml to define the runtime: go115 
 gcloud app deploy app.yaml --project $PROJECT_ID -q
 
-# launch browser
+# open the current app in a web browser
 gcloud app browse
 ```
 ```yaml
