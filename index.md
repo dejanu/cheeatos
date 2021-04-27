@@ -93,12 +93,20 @@ gcloud source repos create sample-app
 
 ## Compute Engine (IaaS)
 
+
+**list all VM instances in a project**
+```bash
+#by default instances from all zones are listed
+gcloud compute instances list
+```
 **create VM**
 ```bash
 # create compute instances Linux (Debian,Ubuntu, Suse, Red Hat, CoreOS) and Windows Server, on Google infrastructure
 gcloud compute instances create <VN_NAME> --machine-type <MACHINE_TYPE> --zone <ZONE>
 
 gcloud compute instances create gcelab2 --machine-type n1-standard-2 --zone us-central1-c
+
+# create VM with tags
 gcloud compute instances create lamp-1-vm --machine-type n1-standard-2 --zone=us-central1-a --tags="Allow HTTP traffic"
 ```
 
