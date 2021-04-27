@@ -211,12 +211,13 @@ kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{ran
 # App Engine is a serverless compute platform that is fully managed to scale up and down as workloads demand
 
 ```
-**Deploy https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld to app Engine**
+**Deploy [Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld to app Engine**
 ```bash
 
+# install component
 gcloud components install app-engine-go
 
-# need app.yml which will define the runtime: go115 
+#  app.yml to define the runtime: go115 
 gcloud app deploy
 gcloud app deploy app.yaml --project $PROJECT_ID -q
 
@@ -224,7 +225,7 @@ gcloud app deploy app.yaml --project $PROJECT_ID -q
 gcloud app browse
 ```
 ```bash
-# app.yaml
+# app.yaml content
 
 runtime: go113
 
@@ -240,7 +241,7 @@ env_variables:
 
 ## Cloud Functions (FaaS)
 
-**index.js cloud function**
+**index.js as cloud function**
 ```js
 /**
 * Background Cloud Function to be triggered by Pub/Sub.
@@ -265,7 +266,7 @@ gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
 
 
 gcloud functions deploy helloWorld \
-  --stage-bucket [BUCKET_NAME] \
+  --stage-bucket <BUCKET_NAME> \
   --trigger-topic hello_world \
   --runtime nodejs8
 
