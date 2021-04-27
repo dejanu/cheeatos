@@ -223,7 +223,7 @@ kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{ran
 ```
 **Deploy golang to app Engine**
 
-[Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld
+* [Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld)
 
 ```bash
 # install component
