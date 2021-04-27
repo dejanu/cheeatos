@@ -121,6 +121,19 @@ gcloud compute instances create www1 \
 gcloud compute ssh <VM_NAME> --zone <ZONE>
 ```
 
+**Create Virtual Private Cloud (VPC) network and subnetworks**
+
+```bash
+# Create VPC griffin-dev-vpc with 2 subnets griffin-dev-wp and griffin-dev-mgmt
+gcloud compute networks create griffin-dev-vpc --subnet-mode=custom
+gcloud compute networks subnets create griffin-dev-wp --network=griffin-dev-vpc --range=192.168.16.0/20
+gcloud compute networks subnets create griffin-dev-mgmt --network=griffin-dev-vpc --range=192.168.32.0/20
+```
+
+**Create a bastion host (jump server) and configure NIC to subnet**
+```bash
+gcloud compute instances create bastion-vm --machine-type=n1-standard-1 --subnet=griffin-dev-mgmt
+```
 ***
 
 ## GKE (K8s Engine)
