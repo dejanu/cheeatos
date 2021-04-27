@@ -252,6 +252,9 @@ env_variables:
 
 ## Cloud Functions (FaaS)
 
+```bash
+# event-driven serverless compute platform
+```
 **index.js as cloud function**
 ```js
 /**
