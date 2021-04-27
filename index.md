@@ -37,6 +37,7 @@ gcloud config set compute/region us-east1
 gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
 ```
 **Copy from/to Bucket**
+
 ```bash
 gsutil cp -r gs://<BUCKET_NAME> .
 gsutil cp <FILE> gs://<BUCKET_NAME>
