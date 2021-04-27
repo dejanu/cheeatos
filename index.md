@@ -31,13 +31,14 @@ gcloud config set compute/region us-east1
 ***
 ## Storage
 
-- Storage bucket: basic containers that hold your data
+
 **Create storage bucket**
 ```bash
+# storage bucket: basic containers that hold your data
 gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
 ```
-**Copy from/to Bucket**
 
+**Copy from/to Bucket**
 ```bash
 gsutil cp -r gs://<BUCKET_NAME> .
 gsutil cp <FILE> gs://<BUCKET_NAME>
@@ -47,7 +48,7 @@ gsutil cp <FILE> gs://<BUCKET_NAME>
 
 ## Compute Engine (Iaas)
 
-**create VM's**
+**create VM**
 ```bash
 # create compute instances Linux (Debian,Ubuntu, Suse, Red Hat, CoreOS) and Windows Server, on Google infrastructure
 gcloud compute instances create <VN_NAME> --machine-type <MACHINE_TYPE> --zone <ZONE>
@@ -80,10 +81,8 @@ gcloud compute ssh <VM_NAME> --zone <ZONE>
 ## GKE (K8s Engine)
 
 **Create k8s cluster**
-
 ```bash
 ## K8s environment consists of multiple machines (Compute Engine instances) grouped to form a container cluster
-
 gcloud container clusters create [CLUSTER-NAME]
 
 # example of cluster with 2 worker nodes
@@ -93,7 +92,7 @@ gcloud container clusters create hello-world \
                 --zone us-central1-a
 ```
 
-**List k8s cluster**
+**List k8s clusters**
 ```bash
 gcloud container clusters list
 ```
@@ -117,8 +116,15 @@ kubectl expose deployment hello-node --type="LoadBalancer" --port=8080
 
 **Create deployment and service DECLARATIVE**
 ```bash
+# based on 
 kubectl create -f deployment.yaml
 kubectl create -f service.yaml
+```
+
+**Create k8s namespace**
+```bash
+# NAMESPACE = objects which partition a single K8s cluster into multiple virtual clusters
+kubectl create ns <NAMESPACE>
 ```
 
 **Delete deployment**
@@ -130,7 +136,7 @@ gcloud deployment-manager deployments delete <DEPLOYMENT_NAME> --delete-policy=D
 ```bash
 kubectl rollout restart deployment/<DEPLOYMENT_NAME>
 
-#interactive rollout
+# interactive rollout
 kubectl edit deployments/<DEPLOYMENT_NAME>
 ```
 
@@ -141,21 +147,15 @@ kubectl scale --current-replicas=1 --replicas=3 deployment/<DEPLOYMENT_NAME>
 ```
 **Get replicasets/nodes/pods/services/deployments**
 ```bash
-
-kkubectl cluster-info
+kubectl cluster-info
 kubectl get pods
 kubectl get svc
 kubectl get replicasets
 kubectl get rs
 kubectl get deployments
 
-
 # check pod running images
 kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
-
-# create k8s namespace
-kubectl create ns <NAMESPACE>
-
 ```
 
 ***
