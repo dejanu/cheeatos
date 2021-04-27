@@ -205,9 +205,8 @@ kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{ran
 ## App Engine (PaaS)
 
 ```bash
-# App Engine standard environment is based on container instances (preconfigured with one of several available runtimes Java 7, Java 8, Python 2.7, Go and PHP)) running on Google's infrastructure.
+# App Engine standard environment is based on container instances (preconfigured with one of several available runtimes Java 7/8, Python 2.7, Go and PHP)) running on Google's infrastructure.
 # App Engine is a serverless compute platform that is fully managed to scale up and down as workloads demand
-
 ```
 **Deploy [Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld to app Engine**
 ```bash
