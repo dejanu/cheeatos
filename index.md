@@ -4,6 +4,19 @@
 
 ### GCP
 
+**gcloud SDK**
+
+* [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
+
+```bash
+## Cloud Shell is a VM with gcloud sdk
+sudo apt-get install google-cloud-sdk
+gcloud beta interactive
+gcloud compute project-info describe --project $(gcloud config get-value core/project)
+gcloud components list
+```
+***
+
 **List/Set gcp project**
 
 ```bash
