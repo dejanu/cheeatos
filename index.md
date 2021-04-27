@@ -8,7 +8,7 @@
 
 
 
-**gcloud SDK**
+## gcloud SDK
 ```python
 # Cloud Shell is a VM with gcloud sdk
 ```
@@ -83,19 +83,23 @@ gsutil cp <FILE> gs://<BUCKET_NAME>
 
 ## Cloud Source Repos
 
-**Application source code**
+**Create repo**
 ```bash
+# create source repo <REPO_NAME> @ https://source.developers.google.com/p/$PROJECT/r/s<REPO_NAME>
+gcloud source repos create <REPO_NAME>
+
 # initialize a repo
 git init
 git remote add origin [your-repository]
 git pull [your-repository]
 ```
 
-**Create repo**
+**Clone repo**
 ```bash
-# create source repo sample-app https://source.developers.google.com/p/$PROJECT/r/sample-app
-gcloud source repos create sample-app
+# clone repo
+gcloud source repos clone <REPO_NAME> --project=<PROJECT_ID>
 ```
+
 ***
 
 ## Compute Engine (IaaS)
