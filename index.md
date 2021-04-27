@@ -9,15 +9,22 @@
 
 
 **gcloud SDK**
-
-
-```bash
-## Cloud Shell is a VM with gcloud sdk
-sudo apt-get install google-cloud-sdk
-gcloud beta interactive
-gcloud compute project-info describe --project $(gcloud config get-value core/project)
-gcloud components list
+```python
+# Cloud Shell is a VM with gcloud sdk
 ```
+```bash
+# install gcloud sdk
+sudo apt-get install google-cloud-sdk
+
+gcloud compute project-info describe --project $(gcloud config get-value core/project)
+# list components e.g.: gsutil, kubectl
+gcloud components list
+
+# grant/revoke authorization to Cloud SDK
+gcloud auth login
+gcloud auth revoke
+```
+
 ***
 
 **List/Set gcp project**
@@ -38,7 +45,7 @@ export PROOJECT_ID=$(gcloud config list --format 'value(core.project)')
 **Get/Set compute zone/region**
 
 Region vs Zone: 
-![alt text](https://github.com/dejanu/cheetcity/blob/fffd7504494195c9616729d50126ce340fe16a60/src/zone_region.png "Region vs Zone")
+![txt](https://github.com/dejanu/cheetcity/blob/fffd7504494195c9616729d50126ce340fe16a60/src/zone_region.png) 
 
 
 ```bash
