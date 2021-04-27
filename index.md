@@ -6,6 +6,11 @@
 
 * [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
 
+```javascript
+var s = "Google Cloud Platfrom";
+alert(s);
+```
+
 **gcloud SDK**
 
 
