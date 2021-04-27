@@ -46,6 +46,23 @@ gsutil cp <FILE> gs://<BUCKET_NAME>
 
 ***
 
+## Cloud Source Repos
+
+**Application source code**
+```bash
+# initialize a repo
+git init
+git remote add origin [your-repository]
+git pull [your-repository]
+```
+
+**Create repo**
+```bash
+# create source repo sample-app https://source.developers.google.com/p/$PROJECT/r/sample-app
+gcloud source repos create sample-app
+```
+***
+
 ## Compute Engine (Iaas)
 
 **create VM**
