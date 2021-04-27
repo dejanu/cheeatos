@@ -4,9 +4,10 @@
 
 ### GCP
 
+* [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
+
 **gcloud SDK**
 
-*[Download SDK](https://cloud.google.com/sdk/docs/install#linux)
 
 ```bash
 ## Cloud Shell is a VM with gcloud sdk
