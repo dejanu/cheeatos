@@ -6,10 +6,7 @@
 
 * [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
 
-```javascript
-var s = "Google Cloud Platfrom";
-alert(s);
-```
+
 
 **gcloud SDK**
 
@@ -39,12 +36,16 @@ export PROOJECT_ID=$(gcloud config list --format 'value(core.project)')
 ```
 
 **Get/Set compute zone/region**
+
+Inline-style: 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Region vs Zone")
+
 ```bash
 gcloud config get-value compute/region
 gcloud config get-value compute/zone
 
-gcloud config set compute/zone us-east1-d
 gcloud config set compute/region us-east1
+gcloud config set compute/zone us-east1-d
 ```
 
 ***
