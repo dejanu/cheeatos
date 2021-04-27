@@ -37,8 +37,9 @@ export PROOJECT_ID=$(gcloud config list --format 'value(core.project)')
 
 **Get/Set compute zone/region**
 
-Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Region vs Zone")
+Region vs Zone: 
+![alt text](https://github.com/dejanu/cheetcity/blob/e5e116209097a162cb83e77b61f16cfaf65873d5/src/zone_region.png "Region vs Zone")
+
 
 ```bash
 gcloud config get-value compute/region
