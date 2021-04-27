@@ -222,10 +222,10 @@ kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{ran
 # App Engine is a serverless compute platform that is fully managed to scale up and down as workloads demand
 ```
 **Deploy golang to app Engine**
-* [Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld
+
+[Golang helloword app](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld
 
 ```bash
-
 # install component
 gcloud components install app-engine-go
 
@@ -236,9 +236,8 @@ gcloud app deploy app.yaml --project $PROJECT_ID -q
 # launch browser
 gcloud app browse
 ```
-```bash
+```yaml
 # app.yaml content
-
 runtime: go113
 
 handlers:
