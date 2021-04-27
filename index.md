@@ -48,6 +48,13 @@ gcloud config get-value compute/zone
 gcloud config set compute/region us-east1
 gcloud config set compute/zone us-east1-d
 ```
+***
+
+**Enable APIs**
+```bash
+# enable texttospeech API
+gcloud services enable texttospeech.googleapis.com
+```
 
 ***
 ## Storage
@@ -195,5 +202,77 @@ kubectl get deployments
 # check pod running images
 kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
 ```
-
 ***
+
+## App Engine (PaaS)
+
+```bash
+# App Engine standard environment is based on container instances (preconfigured with one of several available runtimes Java 7, Java 8, Python 2.7, Go and PHP)) running on Google's infrastructure.
+# App Engine is a serverless compute platform that is fully managed to scale up and down as workloads demand
+
+```
+**Deploy https://github.com/GoogleCloudPlatform/golang-samples/tree/master/appengine/go11x/helloworld to app Engine**
+```bash
+
+gcloud components install app-engine-go
+
+# need app.yml which will define the runtime: go115 
+gcloud app deploy
+gcloud app deploy app.yaml --project $PROJECT_ID -q
+
+# launch browser
+gcloud app browse
+```
+```bash
+# app.yaml
+
+runtime: go113
+
+handlers:
+- url: /.*
+  secure: always
+  script: auto
+
+env_variables:
+  PORT: "8080"
+```
+***
+
+## Cloud Functions (FaaS)
+
+**index.js cloud function**
+```js
+/**
+* Background Cloud Function to be triggered by Pub/Sub.
+* This function is exported by index.js, and executed when
+* the trigger topic receives a message.
+*
+* @param {object} data The event payload.
+* @param {object} context The event metadata.
+*/
+exports.helloWorld = (data, context) => {
+const pubSubMessage = data;
+const name = pubSubMessage.data
+    ? Buffer.from(pubSubMessage.data, 'base64').toString() : "Hello World";
+
+console.log(`My Cloud Function: ${name}`);
+};
+```
+
+**Create storage bucket and deploy function to bucket**
+```bash
+gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
+
+
+gcloud functions deploy helloWorld \
+  --stage-bucket [BUCKET_NAME] \
+  --trigger-topic hello_world \
+  --runtime nodejs8
+
+#verify function status
+gcloud functions describe helloWorld
+
+# test function/ check logs
+DATA=$(printf 'Hello World!'|base64) && gcloud functions call helloWorld --data '{"data":"'$DATA'"}'
+gcloud functions logs read helloWorld
+```
