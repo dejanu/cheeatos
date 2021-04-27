@@ -91,7 +91,7 @@ gcloud source repos create sample-app
 ```
 ***
 
-## Compute Engine (Iaas)
+## Compute Engine (IaaS)
 
 **create VM**
 ```bash
@@ -156,9 +156,7 @@ kubectl create deployment hello-server --image=gcr.io/google-samples/hello-app:1
 ```bash
 # provide public IP and in order to access nodes from external 
 kubectl expose deployment hello-node --type="LoadBalancer" --port=8080
-
 ```
-
 **Create deployment and service DECLARATIVE**
 ```bash
 # based on 
