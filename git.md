@@ -5,9 +5,9 @@
 ### Git
 
 * Git has 3 levels of configuration:
-  * SYSTEM(configurations for multiple users)
-  * GLOBAL(configurations used for one user all repo on one host) 
-  * LOCAL (configuration for one repo) 
+  - SYSTEM(configurations for multiple users)
+  - GLOBAL(configurations used for one user all repo on one host) 
+  - LOCAL (configuration for one repo) 
   
 ```bash
 #list the configuration
@@ -30,7 +30,7 @@ git config --global user.name "NAME"
   git add => BLOB
   git commit ==> COMMIT + TREE
   ```
-* HEAD = pointer to the last commit on the branch
+* `HEAD` = pointer to the last commit on the branch
 * `git pull` == `git fetch` + `git merge`
 * `git checkout -b` = `git branch` + `git checkout`
 
@@ -91,7 +91,6 @@ git revert HEAD --no-edit | git revert HASH
 
 ```
 
-
 ***
 
 ## FunStuff
@@ -118,13 +117,8 @@ done
 ```
 ```bash
 # pull all remote branches
-
 for remote in `git branch -r`; do git branch --track ${remote#origin/} $remote; done
 ```
-
-
-```
- 
 
 ***
 
