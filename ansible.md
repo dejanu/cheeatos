@@ -4,13 +4,24 @@
 
 ### ANSIBLE
 
+* Agentless (uses as transport layer Open SSH)
+* Configuration (`/etc/ansible/ansible.cfg`) check: `$ansible-config list`
+* Ansible inventory commands: `$ansible-inventory --list` or `$ansible-inventory --graph`
+
 ## AD-HOC
 
+
+* Can be used to reboot servers, copy files, manage packages and users etc: `ansible <HOST_GROUP> -m <MODULE> -a "ARGUMENTS"`
+* 
 ```bash
+
+# ping 
+ansible <GROUP> -v -m ping -i <HOSTS_INVENTORY>
 ansbile <GROUP> -m shell -a "uptime" -i <HOSTS_INVENTORY>
 
 # transfer file  (sudo yum install -y libselinux-python )
 ansible <GROUP> -m copy -a "src=/path/to/file dest=/path/on/target/" -i <HOSTS_INVENTORY>
+
 ```
  
 
@@ -83,4 +94,28 @@ ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -e "instance_name=search_te
 
       executable: /bin/sh
 
+```
+***
+
+## Test/verify/lint playbooks
+
+* Fork the linter: https://github.com/adrienverge/yamllint. 
+
+1) Dry Run using check module: `ansible-playbook <PLAYBOOK>.yml --check` or just syntax check it `ansible-module <PLAYBOOK>.yml --syntax-check`
+
+2) Linter: ansible molecule to test your ansible roles: `pip install molecule`  
+
+3) List playbook tags: `ansible-playbook --list-tags <PLAYBOOK>.yml`
+
+***
+
+## Ansible Vault
+
+* Ansible vault file: variables_encrypted.yml:
+
+```bash
+#view/decrypt ansible vault 
+
+ansible-vault view variables_encrypted.yml
+ansible-vault decrypt/encrypt variables_encrypted.yml
 ```
