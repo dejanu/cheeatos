@@ -1,5 +1,7 @@
 ## Cheatsheet collection
 
+* [Ansible](ansible.md)
+* [Git](git.md)
 * [GCP](index.md)
 
 ### ANSIBLE
