@@ -1,6 +1,9 @@
 ## Cheatsheet collection
 
 * [Home](https://dejanu.github.io/)
+* [Ansible](ansible.md)
+* [Git](git.md)
+* [GCP](index.md)
 
 ### Git
 
