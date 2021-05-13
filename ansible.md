@@ -31,6 +31,8 @@ ansible <GROUP> -m copy -a "src=/path/to/file dest=/path/on/target/" -i <HOSTS_I
 # ansible view inventory
 ansible-inventory -i <HOSTS_INVENTORY> --graph
 ```
+* Run playbook on local host: `ansible-playbook --connection=local <PLAYBOOK>.yml`:
+
 ```bash
 # ansible-playbook run play on localhost
 -
@@ -55,7 +57,11 @@ ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -t <TAG_NAME>
 ```bash
 # ansible playbook run with tags
 ansible-playbook -l <HOSTNAME/GROUP> -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -t "<TAG_NAME>"
+ansible-playbook -l <HOSTNAME/GROUP> -i <HOSTS_INVENTORY> --tags "selected-tag" -u root <PLAYBOOK>.yml` 
 ```
+* Also we can use `--skip-tags` flag  
+*
+
 ***
 
 ## Extra Vars
