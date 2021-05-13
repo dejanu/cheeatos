@@ -69,6 +69,8 @@ git push --delete origin remote_branch
 # clean working directory interactive mode
 git clean -i
 
+
+
 # UNDO any changes in the WORKING AREA , remove file from git tracking
 git checkout -f <FILE> 
 
@@ -97,6 +99,29 @@ git revert HEAD --no-edit | git revert HASH
 ```bash
 # delete all branches merged into develop
 git branch -r --merged develop | grep -vE "develop|master|release" | xargs -n 1 git branch -d
+```
+```bash
+# loop through each unmerged branch and tell you (a) when the last commit was made, and (b) how many commits it contains which are not merged to ‘origin/master’
+for b in $(git branch --remote --no-merged); do
+
+    echo $b;
+
+    git show $b --pretty="format:  Last commit: %cd" | head -n 1;
+
+    echo -n "  Commits from 'master': ";
+
+    git log --oneline $(git merge-base $b origin/master)..$b | wc -l;
+
+    echo;
+
+done
+```
+```bash
+# pull all remote branches
+
+for remote in `git branch -r`; do git branch --track ${remote#origin/} $remote; done
+```
+
 
 ```
  
@@ -121,6 +146,9 @@ git commit --amend
 
 # list remote branches
 git branch -va
+
+# check remote unmerged branches
+git branch -r --no-merged
 
 # check commit
 git show COMMIT_HASH
