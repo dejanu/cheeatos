@@ -12,7 +12,7 @@
 
 
 * Can be used to reboot servers, copy files, manage packages and users etc: `ansible <HOST_GROUP> -m <MODULE> -a "ARGUMENTS"`
-* 
+
 ```bash
 
 # ping 
