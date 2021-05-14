@@ -52,6 +52,9 @@ $ git config --global http.sslVerify false
 
 ## Commands
 
+* `checkout` and `reset` are generally used for making local or private 'undos', they'll modify the history of a repo and can cause conflicts when pushing to remote
+* `revert` is considered a safer operation for 'public undos' as it creates new history which can be shared remotely and doesn't overwrite history remote
+
 ```bash
 # view/add remote
 git remote -v
@@ -73,9 +76,11 @@ git push --delete origin remote_branch
 git clean -i
 
 
-
-# UNDO any changes in the WORKING AREA , remove file from git tracking
+# UNDO changes in working directory
 git checkout -f <FILE> 
+
+# UNDO (unstage) changes in staging area 
+git restore --staged <file>
 
 # Reset current HEAD to the specified state (MIXED the default one)
 git-reset
