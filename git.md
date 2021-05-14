@@ -7,6 +7,9 @@
 
 ### Git
 
+* [Manual Page](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/)
+* [D3 visual](http://onlywei.github.io/explain-git-with-d3/)
+
 * Git has 3 levels of configuration:
   - SYSTEM(configurations for multiple users)
   - GLOBAL(configurations used for one user all repo on one host) 
