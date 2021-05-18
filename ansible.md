@@ -120,11 +120,14 @@ ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -e "instance_name=search_te
 
 ## Ansible Vault
 
-* Ansible vault file: variables_encrypted.yml:
+* Ansible vault file: `variables_encrypted.yml`:
 
 ```bash
 #view/decrypt ansible vault 
 
 ansible-vault view variables_encrypted.yml
 ansible-vault decrypt/encrypt variables_encrypted.yml
+
+#environment variable to specify that file
+echo $ANSIBLE_VAULT_PASSWORD_FILE
 ```
