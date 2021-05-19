@@ -163,6 +163,6 @@ git show COMMIT_HASH
 
 ## GitKraken
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/gitkraken.png?raw=true)
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/kraken.png?raw=true)
 
 
