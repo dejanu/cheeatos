@@ -165,4 +165,5 @@ git show COMMIT_HASH
 
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/kraken.png?raw=true)
 
-
+* <kbd>`Stage all changes`</kbd> = `git add .`
+* <kbd>`Commit changes`</kbd> = `git commit -m "message"`
