@@ -22,7 +22,7 @@ git config --list
 #edit global configuration 
 git config –e  --global
 
-# get/edd the user name
+# get/add the user name
 git config user.name
 git config --global user.name "NAME"
 
