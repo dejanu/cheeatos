@@ -88,14 +88,16 @@ git restore --staged <file>
 # Reset current HEAD to the specified state (MIXED the default one)
 git-reset
 
-# UNDO last commit and preserve changes
-git reset --soft HEAD^ == git reset --soft HEAD~1 
-
-# UNDO last commit and remove changes, combine both git reset and git checkout in a single command
-git reset --hard HEAD~1 
+# UNDO last commit and PRESERVE changes
+git reset --soft HEAD^ == git reset --soft HEAD^1
+git reset --soft HEAD~1 
 
 # much wow (undo 2 commits) 
 git reset --head X 2 == git reset HEAD^^ 
+
+# UNDO last commit and REMOVE changes, combine both git reset and git checkout in a single command
+git reset --hard HEAD~1 
+
 
 # create a new commit which usually has the inverse effect of the commit being reverted.
 git revert HEAD --no-edit | git revert HASH
