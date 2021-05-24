@@ -9,6 +9,7 @@
 
 * [Manual Page](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/)
 * [D3 visual](http://onlywei.github.io/explain-git-with-d3/)
+* [oshitgit](https://ohshitgit.com/)
 
 * Git has 3 levels of configuration:
   - SYSTEM(configurations for multiple users)
