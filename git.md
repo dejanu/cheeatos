@@ -134,6 +134,13 @@ done
 for remote in `git branch -r`; do git branch --track ${remote#origin/} $remote; done
 ```
 
+```bash
+
+# check the parent branch
+
+git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #
+```
+
 ***
 
 ## Inspection
