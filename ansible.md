@@ -11,6 +11,31 @@
 * Configuration (`/etc/ansible/ansible.cfg`) check: `$ansible-config list`
 * Ansible inventory commands: `$ansible-inventory --list` or `$ansible-inventory --graph`
 
+## Ansible configuration
+
+*  Is defined in `anisble.cfg` in the current directory or `~/.ansible.cfg` or `/etc/ansible/ansible.cfg`:
+
+```yml
+[defaults]
+# define default inventory to bypass -i usage
+inventory = hosts.yml
+
+# gives freedom of not specifying the encryption password or the password file every time
+vault_password_file = ~/.vault_pass
+
+retry_files_enabled = false
+hash_behaviour=merge
+forks = 10
+## OpenSSH needed to use jumphost. See hosts.yml
+transport = ssh
+merge_multiple_cli_tags=True
+# Use the YAML callback plugin.
+stdout_callback = yaml
+
+#interpreter discovery
+interpreter_python = /usr/bin/python3
+```
+
 ## AD-HOC
 
 
@@ -130,4 +155,23 @@ ansible-vault decrypt/encrypt variables_encrypted.yml
 
 #environment variable to specify that file
 echo $ANSIBLE_VAULT_PASSWORD_FILE
+```
+
+## Variables
+
+* Inventory variables
+
+```bash
+# Ansible <2.0:
+[all:vars]
+ansible_connection=ssh
+ansible_ssh_user=vagrant 
+ansible_ssh_pass=vagrant
+
+# Ansible >=2.0:
+[all:vars]
+ansible_connection=ssh # actually default mode smart is OK
+ansible_user=vagrant
+ansible_pass=vagrant # or ansible_ssh_pass=vagrant
+
 ```
