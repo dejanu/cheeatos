@@ -26,3 +26,18 @@ docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 # remove unused images
 docker image prune -a
 ```
+
+### Go templates
+
+https://golang.org/pkg/text/template/
+
+```bash
+
+# check mounts
+docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
+
+docker ps --no-trunc --format "{{.ID}}\t{{.Names}}\t{{.Mounts}}"
+
+docker inspect -f '{{ .Mounts }}' <CONTAINER_ID>
+```
+
