@@ -41,3 +41,8 @@ docker ps --no-trunc --format "{{.ID}}\t{{.Names}}\t{{.Mounts}}"
 docker inspect -f '{{ .Mounts }}' <CONTAINER_ID>
 ```
 
+### Docker registry search
+```bash
+
+curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | python -m json.tool
+```
