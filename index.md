@@ -203,6 +203,9 @@ kubectl create -f service.yaml
 ```bash
 # NAMESPACE = objects which partition a single K8s cluster into multiple virtual clusters
 kubectl create ns <NAMESPACE>
+
+# get namespace
+kubectl config view | grep namespace
 ```
 
 **Delete deployment**
@@ -231,6 +234,14 @@ kubectl get svc
 kubectl get replicasets
 kubectl get rs
 kubectl get deployments
+
+
+
+export SERVICE_PORT=$(kubectl get --namespace <NAMESPACE> -o jsonpath="{.spec.ports[0].port}" services <SERVICE>)
+export SERVICE_IP=$(kubectl get svc --namespace <NAMESPACE> <SERVICE> -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+# get nodes
+kubectl get nodes -o wide
 
 # check pod running images
 kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
