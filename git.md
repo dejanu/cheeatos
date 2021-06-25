@@ -110,8 +110,9 @@ git revert HEAD --no-edit | git revert HASH
 ## FunStuff
 
 ```bash
-# delete all branches merged into develop
+# delete all branches merged into develop from local and remote
 git branch -r --merged develop | grep -vE "develop|master|release" | xargs -n 1 git branch -d
+git branch -r --merged master | grep -vE "develop|master|release" | awk -F'/' '{print $2}'|xargs -n 1 git push --delete origin
 ```
 ```bash
 # loop through each unmerged branch and tell you (a) when the last commit was made, and (b) how many commits it contains which are not merged to ‘origin/master’
