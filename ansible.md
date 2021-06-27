@@ -36,8 +36,7 @@ stdout_callback = yaml
 interpreter_python = /usr/bin/python3
 ```
 
-* Use `ansible_python_interpreter` inventory variable  or the `interpreter_python` key in the `[defaults]` section of `ansible.cfg` to set the desired python interpreter. 
-
+* Use `ansible_python_interpreter` inventory variable in `hosts.yml` or the `interpreter_python` key in the `[defaults]` section of `ansible.cfg` to set the desired python interpreter. 
 
 
 
