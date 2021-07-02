@@ -179,3 +179,21 @@ ansible_user=vagrant
 ansible_pass=vagrant # or ansible_ssh_pass=vagrant
 
 ```
+
+# Print/register var/output
+
+```yml
+- name: Test connection
+  #hosts: "prometheus_host"
+  hosts: "grafana_host"
+  gather_facts: no
+  tasks:
+    - name: Check user
+      shell: id
+      register: shellcmd
+        
+    - debug: msg="{{shellcmd.stdout}}"
+
+    # - debug:
+    #     var: shellcmd
+```
