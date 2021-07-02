@@ -180,7 +180,7 @@ ansible_pass=vagrant # or ansible_ssh_pass=vagrant
 
 ```
 
-# Print/register var/output
+* Print/register var/output
 
 ```yml
 - name: Test connection
