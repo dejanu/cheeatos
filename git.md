@@ -153,6 +153,9 @@ git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | he
 git log --author="Jon"
 git log --graph --oneline --all
 
+# check only the commit msg aka subject
+git log --pretty=format:"%s"
+
 # examine the contents of a file
 git blame <FILE>
 gitk --follow <FILE>
