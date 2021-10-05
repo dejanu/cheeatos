@@ -50,6 +50,9 @@ $ git config --global user.email <YOUR MAIL>
 
 #disable SSL verification if you encounter SSL certificate problem: self signed certificate
 $ git config --global http.sslVerify false
+
+# use other ssh key
+git -c core.sshCommand="ssh -i ~/.ssh/<PRIVATE_KEY>" clone git@github.com:dejanu/sretoolkit.git
 ```
 
 ***
