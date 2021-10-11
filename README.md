@@ -1,2 +1,0 @@
-# cheetcity
-Set of cheatsheets
