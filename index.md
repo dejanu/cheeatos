@@ -3,7 +3,7 @@
 * [Home](#)
 * [Ansible](ansible.md)
 * [Git](git.md)
-* [GCP](index.md)
+* <ins>[GCP](index.md)<ins>
 * [Docker](docker.md)
 
 ### GCP
