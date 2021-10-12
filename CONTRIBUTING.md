@@ -13,7 +13,7 @@ to add or update a new cheat page.
 1) Add a new cheat page:
     * Step one:
 
-    Create a markdown file `TECH_NAME.md`
+    Copy `template.md` to `<TECH_NAME>.md` and add knowledge (tips and triks) using markdown 
 
     * Step two:
 
@@ -23,8 +23,8 @@ to add or update a new cheat page.
 
 ## Cheatsheet collection
 ...
-* [TECH_NAME](TECH_NAME.md)
+* </ins>[TECH_NAME_HERE](tech_page_here.md)</ins>
 ...
 ```
 
-2) Update antoher cheat page
+2) Update/Fix antoher cheat page
