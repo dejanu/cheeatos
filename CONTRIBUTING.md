@@ -23,7 +23,7 @@ to add or update a new cheat page.
 
 ## Cheatsheet collection
 ...
-* </ins>[TECH_NAME_HERE](tech_page_here.md)</ins>
+* [TECH_NAME_HERE](tech_page_here.md)
 ...
 ```
 
