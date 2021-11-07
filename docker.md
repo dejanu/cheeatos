@@ -31,7 +31,9 @@ docker image prune -a
 
 https://golang.org/pkg/text/template/
 
-```python
+
+```diff
+
 
 # check mounts
 docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
@@ -70,5 +72,28 @@ docker ps --format "table {{.Names}} {{.Status}}"
 docker save dejanualex/exporter | bzip2 | ssh hostname docker load 
 
 curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | python -m json.tool
+```
+
+
+### Docker logging
+```bash
+# /etc/docker/daemon.json
+{
+  "log-driver": "journald"
+}
+
+docker info --format '{{.LoggingDriver}}'
+docker inspect --format='{{.LogPath}}' <CONTAINER_ID>
+
+# follow logs starting from the last 10 lines onwards
+docker logs -f --tail 10 <CONTAINER_ID>
+docker logs --since=1h <CONTAINER_ID>
+
+# redirect stdout and stderr to a file
+docker logs -f <CONTAINER_ID> > &> container.log
+docker logs <CONTAINER_ID> > container.log 2>&1
+
+# get container stats
+docker stats <CONTAINER_ID>
 ```
 
