@@ -32,7 +32,7 @@ docker image prune -a
 https://golang.org/pkg/text/template/
 
 
-```diff
+```bash
 
 
 # check mounts
