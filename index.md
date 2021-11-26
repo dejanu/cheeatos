@@ -81,6 +81,7 @@ gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
 ```bash
 gsutil cp -r gs://<BUCKET_NAME> .
 gsutil cp <FILE> gs://<BUCKET_NAME>
+gsutil -m cp -r gs://spls/gsp233/* .
 ```
 
 ***
