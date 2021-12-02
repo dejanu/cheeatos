@@ -54,6 +54,13 @@ $ git config --global http.sslVerify false
 
 # use other ssh key
 git -c core.sshCommand="ssh -i ~/.ssh/<PRIVATE_KEY>" clone git@github.com:dejanu/sretoolkit.git
+
+# update ~/.ssh/config
+
+Host github.com
+    Hostname github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/<private_key>
 ```
 
 ***
