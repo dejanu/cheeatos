@@ -25,6 +25,9 @@ docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 
 # remove unused images
 docker image prune -a
+
+# remove stopped containers and delete dangling images
+docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
 ```
 
 ### Go templates
@@ -71,7 +74,9 @@ docker ps --format "table {{.Names}} {{.Status}}"
 # transfer image to another server
 docker save dejanualex/exporter | bzip2 | ssh hostname docker load 
 
+# list images
 curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | python -m json.tool
+curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | jq .
 ```
 
 
