@@ -114,6 +114,10 @@ git reset --hard HEAD~1
 # create a new commit which usually has the inverse effect of the commit being reverted.
 git revert HEAD --no-edit | git revert HASH
 
+# rename local branch, push it and delete the old branch
+git branch -m <oldname> <newname>
+git push origin -u <newname>
+git push origin --delete <oldname>
 ```
 
 ***
