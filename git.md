@@ -125,7 +125,9 @@ git revert HEAD --no-edit | git revert HASH
 git branch -r --merged develop | grep -vE "develop|master|release" | xargs -n 1 git branch -d
 git branch -r --merged master | grep -vE "develop|master|release" | awk -F'/' '{print $2}'|xargs -n 1 git push --delete origin
 
+# diff MERGED vs UNMERGED branches
 git branch -r --merged | grep -v HEAD | xargs -L1 git --no-pager log --pretty=tformat:'%Cgreen%d%Creset | %h | %an | %Cblue%ar%Creset' -1 | column -t -s '|'
+git branch -r --no-merged | grep -v HEAD | xargs -L1 git --no-pager log --pretty=tformat:'%Cgreen%d%Creset | %h | %an | %Cblue%ar%Creset' -1 | column -t -s '|'
 ```
 ```bash
 # loop through each unmerged branch and tell you (a) when the last commit was made, and (b) how many commits it contains which are not merged to ‘origin/master’
