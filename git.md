@@ -123,7 +123,7 @@ git push origin --delete <oldname>
 ***
 
 ## FunStuff
-
+[GitHooks article](https://dev.to/dejanualex/short-intro-to-git-hooks-2llb)
 ```bash
 # delete all branches merged into develop from local and remote
 git branch -r --merged develop | grep -vE "develop|master|release" | xargs -n 1 git branch -d
