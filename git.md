@@ -90,9 +90,9 @@ git push --delete origin remote_branch
 # clean working directory interactive mode
 git clean -i
 
-
-# UNDO changes in working directory
-git checkout -f <FILE> 
+# UNDO changes in working directory a.k.a I've deleted a file and did not commit
+git checkout -f <FILE>
+git checkout HEAD <filename>
 
 # UNDO (unstage) changes in staging area 
 git restore --staged <file>
