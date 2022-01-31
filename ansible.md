@@ -5,6 +5,7 @@
 * [Git](git.md)
 * [GCP](index.md)
 * [Docker](docker.md)
+* [Azure](azure.md)
 
 ### ANSIBLE
 

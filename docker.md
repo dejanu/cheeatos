@@ -5,6 +5,7 @@
 * [Git](git.md)
 * [GCP](index.md)
 * <ins>[Docker](docker.md)</ins>
+* [Azure](azure.md)
 
 ### Cleanup docker workspace
 

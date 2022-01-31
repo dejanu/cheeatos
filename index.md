@@ -5,6 +5,7 @@
 * [Git](git.md)
 * <ins>[GCP](index.md)<ins>
 * [Docker](docker.md)
+* [Azure](azure.md)
 
 ### GCP
 
