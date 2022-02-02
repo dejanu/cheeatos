@@ -6,6 +6,7 @@
 * [GCP](index.md)
 * [Docker](docker.md)
 * [Azure](azure.md)
+* [Terraform](terraform.md)
 
 ### Git
 

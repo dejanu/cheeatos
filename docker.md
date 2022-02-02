@@ -6,6 +6,7 @@
 * [GCP](index.md)
 * <ins>[Docker](docker.md)</ins>
 * [Azure](azure.md)
+* [Terraform](terraform.md)
 
 ### Cleanup docker workspace
 
