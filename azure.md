@@ -6,6 +6,7 @@
 * [GCP](index.md)
 * [Docker](docker.md)
 * <ins>[Azure](azure.md)<ins>
+* [Terraform](terraform.md)
 
 ```bash
 
