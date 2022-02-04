@@ -11,8 +11,6 @@
 ### Cleanup docker workspace
 
 ```bash
-
-
 #stop all containers using their id
 docker stop $(docker ps -q) 
 
