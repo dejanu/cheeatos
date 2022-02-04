@@ -198,9 +198,7 @@ git show COMMIT_HASH
 ```
 ***
 
-## GitKraken
-
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/kraken.png?raw=true)
+## Buttons
 
 * <kbd>`Stage all changes`</kbd> = `git add .`
 * <kbd>`Commit changes`</kbd> = `git commit -m "message"`
