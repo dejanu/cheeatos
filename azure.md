@@ -26,13 +26,21 @@ az account list -o table --all --query "[].{TenantID: tenantId, Subscription: na
 
 # list resource groups based on query
 az group list --query "[?location=='westeurope']" -o table
-az group list --query "[?name=='NAME_OF_RESOURCE_GROUP']" -o table
+az group list --query "[?name=='RESOURCE_GROUP_NAME']" -o table
 
 # check resource group components aka resources
-az group show --resource-group PHISynergyRG1
-az resource list --query "[?resourceGroup=='NAME_OF_RESOURCE_GROUP']"
+az group show --resource-group RESOURCE_GROUP_NAME
+az resource list --query "[?resourceGroup=='RESOURCE_GROUP_NAME']"
 ```
 * Azure Management Groups - containers that help you manage access, policy, and compliance for multiple subscriptions
 * Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
 * Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
 
+```bash
+
+# check AKS/K8s node pool
+az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
+
+# scale AKS/k8s cluster: set 
+az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
+```

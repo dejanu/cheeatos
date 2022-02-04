@@ -51,7 +51,7 @@ export PROOJECT_ID=$(gcloud config list --format 'value(core.project)')
 **Get/Set compute zone/region**
 
 Region vs Zone: 
-![txt](https://github.com/dejanu/cheetcity/blob/fffd7504494195c9616729d50126ce340fe16a60/src/zone_region.png) 
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/zone_region.png?raw=true)
 
 
 ```bash
