@@ -36,6 +36,11 @@ az resource list --query "[?resourceGroup=='RESOURCE_GROUP_NAME']"
 * Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
 * Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
 
+Azure subscription and resource groups:
+
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/azure_hierachy.png?raw=true)
+
+
 ```bash
 
 # check AKS/K8s node pool
