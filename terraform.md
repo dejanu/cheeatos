@@ -16,9 +16,15 @@
 ```bash
 terraform init # initialize a working directory containing the Terraform configuration files.
 
-terraform apply # apply the changes required to reach the desired state of the configuration.
+terraform plan # present you the difference between reality at a given time and config you intend to apply
+terraform plan -out maint.tfplan # creates an execution plan to a specified output file
 
-terraform plan # present you the difference between reality at a given time and config you intend to apply.
+terraform apply # apply the changes required to reach the desired state of the configuration.
+terraform apply main.tfplan # apply the plan from file e.g. maint.tfplan
+
+# proposed destroy changes without executing them
+terraform plan -destroy -out main.destroy.tfplan
+terraform apply main.destroy.tfplan
 ```
 
 * The `init` command must be called:
