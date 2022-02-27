@@ -43,7 +43,9 @@ Azure subscription and resource groups:
 
 
 ```bash
-
+# create service principal
+ az ad sp create-for-rbac -n <name-of-service-principal>
+  
 # check AKS/K8s node pool
 az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
 
