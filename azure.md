@@ -24,9 +24,10 @@ az account set -s <subscription_guid>
 # get tenant ID and subscriptions
 az account list -o table --all --query "[].{TenantID: tenantId, Subscription: name, Default: isDefault}"
 
-# list resource groups based on query
+# list resource groups from a subscriobtion based on query
 az group list --query "[?location=='westeurope']" -o table
 az group list --query "[?name=='RESOURCE_GROUP_NAME']" -o table
+az group list -o table
 
 # check resource group components aka resources
 az group show --resource-group RESOURCE_GROUP_NAME
@@ -42,16 +43,21 @@ Azure subscription and resource groups:
 
 
 ```bash
-
+# create service principal
+ az ad sp create-for-rbac -n <name-of-service-principal>
+  
 # check AKS/K8s node pool
 az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
 
 # scale AKS/k8s cluster: set 
 az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
+
+# get k8s cluster credentials .kube/config
+az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name>
 ```
   
 ```bash
  # get supported k8s version by region
-  az aks get-versions --location westeurope
-  ````
+ az aks get-versions --location westeurope
+````
  
