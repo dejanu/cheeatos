@@ -48,10 +48,13 @@ az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query
 
 # scale AKS/k8s cluster: set 
 az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
+
+# get k8s cluster credentials .kube/config
+az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name>
 ```
   
 ```bash
  # get supported k8s version by region
-  az aks get-versions --location westeurope
-  ````
+ az aks get-versions --location westeurope
+````
  
