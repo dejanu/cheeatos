@@ -24,9 +24,10 @@ az account set -s <subscription_guid>
 # get tenant ID and subscriptions
 az account list -o table --all --query "[].{TenantID: tenantId, Subscription: name, Default: isDefault}"
 
-# list resource groups based on query
+# list resource groups from a subscriobtion based on query
 az group list --query "[?location=='westeurope']" -o table
 az group list --query "[?name=='RESOURCE_GROUP_NAME']" -o table
+az group list -o table
 
 # check resource group components aka resources
 az group show --resource-group RESOURCE_GROUP_NAME
