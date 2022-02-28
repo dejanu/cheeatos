@@ -13,6 +13,7 @@
 * [Manual Page](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/)
 * [D3 visual](http://onlywei.github.io/explain-git-with-d3/)
 * [oshitgit](https://ohshitgit.com/)
+* [101](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
 
 * Git has 3 levels of configuration:
   - SYSTEM(configurations for multiple users)
@@ -92,9 +93,9 @@ git push --delete origin remote_branch
 # clean working directory interactive mode
 git clean -i
 
-
-# UNDO changes in working directory
-git checkout -f <FILE> 
+# UNDO changes in working directory a.k.a I've deleted a file and did not commit
+git checkout -f <FILE>
+git checkout HEAD <filename>
 
 # UNDO (unstage) changes in staging area 
 git restore --staged <file>
