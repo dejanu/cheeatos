@@ -330,3 +330,25 @@ gcloud functions describe helloWorld
 DATA=$(printf 'Hello World!'|base64) && gcloud functions call helloWorld --data '{"data":"'$DATA'"}'
 gcloud functions logs read helloWorld
 ```
+ 
+ **kubectl configs**
+ ```bash
+# Displays the current-context/displays merged kubeconfig settings or a specified kubeconfig file.
+kubectl config current-context
+kubectl config view
+
+# Sets/Unset an individual value in a kubeconfig file
+kubectl config set
+kubectl config unset
+
+# Sets a cluster entry in kubeconfig
+kubectl config set-cluster
+
+# Sets a context entry in kubeconfig
+kubectl config set-context
+# Sets a user entry in kubeconfig
+kubectl config set-credentials
+
+# Sets the current-context in a kubeconfig file
+kubectl config use-context
+ ```
