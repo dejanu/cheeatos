@@ -330,8 +330,11 @@ gcloud functions describe helloWorld
 DATA=$(printf 'Hello World!'|base64) && gcloud functions call helloWorld --data '{"data":"'$DATA'"}'
 gcloud functions logs read helloWorld
 ```
- 
+
+ ***
+  
  **kubectl configs**
+
  ```bash
 # Displays the current-context/displays merged kubeconfig settings or a specified kubeconfig file.
 kubectl config current-context
@@ -352,3 +355,37 @@ kubectl config set-credentials
 # Sets the current-context in a kubeconfig file
 kubectl config use-context
  ```
+ **k8s nodes**
+  
+  ```bash
+  
+kubectl get nodes -o wide
+kubectl get nodes --show-labels
+  
+# describe node and check conditions field describes the status of all Running nodes: True if pressure
+kubectl describe node <insert-node-name-here>
+
+ Conditions:
+  Type                 Status  Message
+  ----                 ------  -----------------
+  NetworkUnavailable   False   Weave pod has set this
+  MemoryPressure       False   kubelet has sufficient memory available
+  DiskPressure         False   kubelet has no disk pressure
+  PIDPressure          False   kubelet has sufficient PID available
+  Ready                True    kubelet is posting ready status. AppArmor enabled
+  
+# kubectl drain to safely evict all of your pods from a node before you perform maintenance on the node (e.g. kernel upgrade, hardware maintenance)
+kubectl drain <node>
+kubectl drain node_name --ignore-daemonsets
+
+# Cordon the node; this means marking the node itself as unplannable so that new pods are not arranged on the node. 
+# Kubectl contains a command named cordon that permits us to create a node unschedulable
+ kubectl uncordon <node name>
+ 
+```
+**probes**
+```bash
+Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
+Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
+```
+
