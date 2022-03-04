@@ -382,12 +382,20 @@ kubectl drain node_name --ignore-daemonsets
 
 # Cordon the node; this means marking the node itself as unplannable so that new pods are not arranged on the node. 
 # Kubectl contains a command named cordon that permits us to create a node unschedulable
- kubectl uncordon <node name>
+ kubectl uncordon <node_name>
  
 ```
 **probes**
 ```bash
 Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
 Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
+```
+
+**debugging**
+```bash
+  
+$for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
+  
+kubectl logs <pod_name> --all-containers -n <namespace_name>
 ```
 
