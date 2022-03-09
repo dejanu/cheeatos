@@ -35,7 +35,8 @@ helm upgrade -i <RELEASE_NAME>  <REPO>/<CHART> --version 2.16
 
 * When installing Helm, make sure you're installing version 3. Version 2 still works, but it needs a server-side component called **Tiller**, which ties your helm installation to a single cluster. Helm 3 removed this need with the addition of several CRDs, but it's not supported in all Kubernetes versions.
 
-* Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0)
+* Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0):
+
 ```bash
 # add/install chart repo:
 helm repo add bitnami https://charts.bitnami.com/bitnami

@@ -7,6 +7,7 @@
 * [Docker](docker.md)
 * [Azure](azure.md)
 * <ins>[Terraform](terraform.md)</ins>
+* [Helm](helm.md)
 
 
 ### Key features
