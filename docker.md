@@ -7,6 +7,7 @@
 * <ins>[Docker](docker.md)</ins>
 * [Azure](azure.md)
 * [Terraform](terraform.md)
+* [Helm](helm.md)
 
 ### Cleanup docker workspace
 

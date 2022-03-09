@@ -7,6 +7,7 @@
 * [Docker](docker.md)
 * [Azure](azure.md)
 * [Terraform](terraform.md)
+* [Helm](helm.md)
 
 ### GCP
 
