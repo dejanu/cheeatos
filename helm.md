@@ -37,7 +37,6 @@ helm upgrade -i <RELEASE_NAME>  <REPO>/<CHART> --version 2.16
 
 * Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0)
 ```bash
-
 # add/install chart repo:
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
