@@ -52,6 +52,7 @@ helm install <realease_name> bitnami/rabbitmq
 * Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0):
 
 * RabbitMQ chart:
+
 ```bash
 
 # add repo
@@ -70,5 +71,4 @@ helm list
 
 # delete/uninstall chart
 helm delete <release_name>
-
 ```
