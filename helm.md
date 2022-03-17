@@ -8,6 +8,7 @@
 * [Azure](azure.md)
 * [Terraform](terraform.md)
 * <ins>[Helm](helm.md)<ins>
+* [ElasticSearch](elastic.md)
 
 <em>"The package manager for k8s Provide users with a better way to manage all the Kubernetes YAML files for a k8s project"</em>
 
