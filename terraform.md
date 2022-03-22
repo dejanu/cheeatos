@@ -8,6 +8,7 @@
 * [Azure](azure.md)
 * <ins>[Terraform](terraform.md)</ins>
 * [Helm](helm.md)
+* [ElasticSearch](elastic.md)
 
 
 ### Key features
