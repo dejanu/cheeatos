@@ -79,3 +79,37 @@ resource "google_compute_instance" "vm_instance" {
   }
 }
 ```
+
+### Terraform state
+
+* by default is stored in `terraform.tfstate` file or it can be stored remotely e.g. Azure VM
+
+**maint.tf**
+```json
+# store state remotely in Azure VM
+terraform {
+    backend "azurerm" {
+        resource_group_name = "RG_NAME"
+        storage_account_name = "STORAGE_ACCOUNT_NAME"
+        container_name = "tfstate"
+        key = "terraform.tfstate"
+    }
+
+    required_version = ">= 0.13"
+    required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "2.49.0"
+    }
+  }
+}
+
+
+### Action
+
+- If you have a resourge e.g. ResourceGroup create manually in Azure_portal in order to use it you must import it:
+```bash
+
+# imported the resource group which was created manually
+terraform import azurerm_resource_group.<RG_NAME_LOWERCASE> /subscriptions/<SUBS_ID>/resourceGroups/<RG_NAME>
+```
