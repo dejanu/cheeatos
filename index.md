@@ -243,8 +243,6 @@ kubectl get replicasets
 kubectl get rs
 kubectl get deployments
 
-
-
 export SERVICE_PORT=$(kubectl get --namespace <NAMESPACE> -o jsonpath="{.spec.ports[0].port}" services <SERVICE>)
 export SERVICE_IP=$(kubectl get svc --namespace <NAMESPACE> <SERVICE> -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
@@ -340,6 +338,9 @@ gcloud functions logs read helloWorld
  **kubectl configs**
 
  ```bash
+# autocompletion 
+source <(kubectl completion bash)
+
 # Displays the current-context/displays merged kubeconfig settings or a specified kubeconfig file.
 kubectl config current-context
 kubectl config view
@@ -362,7 +363,6 @@ kubectl config use-context
  **k8s nodes**
   
   ```bash
-  
 kubectl get nodes -o wide
 kubectl get nodes --show-labels
   
@@ -384,8 +384,7 @@ kubectl drain node_name --ignore-daemonsets
 
 # Cordon the node; this means marking the node itself as unplannable so that new pods are not arranged on the node. 
 # Kubectl contains a command named cordon that permits us to create a node unschedulable
- kubectl uncordon <node_name>
- 
+kubectl uncordon <node_name>
 ```
 **probes**
 ```bash
@@ -397,7 +396,6 @@ Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness 
 ```bash
   
 $for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
-  
 kubectl logs <pod_name> --all-containers -n <namespace_name>
 ```
 
