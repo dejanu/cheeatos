@@ -9,6 +9,8 @@
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
+* [Kubernetes](k8s.md)
+* [Istio](istio.md)
 
 ```bash
 
