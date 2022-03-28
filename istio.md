@@ -9,6 +9,7 @@
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
+* [Kubernetes](k8s.md)
 * <ins>[Istio](istion.md)</ins>
 
 ### General features
