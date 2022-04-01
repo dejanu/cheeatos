@@ -34,6 +34,9 @@ kubectl exec -t -n <namespace> <pod_name> -- curl -I http://<another_pod_ip>:303
 $for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
 kubectl logs <pod_name> --all-containers -n <namespace_name>
 
+# get logs  from a specific pod
+kubectl -n <namespace> logs <pod_name> --tail 200
+
 # check pod running images
 kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
 ```
@@ -117,6 +120,21 @@ kubectl create ns <namespace>
 kubectl edit deployments/<deployment_name>
 ```
  ***
+### Services:
+
+```bash
+# get services
+kubectl -n <namespace> get svc
+
+# get pod port
+kubectl get pod <pod_name> --template='{{(index (index .spec.containers 0).ports 0).containerPort}}{{"\n"}}' -n <namespace>
+
+# tunnels the traffic from a specified port at your local host machine to the specified port on the specified pod
+kubectl port-forward pods/<pod_name> <port_no>:<port_no>
+
+```
+  ***
+
 ### 101 stuff:
 
 **probes**:
@@ -131,3 +149,16 @@ kubectl edit deployments/<deployment_name>
 - **requests** is what the container is guaranteed to get.
 - **limits** is what the container is allowed to use, and is restricted to go above limits.
 
+**CRD**:
+
+- A RESOURCE is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind
+- CUSTOM RESOURCES are extensions of the Kubernetes API.
+- Extend the k8s API with CRD -> custom resource (CRD or Aggregated API)
+```bash
+
+# kubectl get CRD
+kubectl get crd -n <namespace>
+kubect get <customresource_name> -n <namespace>
+kubectl describe  <customresource_type> <customresource_name> -n <namespace>
+
+```
