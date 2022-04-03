@@ -131,34 +131,30 @@ kubectl get pod <pod_name> --template='{{(index (index .spec.containers 0).ports
 
 # tunnels the traffic from a specified port at your local host machine to the specified port on the specified pod
 kubectl port-forward pods/<pod_name> <port_no>:<port_no>
-
 ```
   ***
 
-### 101 stuff:
+### 101 stuff
 
-**probes**:
+**Probes**:
 - Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
 
 - Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
 
-**requests_and_limits**:
-
+**Requests_and_limits**:
 - CPU <k8s_CPU's> and memory <bytes> are each a resource type and form compute resources, which can be requested, allocated, and consumed by containers.
-- CPU resource units **limits** and **requests** are measured in CPU unints.
+- CPU resource units **limits** and **requests** are measured in CPU units.
 - **requests** is what the container is guaranteed to get.
 - **limits** is what the container is allowed to use, and is restricted to go above limits.
 
 **CRD**:
-
 - A RESOURCE is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind
 - CUSTOM RESOURCES are extensions of the Kubernetes API.
 - Extend the k8s API with CRD -> custom resource (CRD or Aggregated API)
-```bash
 
+```bash
 # kubectl get CRD
 kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
 kubectl describe  <customresource_type> <customresource_name> -n <namespace>
-
 ```
