@@ -12,7 +12,7 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
----
+<br>  
 
 ```bash
                     ___ _____
@@ -26,7 +26,7 @@
                    \/________/         @dejanualex
 ```
 ---
+
 Nice stuff:
 - [devhints](https://devhints.io/)
 - [explainshell](https://explainshell.com/)
----
