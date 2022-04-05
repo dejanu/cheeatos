@@ -1,3 +1,5 @@
+## Cheatsheet collection
+
 * [Home](index.md)
 * [Ansible](ansible.md)
 * [Git](git.md)
@@ -6,7 +8,7 @@
 * [Azure](azure.md)
 * [Terraform](terraform.md)
 * [Helm](helm.md)
-* </ins>[ElasticSearch](elastic.md)</ins>
+* </ins>[ElasticSearch](elastic.md)<ins>
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 

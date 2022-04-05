@@ -36,15 +36,12 @@ docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
 
 ### Go templates
 
-https://golang.org/pkg/text/template/
+* [go_templates](https://golang.org/pkg/text/template/)
 
+
+`# check mounts`:`docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}`
 
 ```bash
-
-
-# check mounts
-docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}
-
 # list running containers names
 docker ps --filter status=running --format '{{.Names}} {{.Status}}'
 
@@ -69,7 +66,6 @@ docker inspect network bridge --format "{{json .Containers }}" | python -m json.
 
 # nice table
 docker ps --format "table {{.Names}} {{.Status}}"
-
 ```
 
 ### Docker images/registry 

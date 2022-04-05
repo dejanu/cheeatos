@@ -1,5 +1,5 @@
 # cheetcity
-- Set of cheatsheets published at [cheetcity](https://dejanu.github.io/cheeatos/).
+- Set of cheatsheets published at [cheeatos](https://dejanu.github.io/cheeatos/).
 - Contributing guide [here](CONTRIBUTING.md)
 
 ```bash
