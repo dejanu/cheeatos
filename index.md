@@ -1,4 +1,4 @@
-## Cheatsheet collection
+## Collection of cheatsheets for different technologies:
 
 * <ins>[Home](#)</ins>
 * [Ansible](ansible.md)
@@ -11,9 +11,9 @@
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
+
 ---
 
-Collection of cheatsheets for different technologies.
 ```bash
                     ___ _____
                    /\ (_)    \
@@ -29,3 +29,4 @@ Collection of cheatsheets for different technologies.
 Nice stuff:
 - [devhints](https://devhints.io/)
 - [explainshell](https://explainshell.com/)
+---
