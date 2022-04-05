@@ -1,6 +1,6 @@
 ## Cheatsheet collection
 
-* [Home](#)
+* [Home](index.md)
 * [Ansible](ansible.md)
 * [Git](git.md)
 * [GCP](index.md)

@@ -1,9 +1,9 @@
 ## Cheatsheet collection
 
-* [Home](#)
+* [Home](index.md)
 * [Ansible](ansible.md)
 * [Git](git.md)
-* [GCP](index.md)
+* [GCP](gcp.md)
 * <ins>[Docker](docker.md)</ins>
 * [Azure](azure.md)
 * [Terraform](terraform.md)
@@ -97,6 +97,7 @@ docker inspect --format='{{.LogPath}}' <CONTAINER_ID>
 # follow logs starting from the last 10 lines onwards
 docker logs -f --tail 10 <CONTAINER_ID>
 docker logs --since=1h <CONTAINER_ID>
+docker logs <CONTAINER_ID> --since 10m --follow
 
 # redirect stdout and stderr to a file
 docker logs -f <CONTAINER_ID> > &> container.log
