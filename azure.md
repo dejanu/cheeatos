@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 ```bash
 # get account details e.g. subscribtion,tenant id 
 az account show

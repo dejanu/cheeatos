@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * <ins>[Istio](istion.md)</ins>
 
+---
+
 ### General features
 
 * observability(telemetry) - metrics and access logs

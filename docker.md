@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 ### Cleanup docker workspace
 
 ```bash

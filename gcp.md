@@ -12,11 +12,11 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 ### GCP
 
 * [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
-
-
 
 ## gcloud SDK
 ```python

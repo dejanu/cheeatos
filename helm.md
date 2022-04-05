@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 <em>"The package manager for k8s, provide users with a better way to manage all the Kubernetes YAML files for a k8s project"</em>
 
 ```bash
