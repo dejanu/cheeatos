@@ -14,6 +14,14 @@
 
 <br>  
 
+---
+
+
+ <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/JQYDNJDw8kovFBTZ9l" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/cheetos-cheeto-cheetos-popcorn-chester-cheetah-JQYDNJDw8kovFBTZ9l">via GIPHY</a></p>
+
+
+---
+
 ```bash
                     ___ _____
                    /\ (_)    \
@@ -25,13 +33,8 @@
                   \ \_) (o)   /
                    \/________/         @dejanualex
 ```
----
 
-Nice stuff:
-- [devhints](https://devhints.io/)
-- [explainshell](https://explainshell.com/)
+Some other nice stuff [^1] and [^2]:
 
-
-<p align="center">
- <img src="https://media.giphy.com/media/8yqwTVBwpK1qskLxX5/giphy.gif" width="100" height="100" />
-</p>
+ [^1]:  [devhints](https://devhints.io/) 
+ [^2]: [explainshell](https://explainshell.com/)
