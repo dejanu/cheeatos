@@ -12,11 +12,11 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 ### GCP
 
 * [Download SDK](https://cloud.google.com/sdk/docs/install#linux)
-
-
 
 ## gcloud SDK
 ```python
@@ -328,6 +328,17 @@ gcloud functions describe helloWorld
 DATA=$(printf 'Hello World!'|base64) && gcloud functions call helloWorld --data '{"data":"'$DATA'"}'
 gcloud functions logs read helloWorld
 ```
+---
 
- ***
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```
 

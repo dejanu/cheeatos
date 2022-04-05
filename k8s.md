@@ -10,6 +10,7 @@
 * <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s_resources.md) 
 * [Istio](istio.md)
 
+---
 
 ### Debugging pods:
 
@@ -168,4 +169,17 @@ kubectl port-forward pods/<pod_name> <port_no>:<port_no>
 kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
 kubectl describe  <customresource_type> <customresource_name> -n <namespace>
+```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
 ```

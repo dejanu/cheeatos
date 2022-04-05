@@ -12,6 +12,7 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
 
 ### Key features
 
@@ -114,4 +115,17 @@ terraform {
 
 # imported the resource group which was created manually
 terraform import azurerm_resource_group.<RG_NAME_LOWERCASE> /subscriptions/<SUBS_ID>/resourceGroups/<RG_NAME>
+```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
 ```

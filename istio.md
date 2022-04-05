@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * <ins>[Istio](istion.md)</ins>
 
+---
+
 ### General features
 
 * observability(telemetry) - metrics and access logs
@@ -78,3 +80,17 @@
 * Split large virtual services and destination rules
 * Apply destionation rules to first
 * https://istio.io/latest/docs/ops/best-practices/security/
+
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```

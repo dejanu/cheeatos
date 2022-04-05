@@ -8,10 +8,11 @@
 * [Azure](azure.md)
 * [Terraform](terraform.md)
 * [Helm](helm.md)
-* </ins>[ElasticSearch](elastic.md)<ins>
+* <ins>[ElasticSearch](elastic.md)<ins>
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
 
 ### Check the health of ES:
 
@@ -70,4 +71,17 @@ curl -X GET "localhost:9200/_nodes/stats/indices?groups=foo,bar&pretty"
 curl -X GET "localhost:9200/_nodes/stats/ingest?filter_path=nodes.*.ingest&pretty"
 curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.ingest&pretty"
 curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.ingest.pipelines&pretty"
+```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
 ```

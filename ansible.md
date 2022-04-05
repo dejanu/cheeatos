@@ -12,6 +12,8 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
+---
+
 ### ANSIBLE
 
 * Agentless (uses as transport layer Open SSH)
@@ -207,4 +209,17 @@ ansible_pass=vagrant # or ansible_ssh_pass=vagrant
 
     # - debug:
     #     var: shellcmd
+```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
 ```
