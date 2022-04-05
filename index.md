@@ -30,3 +30,8 @@
 Nice stuff:
 - [devhints](https://devhints.io/)
 - [explainshell](https://explainshell.com/)
+
+
+<p align="center">
+ <img src="https://media.giphy.com/media/8yqwTVBwpK1qskLxX5/giphy.gif" width="100" height="100" />
+</p>
