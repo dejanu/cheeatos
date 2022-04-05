@@ -1,9 +1,9 @@
 ## Cheatsheet collection
 
-* [Home](#)
+* [Home](index.md)
 * [Ansible](ansible.md)
 * <ins>[Git](git.md)</ins>
-* [GCP](index.md)
+* [GCP](gcp.md)
 * [Docker](docker.md)
 * [Azure](azure.md)
 * [Terraform](terraform.md)

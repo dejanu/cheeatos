@@ -1,27 +1,30 @@
-* [Home](#)
+* [Home](index.md)
 * [Ansible](ansible.md)
 * [Git](git.md)
-* [GCP](index.md)
+* [GCP](gcp.md)
 * [Docker](docker.md)
 * [Azure](azure.md)
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
-* <ins>[Kubernetes](k8s.md)<ins>
+* <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s_resources.md) 
 * [Istio](istio.md)
+
 
 ### Debugging pods:
 
 ```bash
+# flags
+kubectl get pods -A (--all-namespaces )
+kubectl get pods --show-labels
+kubectl get pods -w (--watch)
+kubectl get pods -o json
 
 # list events
 kubectl describe pod/<pod_name> -n <namespace>
-kubectl describe pod <pod_name> -n <namespace>
 
-# spin up new pod with desired image
+# spin-up/delete a new pod with desired image
 kubectl run -ti kali --image=kalilinux/kali-rolling
-
-# delete the kali pod
 kubectl delete -n default pod kali
 
 # spin up a shell inside the pod
@@ -32,13 +35,17 @@ kubectl exec -t -n <namespace> <pod_name> -- curl -I http://<another_pod_ip>:303
 
 # get pod logs from all namespaces
 $for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
-kubectl logs <pod_name> --all-containers -n <namespace_name>
 
-# get logs  from a specific pod
-kubectl -n <namespace> logs <pod_name> --tail 200
+# logs for for a specific RESOURCE: deployment is specified and that deployment has multiple pods such as a ReplicaSet
+# then only one of the pods logs will be returned
+kubectl -n <namespace> logs deployment/<deplymnet_name> --all-containers=true --since 10m
+
+# get logs (no_lines) from a specific POD
+kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 
 # check pod running images
-kubectl get pods -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |sort
+kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
+kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
 ```
  ***
 ### Nodes operations:
@@ -100,10 +107,9 @@ kubectl config use-context
 # replicasets/nodes/pods/services/deployments/daemonsets/statefulsets/cronjobs
 kubectl cluster-info
 kubectl get pods
-kubectl get svc
-kubectl get replicasets
-kubectl get rs
+kubectl get replicasets/rs
 kubectl get deployments
+kubectl get svc
 
 # get namespaces
 kubectl config view | grep namespace
@@ -114,7 +120,13 @@ kubectl create ns <namespace>
 ```
  ***
 ### Deployment ops:
+
 ```bash
+# set editor ftw
+export KUBE_EDITOR=vim
+
+# edit resource (bad-idea)
+kubectl edit <resource_type>/<resource_name>
 
 # interactive rollout
 kubectl edit deployments/<deployment_name>
@@ -138,7 +150,6 @@ kubectl port-forward pods/<pod_name> <port_no>:<port_no>
 
 **Probes**:
 - Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
-
 - Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
 
 **Requests_and_limits**:
