@@ -13,7 +13,6 @@
 * [Istio](istio.md)
 
 ```bash
-
 # get account details e.g. subscribtion,tenant id 
 az account show
 az account show -o table
@@ -61,8 +60,8 @@ az aks get-credentials --resource-group <resourge_group_name> --name <cluster-na
 ```
   
 ```bash
- # get supported k8s version by region
- az aks get-versions --location westeurope
+# get supported k8s version by region
+az aks get-versions --location westeurope
 ````
  
 * Wrapper script:
@@ -96,4 +95,17 @@ echo -e "$separator_stuff Select resource group :"
 read resource_group
 echo -e "$separator_stuff Available RESOURCES in the $resource_group RESOURCE GROUP:"
 az resource list --query "[?resourceGroup=='$resource_group']" -o table
+```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
 ```

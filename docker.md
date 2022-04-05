@@ -38,8 +38,8 @@ docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
 
 * [go_templates](https://golang.org/pkg/text/template/)
 
+`check mounts` = <kbd>docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}`</kbd>
 
-`# check mounts`:`docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}`
 
 ```bash
 # list running containers names
@@ -102,4 +102,16 @@ docker logs <CONTAINER_ID> > container.log 2>&1
 # get container stats
 docker stats <CONTAINER_ID>
 ```
+---
 
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```

@@ -208,3 +208,16 @@ ansible_pass=vagrant # or ansible_ssh_pass=vagrant
     # - debug:
     #     var: shellcmd
 ```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```

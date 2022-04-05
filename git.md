@@ -201,9 +201,16 @@ git branch -r --no-merged
 git show COMMIT_HASH
 
 ```
-***
+---
 
-## Buttons
-
-* <kbd>`Stage all changes`</kbd> = `git add .`
-* <kbd>`Commit changes`</kbd> = `git commit -m "message"`
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```

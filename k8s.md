@@ -169,3 +169,16 @@ kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
 kubectl describe  <customresource_type> <customresource_name> -n <namespace>
 ```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```

@@ -78,3 +78,16 @@ helm delete <release_name>
 # get objects from namespace
 kubectl get deployments,pods,services --namespace rabbit
 ```
+---
+
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```
