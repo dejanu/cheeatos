@@ -14,7 +14,18 @@
 ---
 
 Collection of cheatsheets for different technologies.
-
+```bash
+                    ___ _____
+                   /\ (_)    \
+                  /  \      (_,
+                 _)  _\   _    \
+                /   (_)\_( )____\
+                \_     /    _  _/
+                  ) /\/  _ (o)(
+                  \ \_) (o)   /
+                   \/________/         @dejanualex
+```
+---
 Nice stuff:
 - [devhints](https://devhints.io/)
 - [explainshell](https://explainshell.com/)
