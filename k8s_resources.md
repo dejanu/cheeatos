@@ -5,7 +5,7 @@
 
 | Name 	               | ShortName 	                |
 |----------------------|----------------------------|
-|bindings              | Binding    	              |
+|bindings              | Binding    	            |
 |configmaps            |  	cm                      |
 |endpoints             |  	ep                      |
 |events                |  	ev                      |

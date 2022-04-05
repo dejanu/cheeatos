@@ -12,7 +12,7 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 
-### Git
+### Nice stuff
 
 * [Manual Page](https://mirrors.edge.kernel.org/pub/software/scm/git/docs/)
 * [D3 visual](http://onlywei.github.io/explain-git-with-d3/)
@@ -20,9 +20,9 @@
 * [101](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
 
 * Git has 3 levels of configuration:
-  - SYSTEM(configurations for multiple users)
-  - GLOBAL(configurations used for one user all repo on one host) 
-  - LOCAL (configuration for one repo) 
+  - SYSTEM: configurations for multiple users
+  - GLOBAL: configurations used for one user all repo on one host
+  - LOCAL: configuration for one repo
   
 ```bash
 #list the configuration
