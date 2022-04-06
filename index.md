@@ -1,4 +1,4 @@
-## Collection of cheatsheets for different technologies:
+## Cheatsheets:
 
 * <ins>[Home](#)</ins>
 * [Ansible](ansible.md)
