@@ -15,7 +15,8 @@
 |pods                  |  	po                      |
 |replicationcontrollers|ReplicationController       |
 |services              |  	svc                     |
-|daemonsets            |  	ds                      |
+|secrets               |Secret                      |
+|daemonsets            |    ds                      |
 |deployments           |  	deploy                  |
 |replicasets           |  	rs                      |
 |statefulsets          |  	srs                     |
@@ -24,4 +25,23 @@
 
 ### Notes:
 
+
 * [getting_started](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
+
+* check them: `kubectl api-resources`
+
+* daemonset = 1 replica on each worker nodes aka 1 special pod on all workers e.g. ingress_controller exposed via a NodePort
+* job = sort of task, k8s will schedule a job and it will run it once and it will not be rescheduled - 1 time, when u apply it it gets executed and that's it aka init container
+* cronjob = a job that runs on a schedule
+* ConfigMap = key/value pairs of configuration data that can be accessed by pods
+* Secret = key/value pairs of sensitive data that can be accessed by pods (encoded in base64)) so `describe` will show opaque data 
+```bash
+# example scenario
+
+kubectl create secret generic <secret_name> --from-literal=MYSQL_ROOT_PASSWORD=test
+kubectl get secrets <secret_name> -o yaml > sqlsecret.yml
+
+kubectl exec -it po/<pod_name> -- bash
+# test the secret 
+mysql -u root -p
+```

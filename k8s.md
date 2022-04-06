@@ -24,9 +24,10 @@ kubectl get pods -o json
 # list events
 kubectl describe pod/<pod_name> -n <namespace>
 
-# spin-up/delete a new pod with desired image
+# running debug pods, svc in the same namespace are resolvable by DNS 
 kubectl run -ti kali --image=kalilinux/kali-rolling
 kubectl delete -n default pod kali
+kubectl run -n <namespace> mybusyboxcurl --image yauritux/busybox-curl -it -- sh
 
 # spin up a shell inside the pod
 kubectl exec -n <namespace> -it <pod_name> -- bash
@@ -39,7 +40,7 @@ $for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;d
 
 # logs for for a specific RESOURCE: deployment is specified and that deployment has multiple pods such as a ReplicaSet
 # then only one of the pods logs will be returned
-kubectl -n <namespace> logs deployment/<deplymnet_name> --all-containers=true --since 10m
+kubectl -n <namespace> logs deployment/<deploymet_name> --all-containers=true --since 10m
 
 # get logs (no_lines) from a specific POD
 kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
@@ -112,13 +113,13 @@ kubectl get replicasets/rs
 kubectl get deployments
 kubectl get svc
 
-# get namespaces
+# NAMESPACE = objects which partition a single K8s cluster into multiple virtual clusters
 kubectl config view | grep namespace
 kubectl get ns
-
-# NAMESPACE = objects which partition a single K8s cluster into multiple virtual clusters
+kubectl config set-context --current --namespace=<namespace>
 kubectl create ns <namespace>
 ```
+
  ***
 ### Deployment ops:
 
@@ -144,6 +145,8 @@ kubectl get pod <pod_name> --template='{{(index (index .spec.containers 0).ports
 
 # tunnels the traffic from a specified port at your local host machine to the specified port on the specified pod
 kubectl port-forward pods/<pod_name> <port_no>:<port_no>
+kubectl port-forward svc/nginx-service [LOCAL_HOST_PORT:]REMOTE_PORT
+kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 ```
   ***
 
@@ -151,7 +154,9 @@ kubectl port-forward pods/<pod_name> <port_no>:<port_no>
 
 **Probes**:
 - Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
+- Liveness probe fails => restart pod
 - Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
+- Readiness probe fails => don't send any traffic to the pod
 
 **Requests_and_limits**:
 - CPU <k8s_CPU's> and memory <bytes> are each a resource type and form compute resources, which can be requested, allocated, and consumed by containers.
