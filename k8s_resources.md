@@ -25,8 +25,9 @@
 
 ### Notes:
 
-
 * [getting_started](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
+
+* explain specs: `kubectl explain pod.spec.containers`
 
 * check them: `kubectl api-resources`
 
@@ -35,8 +36,13 @@
 * cronjob = a job that runs on a schedule
 * ConfigMap = key/value pairs of configuration data that can be accessed by pods
 * Secret = key/value pairs of sensitive data that can be accessed by pods (encoded in base64)) so `describe` will show opaque data 
+
+---
+
+
+
 ```bash
-# example scenario
+# SECRETS example scenario
 
 kubectl create secret generic <secret_name> --from-literal=MYSQL_ROOT_PASSWORD=test
 kubectl get secrets <secret_name> -o yaml > sqlsecret.yml
