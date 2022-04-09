@@ -175,6 +175,18 @@ kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
 kubectl describe  <customresource_type> <customresource_name> -n <namespace>
 ```
+
+**Customizing outptut**:
+```bash
+# just name
+kubectl get po -o name -A
+
+# custom columns .e.g NAME columns
+kubectl get po -o=custom-columns=NAME:.metadata.name -A
+
+# go templates are a powerful method to customize output however you want
+kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
+```
 ---
 
 ```bash
