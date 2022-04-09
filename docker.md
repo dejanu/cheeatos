@@ -44,7 +44,7 @@ docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
 ```bash
 ### check mounts
 
-docker ps --format \'{{ .ID }}\' | xargs -I {} docker inspect -f \'{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}\' {}\'\'
+docker ps --format \'\{\{ .ID \}\}\' | xargs -I {} docker inspect -f \'{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}\' {}\'\'
 
 # list running containers names
 docker ps --filter status=running --format '{{.Names}} {{.Status}}'
