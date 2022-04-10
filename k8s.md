@@ -140,6 +140,9 @@ kubectl edit deployments/<deployment_name>
 # get services
 kubectl -n <namespace> get svc
 
+# get external IP
+kubectl get services -n gmp-test -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}'
+
 # get pod port
 kubectl get pod <pod_name> --template='{{(index (index .spec.containers 0).ports 0).containerPort}}{{"\n"}}' -n <namespace>
 
