@@ -132,6 +132,9 @@ kubectl edit <resource_type>/<resource_name>
 
 # interactive rollout
 kubectl edit deployments/<deployment_name>
+
+# scale rs to 1 for a deployment
+kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ```
  ***
 ### Services:
@@ -140,11 +143,14 @@ kubectl edit deployments/<deployment_name>
 # get services
 kubectl -n <namespace> get svc
 
-# get external IP
-kubectl get services -n gmp-test -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}'
+# get service cluster-ip
+kubectl get services/<service_name> -o go-template='{{(index .spec.clusterIP)}}'
 
-# get pod port
-kubectl get pod <pod_name> --template='{{(index (index .spec.containers 0).ports 0).containerPort}}{{"\n"}}' -n <namespace>
+# get external IP
+kubectl -n <namespace> get services -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}'
+
+# get pod port containerPort
+kubectl -n <namespace> get pod <pod_name> --template='{{(index (index .spec.containers 0).ports 0).containerPort}}{{"\n"}}'
 
 # tunnels the traffic from a specified port at your local host machine to the specified port on the specified pod
 kubectl port-forward pods/<pod_name> <port_no>:<port_no>
