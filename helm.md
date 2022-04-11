@@ -16,9 +16,15 @@
 
 <em>"The package manager for k8s, provide users with a better way to manage all the Kubernetes YAML files for a k8s project"</em>
 
+* managing multiple k8s objects it's hard (versioning yaml :(( ) - helm allows yml templating
+*  helm repos: https://artifacthub.io/ and https://bitnami.com/ (VMWare)
+
+* [Kustomize](https://kustomize.io/) (patch k8s obj) `kubectl kustomize .`  vs HELM (package manager)
+* HELM2 (using **Tiller** pod inside k8s) vs HELM3 which communicates directly with K8s API server (ditch **Tiller** approach)
+
 ```bash
 ## REPOSITORY = chart repository is a location where packaged charts can be stored and share
-## CHART = bundle with one or more Kubernetes manifests
+## CHART = bundle/collection of one or more Kubernetes manifests
 
 # add chart repo <REPO_NAME> has been added to your repositories
 helm repo add <REPO_NAME>  https://artifactory/<REPO_NAME>  --username USER --password PASSWORD
