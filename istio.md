@@ -10,7 +10,7 @@
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
-* <ins>[Istio](istion.md)</ins>
+* <ins>[Istio](istio.md)</ins>
 
 ---
 
@@ -20,7 +20,12 @@
 * traffic management -> mesh network for servicesv -> routing roules, circuit breakers also great for deployments
 * security: mutuals TLS, req auth. E.g Mutal TLS = Secure communication between services inside the mesh between PODs with the Istio sidecar injected and also from mesh-external services accessing the mesh through an ingress gateway.
 
+* Istio envoy proxy that acts as a LB
 
+* Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
+```bash
+kubectl -n synergy-system get gateways.networking.istio.io
+```
 * Services give SPAN (piece of info of each server/servce provide) to trace a request - TELEMETRY
 
 * Istio injects a ENVOY proxy side-car container to the pods to intercept traffic from pods, this behavior is enabled using label `istio-injection=enabled` on the namespace level and `sidecar.istio.io/inject=true` on the pod level.
