@@ -24,7 +24,7 @@
 
 * Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
 ```bash
-kubectl -n synergy-system get gateways.networking.istio.io
+kubectl -n <namespace> get gateways.networking.istio.io
 ```
 * Services give SPAN (piece of info of each server/servce provide) to trace a request - TELEMETRY
 
