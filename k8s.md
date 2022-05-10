@@ -16,6 +16,7 @@
 
 ```bash
 # flags
+# allowed formats are: custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-file,name,template,templatefile,wide,yaml
 kubectl get pods -A (--all-namespaces )
 kubectl get pods --show-labels
 kubectl get pods -w (--watch)

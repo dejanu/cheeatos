@@ -37,19 +37,22 @@ az group list -o table
 # check resource group components aka resources
 az group show --resource-group RESOURCE_GROUP_NAME
 az resource list --query "[?resourceGroup=='RESOURCE_GROUP_NAME']"
-```
-* Azure Management Groups - containers that help you manage access, policy, and compliance for multiple subscriptions
-* Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
-* Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
 
-Azure subscription and resource groups:
+# list service principals
+az ad sp list --query "[].{id:id,name:displayName}" --show-mine
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/azure_hierachy.png?raw=true)
+# create service principal app_name in AAD + https://stackoverflow.com/questions/55457349/service-principal-az-cli-login-failing-no-subscriptions-found
+export mySubscriptionID="3e053c67-dd5c-4904-8ecb-5af26418d771"
+az ad sp create-for-rbac --name <service_principal> --role contributor --scopes /subscriptions/$mySubscriptionID
 
+# login using sp - username for a service principal is its Application is (client) ID
+az login --output json --password <service_principal_password> --service-principal --tenant <AAD_tenant> --username <service_principal>
 
-```bash
-# create service principal
- az ad sp create-for-rbac -n <name-of-service-principal>
+# reset credentials for service principal will output to STDOUT the new credentials
+az ad sp credential reset --name <service_principal>
+
+# assign role to SVP
+az role assignment create --assignee "object_id" --role "contributor"
   
 # check AKS/K8s node pool
 az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
@@ -59,13 +62,23 @@ az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node
 
 # get k8s cluster credentials .kube/config
 az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name>
-```
-  
-```bash
+
 # get supported k8s version by region
 az aks get-versions --location westeurope
-````
- 
+```
+---
+
+* Azure Management Groups - containers that help you manage access, policy, and compliance for multiple subscriptions
+* Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
+* Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
+* Service principal - identity created for use with applications, hosted services, and automated tools to access Azure resources instead of havving apps signs is as a fully privileged user.
+
+Azure subscription and resource groups:
+
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/azure_hierachy.png?raw=true)
+
+---
+
 * Wrapper script:
 
 ```bash
@@ -99,6 +112,8 @@ echo -e "$separator_stuff Available RESOURCES in the $resource_group RESOURCE GR
 az resource list --query "[?resourceGroup=='$resource_group']" -o table
 ```
 ---
+
+* [Azure AKS upgrade](https://faun.pub/tale-of-a-kubernetes-upgrade-7a08e5d5528a)
 
 ```bash
                     ___ _____
