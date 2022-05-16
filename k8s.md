@@ -1,3 +1,5 @@
+## Cheatsheet collection
+
 * [Home](index.md)
 * [Ansible](ansible.md)
 * [Git](git.md)
@@ -10,6 +12,7 @@
 * <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s_resources.md) 
 * [Istio](istio.md)
 * [OIDC](openID.md)
+
 ---
 
 ### Debugging pods:
@@ -90,22 +93,30 @@ kubectl config current-context
 kubectl config view
 
 # Sets/Unset an individual value in a kubeconfig file
-kubectl config set
-kubectl config unset
+kubectl config get-contexts
+kubectl config get-clusters
+kubectl config view -o jsonpath='{.users[*].name}'
+                 
+kubectl config unset users.<user>
+kubectl config unset contexts.<context>
+kubectl config unset clusters.<cluster>
 
 # Sets a cluster entry in kubeconfig
 kubectl config set-cluster
 
 # Sets a context entry in kubeconfig
 kubectl config set-context
+                 
 # Sets a user entry in kubeconfig
 kubectl config set-credentials
 
 # Sets the current-context in a kubeconfig file
 kubectl config use-context
- ```
+```
+ 
  ***
-### Get k8s objects:
+
+ ### Get k8s objects:
 ```bash
 # replicasets/nodes/pods/services/deployments/daemonsets/statefulsets/cronjobs
 kubectl cluster-info

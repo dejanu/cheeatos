@@ -12,10 +12,22 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 * [OIDC](openID.md)
+
 ---
 
-### Check the health of ES:
+### 101
 
+* Index = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards.
+
+* Shards = physical data files which are split into chunks and are distributed across the cluster.
+
+* Elasticsearch contains multiple circuit breakers used to prevent operations from causing on OutOfMemoryError.
+
+  - by default the parent ciruit breaker triggers at 95% JVM memory usage
+  - high JVM memory pressure cause circuit breaker errors, each circtuit breaker specifies a limit for how much memory it can use.
+  - Elasticsearch will throw a  “CircuitBreakerException” and reject the request rather than risk crashing the entire node
+
+### Check the health of ES:
 ```bash
 curl localhost:9201/_cluster/health?pretty
 curl -X GET http://localhost:9201/_cat/nodes?v
@@ -26,24 +38,35 @@ curl -X GET localhost:9200/_cat/indices?v
 curl -X GET localhost:9200/_cat/nodes?v=true  # return HEAP information
 curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
 curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed' # fixing unassigned shards
-
 GET /_cluster/allocation/explain  and  GET /_cat/indices?v 
+
+# cluster health
+GET _cluster/health
+
+# shards stuff
+POST _cluster/reroute?retry_failed
+GET _cluster/health?filter_path=status,*_shards
+GET _cluster/allocation/explain
 ```
 
 
-* From https://www.bluematador.com/docs/troubleshooting/aws-elasticsearch-status
 
 ### CircuitBreaker due to JVM (heap)pressure:
+
+* High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
+
 ```bash
 curl -X GET "localhost:9200/_nodes/stats/breaker?pretty"
-To calculate the current JVM memory pressure for each node, use the nodes stats API.
+
+# each instance displays a JVM memory pressure indicator
 GET _nodes/stats?filter_path=nodes.*.jvm.mem.pools.old
-Copy as curlView in Console
-Use the response to calculate memory pressure as follows:
-JVM Memory Pressure = used_in_bytes / max_in_bytes
+
+# Use the response to calculate memory pressure as follows:
+# JVM Memory Pressure = used_in_bytes / max_in_bytes
+
+
 ```
 
-* From https://www.elastic.co/guide/en/elasticsearch/reference/7.15/fix-common-cluster-issues.html#high-jvm-memory-pressure
 
 ```bash
 # return just indices

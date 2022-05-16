@@ -1,4 +1,3 @@
-
 ## Cheatsheet collection
 
 * [Home](index.md)
@@ -14,7 +13,9 @@
 * [Istio](istio.md)
 * <ins>[OIDC](openID.md)</ins>
 
-### Basic 101:
+---
+
+### 101:
 
 * OpenID = authetication (standardized tokens)
 * OAuth2 = authorization (distribution of tokens)
