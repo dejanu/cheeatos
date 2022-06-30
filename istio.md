@@ -31,8 +31,8 @@
 * To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
 * Istio uses gateway instead of ingress:
 ```bash
+kubectl get ingresses.networking.k8s.io -A  # no resources found
 kubectl get gateways.networking.istio.io -A
-kubect
 ```
 * Istio envoy proxy that acts as a LB
 * Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
