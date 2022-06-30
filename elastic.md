@@ -29,6 +29,10 @@
   * Persistent – Changes that will be saved after a full cluster restart
   * Get settings: `GET /_cluster/settings` 
   ```bash
+
+  # include default settings
+  GET /_cluster/settings?include_defaults=true
+  
   {
   "persistent" : { },
   "transient" : { }
