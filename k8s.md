@@ -176,11 +176,12 @@ kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 **Probes**:
 - Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
 - Liveness probe fails => restart pod
+
 - Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
 - Readiness probe fails => don't send any traffic to the pod
 
 **Requests_and_limits**:
-- CPU <k8s_CPU's> and memory <bytes> are each a resource type and form compute resources, which can be requested, allocated, and consumed by containers.
+- CPU <k8s_CPU's> and memory <bytes> are each a resource type and form compute [resources](https://learnk8s.io/setting-cpu-memory-limits-requests), which can be requested, allocated, and consumed by containers.
 - CPU resource units **limits** and **requests** are measured in CPU units.
 - **requests** is what the container is guaranteed to get.
 - **limits** is what the container is allowed to use, and is restricted to go above limits.
