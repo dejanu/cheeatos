@@ -61,24 +61,19 @@ kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
 kubectl get nodes --show-labels
 kubectl get nodes -o wide
 
+# add/delete label for node
+kubectl label node <nodename> <labelname>=<value>
+kubectl label node <nodename> <labelname>-
+
 # describe node and check conditions field describes the status of all Running nodes: True if pressure
-kubectl describe node <insert-node-name-here>
+kubectl describe node <node_name>
 
- Conditions:
-  Type                 Status  Message
-  ----                 ------  -----------------
-  NetworkUnavailable   False   Weave pod has set this
-  MemoryPressure       False   kubelet has sufficient memory available
-  DiskPressure         False   kubelet has no disk pressure
-  PIDPressure          False   kubelet has sufficient PID available
-  Ready                True    kubelet is posting ready status. AppArmor enabled
-  
-# kubectl drain to safely evict all of your pods from a node before you perform maintenance on the node (e.g. kernel upgrade, hardware maintenance)
-kubectl drain <node>
-kubectl drain node_name --ignore-daemonsets
+# DRAIN to safely EVICT all of your pods from a node before you perform maintenance on the node (e.g. kernel upgrade, hardware maintenance)
+kubectl drain <nodename>
+kubectl drain <nodename> --ignore-daemonsets
 
-# Cordon the node; this means marking the node itself as unplannable so that new pods are not arranged on the node. 
-# Kubectl contains a command named cordon that permits us to create a node unschedulable
+# CORDON  mark node unschedulable for all pods and adds a taint node.kubernetes.io/unschedulable:NoSchedule to the node
+kubectl cordon <node_name>
 kubectl uncordon <node_name>
 ```
  ***
@@ -209,6 +204,36 @@ kubectl get po -o=custom-columns=NAME:.metadata.name -A
 # go templates are a powerful method to customize output however you want
 kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
 ```
+**Scheduling PODS on NODES**:
+```bash
+
+# this is the job of Kubernetes scheduler (who's responsible for the best Node for that Pod to run on), but is some situations it might be needed for us to contraint this process
+
+# I want a certain POD to start on a specific NODE
+kubectl label node <nodename> <labelname>=<value> # label node e.g label=chosen
+kubectl edit deployment <deploymentname> # nodeSelector
+spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nodetype
+                operator: In
+                values:
+                - chosen
+```
+
+**Taint and Node affinit**:
+* PODS get assigned to NODE using affinity feture and nodeSelector.
+* Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
+```bash
+kubectl taint nodes -l LABEL=LABEL_VALUE KEY=VALUE:EFFECT
+
+kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
+kubectl taint nodes host1 special=true:NoSchedule
+```
+
 ---
 
 ```bash

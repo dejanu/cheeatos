@@ -51,3 +51,5 @@ kubectl exec -it po/<pod_name> -- bash
 # test the secret 
 mysql -u root -p
 ```
+
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s_objects_me.png?raw=true)
