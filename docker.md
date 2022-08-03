@@ -76,8 +76,16 @@ docker ps --format "table {{.Names}} {{.Status}}"
 ### Docker images/registry 
 ```bash
 
-# transfer image to another server
-docker save dejanualex/exporter | bzip2 | ssh hostname docker load 
+# save image as tarball
+docker save -o tarfile.tar <IMAGE>
+docker save <IMAGE> | gzip > <IMAGE>.tar.gz
+
+# load image
+docker load < <IMAGE>.tar.gz
+
+# save and transfer image to another server
+docker save <IMAGE> | bzip2 | ssh hostname.fqdn docker load 
+docker save dejanualex/exporter | bzip2 | ssh hostname.fqdn docker load 
 
 # list images
 curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | python -m json.tool
