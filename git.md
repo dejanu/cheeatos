@@ -102,7 +102,7 @@ git clean -i
 
 # UNDO changes in working directory a.k.a I've deleted a file and did not commit
 git checkout -f <FILE>
-git checkout HEAD <filename>
+git reset HEAD <filename>
 
 # UNDO (unstage) changes in staging area 
 git restore --staged <file>
