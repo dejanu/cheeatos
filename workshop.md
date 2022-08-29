@@ -38,7 +38,9 @@
 * Devops Jargon
 * Architectural best practices
 
-![twitter](https://github.com/dejanu/cheetcity/blob/gh-pages/src/twitter.png?raw=true)
+![docker](https://github.com/dejanu/cheetcity/blob/gh-pages/src/docker.png?raw=true)
+![k8s](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s.png?raw=true)
+![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.png?raw=true)
 
 
 ```bash
