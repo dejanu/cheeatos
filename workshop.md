@@ -1,9 +1,4 @@
-
-
-# DevOps and SRE workshop
-
-
-## Curriculum
+## DevOps and SRE workshop
 
 ### Infrastructure:
 * Operating systems: Linux,Unix,Windows 
@@ -43,7 +38,7 @@
 * Devops Jargon
 * Architectural best practices
 
-![twitter](twitter.svg)
+![twitter](https://github.com/dejanu/cheetcity/blob/gh-pages/src/twitter.png?raw=true)
 
 
 ```bash
