@@ -40,6 +40,8 @@
     - Devops Jargon
     - Architectural best practices
 
+![twitter](twitter.svg)
+
 
 ```bash
                     ___ _____
