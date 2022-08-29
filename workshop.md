@@ -1,9 +1,4 @@
-
-
-# DevOps and SRE workshop
-
-
-## Curriculum
+## DevOps and SRE workshop
 
 ### Infrastructure:
 * Operating systems: Linux,Unix,Windows 
