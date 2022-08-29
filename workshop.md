@@ -1,5 +1,7 @@
 ## DevOps and SRE workshop
 
+![docker](https://github.com/dejanu/cheetcity/blob/gh-pages/src/docker.svg?raw=true) ![k8s](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s.svg?raw=true) ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true) ![vm](https://github.com/dejanu/cheetcity/blob/gh-pages/src/vm.svg?raw=true)
+
 ### Infrastructure:
 * Operating systems: Linux,Unix,Windows 
 * Cloud vs. on-prem (VM/bare-metal)
@@ -38,9 +40,6 @@
 * Devops Jargon
 * Architectural best practices
 
-![docker](https://github.com/dejanu/cheetcity/blob/gh-pages/src/docker.svg?raw=true) ![k8s](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s.svg?raw=true) ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true)
-
-
 ```bash
                     ___ _____
                    /\ (_)    \
@@ -50,5 +49,5 @@
                 \_     /    _  _/
                   ) /\/  _ (o)(
                   \ \_) (o)   /
-                   \/________/         @dejanualex
+                   \/________/         @systematic
 ```
