@@ -1,44 +1,49 @@
+
+
 # DevOps and SRE workshop
+
 
 ## Curriculum
 
-* Infrastructure:
+* **Infrastructure**:
     - Operating systems: Linux,Unix,Windows 
     - Cloud vs. on-prem (VM/bare-metal)
 
 ---
 
-* Containers:
+* **Containers**:
     - Container tech: Docker, Podman
 
 ---
 
-* Orchestration:
+* **Orchestration**:
     - Docker-compose, K8s
 
 ---
 
-* CI/CD:
+* **CI/CD**:
     - Build servers: Jenkins, TeamCity, Bamboo, etc  
     - GitOps: Flux, Argo  
     - IaC: Terraform, Ansible
 
 ---
 
-* Monitoring:
+* **Monitoring**:
     - Infra vs. app
     - Tooling Landscape
 
 ---
 
-* Workshop:
+* **Workshop**:
     - Build -> Deploy -> Monitor
 
 ---
 
-* Bonus:
+* **Bonus**:
     - Devops Jargon
     - Architectural best practices
+
+![twitter](twitter.svg)
 
 
 ```bash
