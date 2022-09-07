@@ -15,6 +15,10 @@
 
 ---
 
+* Check Azure status: https://status.azure.com/en-us/status
+
+* Commands:
+
 ```bash
 # get account details e.g. subscribtion,tenant id 
 az account show
@@ -73,6 +77,9 @@ az aks get-versions --location westeurope
 * Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
 * Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
 * Service principal - identity created for use with applications, hosted services, and automated tools to access Azure resources instead of havving apps signs is as a fully privileged user.
+
+* Billing account - Subscription - Resource Group (A billing account can contain multiple subscriptions within it to help isolate and organize how payments are organized. Subscriptions contain multiple resource groups, which are collections of related resources, such as compute, storage, and network resources within the same application)
+
 
 Azure subscription and resource groups:
 
