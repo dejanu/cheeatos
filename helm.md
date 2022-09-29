@@ -25,7 +25,8 @@
 
 ```bash
 ## REPOSITORY = chart repository is a location where packaged charts can be stored and share
-## CHART = bundle/collection of one or more Kubernetes manifests
+## CHART = bundle/collection of one or more Kubernetes manifests, a chart is a Helm pacakge.
+## RELEASE = instance of a chart running in a k8s cluster.
 
 # add chart repo <REPO_NAME> has been added to your repositories
 helm repo add <REPO_NAME>  https://artifactory/<REPO_NAME>  --username USER --password PASSWORD
@@ -33,9 +34,9 @@ helm repo add <REPO_NAME>  https://artifactory/<REPO_NAME>  --username USER --pa
 # pick the latest chart version
 helm upgrade -i <release_name> <REPO_NAME>  /<CHART> --version 2.12
 
-# add/list/update repositories:
+# add/list/update repositories: 
 helm repo add [NAME] [URL]
-helm repo list
+helm repo list # Error: no repositories to show
 helm repo update
 helm search repo <CHART> --versions
 

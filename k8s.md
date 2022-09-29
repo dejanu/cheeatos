@@ -223,6 +223,15 @@ spec:
                 values:
                 - chosen
 ```
+**PODS and status**
+
+```bash
+#check pods status
+kubectl get po -A -o jsonpath='{.items[*].status}'
+
+#A Pod's status field is a PodStatus object, which has a phase field.
+kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
+```
 
 **Taint and Node affinit**:
 * PODS get assigned to NODE using affinity feture and nodeSelector.

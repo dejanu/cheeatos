@@ -17,18 +17,13 @@
 
 ### General features
 
-* Observability(telemetry): metrics and access logs
-* Services give SPAN (piece of info of each server/servce provide) to trace a request - TELEMETRY
-* traffic management -> mesh network for services -> routing roules, circuit breakers also great for deployments
-* security: mutuals TLS, req auth. E.g Mutal TLS = Secure communication between services inside the mesh between PODs with the Istio sidecar injected and also from mesh-external services accessing the mesh through an Ingress Gateway.
-
 * Getting external traffic into your cluster can be achieved using the Service k8s object or Ingress
-* Ingress is probably the most powerful way to expose your services, but can also be the most complicated. 
-
-* There are many types of Ingress controllers, from the Google Cloud Load Balancer, Nginx, Contour, ISTIO, and more. 
-* There are also plugins for Ingress controllers, like the cert-manager, that can automatically provision SSL certificates for your services.
+* Ingress is probably the most powerful way to expose your services, but can also be the most complicated:
+  * There are many types of Ingress controllers, from the Google Cloud Load Balancer, Nginx, Contour, ISTIO, and more. 
+  * There are also plugins for Ingress controllers, like the cert-manager, that can automatically provision SSL certificates for your services.
 
 * To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
+
 * Istio uses gateway instead of ingress:
 ```bash
 kubectl get ingresses.networking.k8s.io -A  # no resources found
@@ -41,9 +36,11 @@ kubectl get gateways.networking.istio.io -A
 * Side note: istio gateway and virtual service are just intrumentation to the ingress pod
 
 * Istio injects a ENVOY proxy side-car container to the pods to intercept traffic from pods, this behavior is enabled using label `istio-injection=enabled` on the namespace level and `sidecar.istio.io/inject=true` on the pod level.
+
 * ENVOY proxy is deployed as a sidecar and mediates all inbound/outbound traffic for services in the mesh and enabls load balancing, circuit brakers, fault injection
 
-* Mesh traffic out of the box is mutals TLS (both client and server side)
+* Mesh traffic out of the box is mutals TLS (both client and server side). Mutal TLS = Secure communication between services inside the mesh between PODs with the Istio sidecar injected and also from mesh-external services accessing the mesh through an Ingress Gateway.
+
 * `istio-init` This init container is used to setup the iptables rules so that inbound/outbound traffic will go through the sidecar proxy
 
 ### Sidecard
@@ -68,13 +65,19 @@ kubectl get gateways.networking.istio.io -A
 
 * Istio routing rules provide fine-grained control over how to route traffic based on host, port, headers, uri, method, source labels and control the distribution of traffic.
 
-```bash
-# kind: Rule
-# virtualservice.networking.istio.io/name-route created
-# destinationrule.networking.istio.io/name-destination-rule created
+* Istio resources:
+    * VirtualService - how to route the traffic where to (which service) /foo or /bar 
+    * DestinationRule - policies that apply to traffic after it has been routed through VeirutaService. What version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service.
+    * Gateway - describes the a Load Balancer (ports + Server Name Indicator)
 
-- VirtualService - how to route the traffic where to( which service) /foo or /bar
-- DestinationRule - what version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service
+```bash
+# get all Istio resource from default namespace
+kubectl get dr,gw,vs -n default
+
+# kind: Rule
+destinationrule.networking.istio.io/frontend created
+gateway.networking.istio.io/frontend-gateway created
+virtualservice.networking.istio.io/frontend-vs created
 ```
 
 * Istio has its own Ingress Gateway (Gateway controller which runs a standalone envoy proxy)
