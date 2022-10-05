@@ -95,6 +95,16 @@ PUT _cluster/settings
 }
 ```
 
+  * Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
+  ```bash
+GET _cluster/health
+GET _cluster/health?filter_path=status,*_shards
+GET _cluster/allocation/explain?pretty
+
+# retry to decrease unassigned_shards
+POST _cluster/reroute?retry_failed
+```
+
 ---
 ```bash
 # return just indices
