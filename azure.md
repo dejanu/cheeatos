@@ -15,10 +15,10 @@
 
 ---
 
-* Check Azure status: https://status.azure.com/en-us/status
-* New Azure status: https://azure.status.microsoft/en-us/status
-* Azure VM Sizing and pricing: https://azureprice.net/
-* Product availability by region: https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/
+✔️ [Check Azure status](https://status.azure.com/en-us/status)
+✔️ [New Azure status](https://azure.status.microsoft/en-us/status)
+✔️ [Azure VM Sizing and pricing](https://azureprice.net/)
+✔️ [Product availability by region](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/)
 
 * Commands:
 
