@@ -23,6 +23,9 @@
   * There are also plugins for Ingress controllers, like the cert-manager, that can automatically provision SSL certificates for your services.
 
 * To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
+* Service mesh is an abstraction which consists of a network of **envoys** and the **istiod** - one envoy in the ingress gateway and one envoy in each pod (the istio proxy)
+* If you expose another service as type LoadBalancer and obtains a separate ip, then requesting that endpoint would still be regarded as ingress traffic but not manager by the Istio service mesh.
+* The ingress gateway is just the first workload part of the service mesh to intercept and process the request
 
 * Istio uses gateway instead of ingress:
 ```bash
@@ -89,10 +92,9 @@ virtualservice.networking.istio.io/frontend-vs created
 ### Service level metrics
 
 * Istio's envoy proxies generate the distributed trace SPAN for the services.
-
 * Istion generates detail metrics telemetry for all traffic within the mesh (proxy-level, service-level)
 * You should enable prometheus integration
-* the envoy proxy sidecar automatically generates trace spans on behalf of the application it proxies - Distributed trace spans.
+* Ehe envoy proxy sidecar automatically generates trace spans on behalf of the application it proxies - Distributed trace spans.
 
 ### Best practices
 
