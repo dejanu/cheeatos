@@ -17,7 +17,14 @@
 
 ### ElasticSearch
 
-* Index = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards.
+* Index = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica 
+shards.
+* Alias = a secndary name for a group of data streams or idices
+```bash
+#  Most Elasticsearch APIs accept an alias in place of a data stream or index name.
+GET _cat/indices
+GET _aliases/?pretty=true
+```
 
 * Shards = physical data files which are split into chunks and are distributed across the cluster.
   * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
@@ -96,7 +103,8 @@ PUT _cluster/settings
 ```
 
   * Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
-  ```bash
+
+```bash
 GET _cluster/health
 GET _cluster/health?filter_path=status,*_shards
 GET _cluster/allocation/explain?pretty
