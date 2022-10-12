@@ -17,25 +17,45 @@
 
 ### ElasticSearch
 
-* Index = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica 
-shards.
-* Alias = a secndary name for a group of data streams or idices
+* INDEX = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica 
+shards. Indices are identified by lowercase names that refer to actions that are performed actions (such as searching and deleting) on the documents that are inside each index.
+* ALIAS = a secondary name for a group of data streams or idices
 ```bash
-#  Most Elasticsearch APIs accept an alias in place of a data stream or index name.
+# Most Elasticsearch APIs accept an alias in place of a data stream or index name.
+
+# get indices and their status
 GET _cat/indices
+
+# get indices 
 GET _aliases/?pretty=true
+
+# Get a specific INDEX and return all of the documents in an index using a "match_all" qu
+GET {YOUR_INDEX}/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+curl -XGET "{OPENSEARCH_URL}:9200/{YOUR_INDEX}/_search"
 ```
 
-* Shards = physical data files which are split into chunks and are distributed across the cluster.
+* SHARDS = physical data files which are split into chunks and are distributed across the cluster. Shards are a single Lucene index.
   * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
   * replica shards = one or more copies of your index's shards
   * primary vs replica = replica is promoted to primary(primary cannot be on the same node as the replica)
+
+* TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model.Use tags to categorize your saved objects, then filter for related objects based on shared tags
+```bash
+# get all docs with TAG http.method
+GET /_all/_search?q=tag:http.method
+```
 
 * Cluster settings:
   * Transient – Changes that will not persist after a full cluster restart
   * Persistent – Changes that will be saved after a full cluster restart
   * Get settings: `GET /_cluster/settings` 
-  ```bash
+```bash
 
   # include default settings
   GET /_cluster/settings?include_defaults=true
@@ -44,7 +64,7 @@ GET _aliases/?pretty=true
   "persistent" : { },
   "transient" : { }
   }
-    ```
+```
 
 * Elasticsearch contains multiple circuit breakers used to prevent operations from causing on OutOfMemoryError.
 
@@ -114,6 +134,7 @@ POST _cluster/reroute?retry_failed
 ```
 
 ---
+
 ```bash
 # return just indices
 curl -X GET "localhost:9200/_nodes/stats/indices?pretty"
@@ -143,6 +164,12 @@ curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.inges
 ```
 ---
 
+* Links:
+
+- https://kb.objectrocket.com/elasticsearch/how-to-return-all-documents-from-an-index-in-elasticsearch
+- https://logz.io/blog/10-elasticsearch-concepts/#:~:text=Documents%20are%20JSON%20objects%20that,to%20a%20row%20in%20table.
+- https://opensearch.org/docs/1.2/clients/cli/
+ 
 ```bash
                     ___ _____
                    /\ (_)    \
