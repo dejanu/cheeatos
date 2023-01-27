@@ -20,7 +20,8 @@
 * INDEX = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica 
 shards. Indices are identified by lowercase names that refer to actions that are performed actions (such as searching and deleting) on the documents that are inside each index.
 * ALIAS = a secondary name for a group of data streams or idices
-```bash
+
+  ```bash
 # Most Elasticsearch APIs accept an alias in place of a data stream or index name.
 
 # get indices and their status
@@ -38,7 +39,7 @@ GET {YOUR_INDEX}/_search
 }
 
 curl -XGET "{OPENSEARCH_URL}:9200/{YOUR_INDEX}/_search"
-```
+  ```
 
 * SHARDS = physical data files which are split into chunks and are distributed across the cluster. Shards are a single Lucene index.
   * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
@@ -46,16 +47,16 @@ curl -XGET "{OPENSEARCH_URL}:9200/{YOUR_INDEX}/_search"
   * primary vs replica = replica is promoted to primary(primary cannot be on the same node as the replica)
 
 * TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model.Use tags to categorize your saved objects, then filter for related objects based on shared tags
-```bash
+  ```bash
 # get all docs with TAG http.method
 GET /_all/_search?q=tag:http.method
-```
+  ```
 
 * Cluster settings:
   * Transient – Changes that will not persist after a full cluster restart
   * Persistent – Changes that will be saved after a full cluster restart
   * Get settings: `GET /_cluster/settings` 
-```bash
+  ```bash
 
   # include default settings
   GET /_cluster/settings?include_defaults=true
@@ -64,7 +65,7 @@ GET /_all/_search?q=tag:http.method
   "persistent" : { },
   "transient" : { }
   }
-```
+  ```
 
 * Elasticsearch contains multiple circuit breakers used to prevent operations from causing on OutOfMemoryError.
 
@@ -73,7 +74,7 @@ GET /_all/_search?q=tag:http.method
   - Elasticsearch will throw a  “CircuitBreakerException” and reject the request rather than risk crashing the entire node
 
 ### Check the health of ES:
-```bash
+  ```bash
 curl localhost:9201/_cluster/health?pretty
 curl -X GET http://localhost:9201/_cat/nodes?v
 curl -X GET http://localhost:9201/_cat/master?v
@@ -83,8 +84,8 @@ curl -X GET localhost:9200/_cat/indices?v
 # return HEAP information
 curl -X GET localhost:9200/_cat/nodes?v=true
 curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
-```
-```bash
+  ```
+  ```bash
 # cluster health
 GET _cluster/health
 
@@ -101,7 +102,7 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 POST _cluster/reroute?retry_failed
 GET _cluster/health?filter_path=status,*_shards
 GET _cluster/allocation/explain
-```
+  ```
 
 ### CircuitBreaker due to JVM (heap)pressure:
   * High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
