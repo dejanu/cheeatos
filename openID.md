@@ -12,6 +12,7 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 * <ins>[OIDC](openID.md)</ins>
+* [Workshop](workshop.md)
 
 ---
 
