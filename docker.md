@@ -34,7 +34,7 @@ docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 docker image prune -a
 
 # remove stopped containers and delete dangling images
-docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
+docker rm $(docker ps -aq -f status=exited) && docker image prune -a
 ```
 
 ### Go templates
@@ -43,16 +43,22 @@ docker rm $(docker ps -aq -f status=exited)&& docker image prune -a
 
 
 ```bash
-### check mounts
+## docker list containers using Pretty-print containers using a Go template instead of using | and awk
+docker ps --format "{{.Names}} with {{.Status}}"
+docker ps --format '{{ .ID }}'
 
-docker ps --format '{{ .ID }}' | xargs -I {} docker inspect -f \'{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' {}''
+# as a table
+docker ps --format "table {{.Names}} {{.Status}}"
+
+### check mounts volumes and binds
+docker inspect -f '{{ .Name }}{{ printf "\n" }}{{ range .Mounts }}{{ printf "\n\t" }}{{ .Type }} {{ if eq .Type "bind" }}{{ .Source }}{{ end }}{{ .Name }} => {{ .Destination }}{{ end }}{{ printf "\n" }}' <INSERT_IMAGE_ID>
 
 # list running containers names
 docker ps --filter status=running --format '{{.Names}} {{.Status}}'
 
 # inspect ENV variables
 docker inspect --format '{{ .Config.Env}}' <IMAGE>/<CONTAINER>
-docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}'
+docker inspect --format='{{range .Config.Env}}{{println .}}{{end}}' <CONTAINER>
 
 # inspect volumes and their type
 docker inspect -f '{{ .Mounts }}' <CONTAINER>
@@ -91,8 +97,40 @@ docker save dejanualex/exporter | bzip2 | ssh hostname.fqdn docker load
 curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | python -m json.tool
 curl -k -X GET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog | jq .
 ```
+### Manage Docker
+```bash
+
+# docker system info
+docker system info --format '{{ .ServerVersion }} {{ .Driver }}'
 
 
+# Usage:  docker system COMMAND
+
+Commands:
+  df          Show docker disk usage
+  events      Get real time events from the server
+  info        Display system-wide information
+  prune       Remove unused data
+```
+
+### Docker containers and networking
+```bash
+# get the container PID
+docker inspect --format '{{ .State.Pid }}' <CONTAINER_ID>
+
+# shim abstract low-level details of the container runtime
+# containerd-shim process in between containerd and bash
+for j in $(for i in $(ps -C containerd-shim | awk 'FNR>1 {print $1}');do pgrep -P $i;done);do ps -p $j -o comm=;done
+
+## list network interfaces
+# default network driver is bridge
+# overlay is the default network driver for swarm, it connects multiple Docker daemons together and enable swarm services to communicate with each other
+docker network ls
+
+# list containers in a network
+docker network inspect bridge --format "{{json .Containers }}"
+
+```
 ### Docker logging
 ```bash
 # /etc/docker/daemon.json
