@@ -1,44 +1,70 @@
-## DevOps and SRE workshop
+## Cheatsheet collection
 
-![docker](https://github.com/dejanu/cheetcity/blob/gh-pages/src/docker.svg?raw=true) ![k8s](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s.svg?raw=true) ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true)
+* [Home](index.md)
 
-### Infrastructure:
-* Operating systems: Linux,Unix,Windows 
-* Cloud vs. on-prem (VM/bare-metal)
+## DevOps and SRE workshop ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true)
 
----
+### Docker
 
-### Containers:
-* Container tech: Docker, Podman
+* list containers using Pretty-print containers with a Go template instead of using `|` and `awk`
+```bash
+ docker ps --format "{{.Names}} with {{.Status}}"
+```
+* how can I remove unused image/dangling images and stopped containers? (filter comes in handy)
+```bash
+# remove stopped containers and emove unused images not just dangling ones
+docker rm $(docker ps -aq -f status=exited) && docker image prune -a
+```
+* how can you list running containers using filters?
+```bash
+docker ps --filter status=running --format '{{.Names}} {{.Status}}'
+```
+* how can you quickly asses the status of docker daemon, docker disk usage, and docker containers?
+```bash
+docker system info
+docker system df
+```
+* what is the default network driver for docker? how can you list docker networks?
+```bash### Docker
 
----
+* list containers using Pretty-print containers with a Go template instead of using `|` and `awk`
+```bash
+ docker ps --format "{{.Names}} with {{.Status}}"
+```
+* how can I remove unused image/dangling images and stopped containers? (filter comes in handy)
+```bash
+# remove stopped containers and emove unused images not just dangling ones
+docker rm $(docker ps -aq -f status=exited) && docker image prune -a
+```
+* how can you list running containers using filters?
+```bash
+docker ps --filter status=running --format '{{.Names}} {{.Status}}'
+```
+* how can you quickly asses the status of docker daemon, docker disk usage, and docker containers?
+```bash
+docker system info
+docker system df
+```
+* what is the default network driver for docker? how can you list docker networks?
+```bash
+# default network driver is bridge
+# overlay is the default network driver for swarm, it connects multiple Docker daemons together and enable swarm services to communicate with each other
+docker network ls
+```
+* how can I check the logs of a container (in the last 60 minutes)?
+```bash
+docker logs --since 60m <CONTAINER>
+docker logs --since=1h <CONTAINER_ID>
 
-### Orchestration:
-* Docker-compose, K8s
-
----
-
-### CI/CD:
-* Build servers: Jenkins, TeamCity, Bamboo, etc  
-* GitOps: Flux, Argo  
-* IaC: Terraform, Ansible
-
----
-
-### Monitoring:
-* Infra vs. app
-* Tooling Landscape
-
----
-
-### Workshop:
-* Build -> Deploy -> Monitor
-
----
-
-### Bonus:
-* Devops Jargon
-* Architectural best practices
+# default network driver is bridge
+# overlay is the default network driver for swarm, it connects multiple Docker daemons together and enable swarm services to communicate with each other
+docker network ls
+```
+* how can I check the logs of a container (in the last 60 minutes)?
+```bash
+docker logs --since 60m <CONTAINER>
+docker logs --since=1h <CONTAINER_ID>
+```
 
 ```bash
                     ___ _____
