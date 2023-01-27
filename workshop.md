@@ -1,8 +1,6 @@
-## Cheatsheet collection
+## DevOps and SRE workshop ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true)
 
 * [Home](index.md)
-
-## DevOps and SRE workshop ![gke](https://github.com/dejanu/cheetcity/blob/gh-pages/src/gke.svg?raw=true)
 
 ### Docker
 
