@@ -5,9 +5,9 @@
 ### Docker
 
 * list containers using Pretty-print containers with a Go template instead of using `|` and `awk`
-```bash
+
  docker ps --format "{{.Names}} with {{.Status}}"
-```
+
 * how can I remove unused image/dangling images and stopped containers? (filter comes in handy)
 ```bash
 # remove stopped containers and emove unused images not just dangling ones
@@ -32,6 +32,12 @@ docker network ls
 ```bash
 docker logs --since 60m <CONTAINER>
 docker logs --since=1h <CONTAINER_ID>
+```
+### Kubernetes
+
+* how can I get the logs of a specific container in a pod?
+```bash
+kubectl logs -f <POD_NAME> -c <CONTAINER_NAME>
 ```
 
 ```bash
