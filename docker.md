@@ -154,6 +154,26 @@ docker logs <CONTAINER_ID> > container.log 2>&1
 # get container stats
 docker stats <CONTAINER_ID>
 ```
+### Docker registry
+```bash
+
+## search images
+curl -k -XGET https://<USER>:<PASSWORD>@<REGISTRY>/v2/_catalog
+docker search <REGISTRY>/<IMAGE>
+
+# endpoint for docker registry
+/v2/_catalog 
+/v2/<IMAGE>/tags/list
+
+# search dockerhub for images
+docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" httpd
+docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" nginx
+
+# manifest schem https://docs.docker.com/registry/spec/manifest-v2-2/
+# manifest command interacts solely with a Docker registry.
+# Docker manifests describe an image’s layers and the architectures it supports
+ docker manifest inspect maven
+```
 ---
 
 ```bash
