@@ -20,6 +20,7 @@
 ✔️ [New Azure status](https://azure.status.microsoft/en-us/status)
 ✔️ [Azure VM Sizing and pricing](https://azureprice.net/)
 ✔️ [Product availability by region](https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/)
+✔️ [Azure Periodic Table](https://azureperiodic.data3.com/)
 
 * Commands:
 

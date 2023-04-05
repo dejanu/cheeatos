@@ -84,9 +84,16 @@ kubectl uncordon <node_name>
 # autocompletion 
 source <(kubectl completion bash)
 
+
 # Displays the current-context/displays merged kubeconfig settings or a specified kubeconfig file.
 kubectl config current-context
 kubectl config view
+kubectl completion bash > ~/.kube/kubectl_autocompletion
+
+# in ~/.bash_profile
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
+fi
 
 # Sets/Unset an individual value in a kubeconfig file
 kubectl config get-contexts
