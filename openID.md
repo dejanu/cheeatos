@@ -13,6 +13,7 @@
 * [Istio](istio.md)
 * <ins>[OIDC](openID.md)</ins>
 * [Workshop](workshop.md)
+* [PostgreSQL](postgres.md)
 
 ---
 
