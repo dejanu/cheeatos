@@ -241,9 +241,10 @@ kubectl get po -A -o jsonpath='{.items[*].status}'
 kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
 ```
 
-**Taint and Node affinit**:
+**Taint and Node affinity**
 * PODS get assigned to NODE using affinity feture and nodeSelector.
 * Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
+
 ```bash
 kubectl taint nodes -l LABEL=LABEL_VALUE KEY=VALUE:EFFECT
 
