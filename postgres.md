@@ -11,8 +11,9 @@
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
-* </ins>[Postgres](postgres.md)</ins>
+* <ins>[Postgres](postgres.md)</ins>
 
+---
 
 ### General info
 

@@ -12,7 +12,6 @@
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
 * [OIDC](openID.md)
-* [Workshop](workshop.md)
 * [PostgreSQL](postgres.md)
 
 ---
