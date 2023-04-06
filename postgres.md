@@ -20,6 +20,7 @@
 * PostgreSQL - relational database RDBMS
 * Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres` 
 * Usefull cmds:
+
 ```bash
 # check db name - check the current db you are connected to
 current_database();
