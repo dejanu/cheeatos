@@ -16,8 +16,8 @@
 
 ---
 
- <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/u5sgL5pks5JXKHcVZo" width="100%" height="50%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/nickelodeon-cartoons-nicktoons-middlemost-post-u5sgL5pks5JXKHcVZo">via GIPHY</a></p>>
-
+<div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/u5sgL5pks5JXKHcVZo" width="100%" height="50%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/nickelodeon-cartoons-nicktoons-middlemost-post-u5sgL5pks5JXKHcVZo">via GIPHY</a></p>
+ 
 ---
 
 Some other nice stuff [^1] and [^2]:

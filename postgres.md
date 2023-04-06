@@ -61,12 +61,14 @@ SELECT pg_size_pretty( pg_database_size('DB_NAME') );
 ### Connections
 
 * Increase values of the `max_connections` and `shared_buffers` parameter is to directly edit `postgresql.conf` file:
+
 ```bash
 max_connections = 150 # (change requires restart)
 shared_buffers = 256MB # min 128kB # (change requires restart)
 ```
 
 * PostgreSQL allocates some amount of memory on a per connection basis, typically around 5 - 10 MB per connection
+
 ```bash
 # show max connections (some of them are reserved) By default, this value is set to 100.
 # max_connections is the upper limit for the number of database connections to all databases
@@ -103,12 +105,14 @@ max_connections = 150 # (change requires restart)
 shared_buffers = 256MB # min 128kB # (change requires restart)
 ```
 
-* Client authentication is controlled by a configuration file, which traditionally is named `pg_hba.conf` and is stored in the database cluster's data directory. (HBA stands for host-based authentication.)
+* Client authentication is controlled by a configuration file, which traditionally is named `pg_hba.conf` and is stored in the database cluster's data directory. (HBA stands for host-based authentication)
+
 ```bash
 table pg_hba_file_rules ;
 ```
 
 * Views-is a virtual table that is created from a `SELECT` statement. Unlike a regular table, a view does not store data on its own, but it provides a logical representation of data from one or more tables.
+
 ```bash
 # create VIEW
 CREATE VIEW employee_salaries AS
