@@ -83,11 +83,6 @@ kubectl uncordon <node_name>
  ```bash
 # autocompletion 
 source <(kubectl completion bash)
-
-
-# Displays the current-context/displays merged kubeconfig settings or a specified kubeconfig file.
-kubectl config current-context
-kubectl config view
 kubectl completion bash > ~/.kube/kubectl_autocompletion
 
 # in ~/.bash_profile
@@ -95,20 +90,25 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
   . /usr/local/share/bash-completion/bash_completion
 fi
 
-# Sets/Unset an individual value in a kubeconfig file
-kubectl config get-contexts
+# context - combination of a cluster and user credentials
+kubectl config current-context
 kubectl config get-clusters
-kubectl config view -o jsonpath='{.users[*].name}'
-                 
-kubectl config unset users.<user>
-kubectl config unset contexts.<context>
-kubectl config unset clusters.<cluster>
+kubectl config get-contexts
 
-# Sets a cluster entry in kubeconfig
+# switch context
+kubectl config use-context <context_name>
+# sets a cluster entry in kubeconfig
 kubectl config set-cluster
-
-# Sets a context entry in kubeconfig
+# sets a context entry in kubeconfig
 kubectl config set-context
+
+# remove a context
+kubectl --kubeconfig=config-demo config unset contexts.<name>
+# remove a cluster
+kubectl --kubeconfig=config-demo config unset clusters.<name>
+
+kubectl config view
+kubectl config view -o jsonpath='{.users[*].name}'
                  
 # Sets a user entry in kubeconfig
 kubectl config set-credentials
@@ -213,6 +213,7 @@ kubectl get po -o=custom-columns=NAME:.metadata.name -A
 kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
 ```
 **Scheduling PODS on NODES**:
+
 ```bash
 
 # this is the job of Kubernetes scheduler (who's responsible for the best Node for that Pod to run on), but is some situations it might be needed for us to contraint this process
@@ -231,7 +232,7 @@ spec:
                 values:
                 - chosen
 ```
-**PODS and status**
+**PODS and status**:
 
 ```bash
 #check pods status
@@ -241,7 +242,8 @@ kubectl get po -A -o jsonpath='{.items[*].status}'
 kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
 ```
 
-**Taint and Node affinity**
+**Taint and Node affinity**:
+
 * PODS get assigned to NODE using affinity feture and nodeSelector.
 * Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
 
