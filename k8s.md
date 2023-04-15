@@ -15,12 +15,27 @@
 * [PostgreSQL](postgres.md)
 
 ---
+  
+### Control plane checks:
+
+```bash
+# get control plane status
+kubectl get cs
+kubectl get componentstatuses
+
+# get version k8s
+kubectl version --short
+
+# apiserver endpoints
+#echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/healthz?verbose')" # deprecated v1.16
+echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/livez?verbose')"
+echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/readyz?verbose')"
+```
 
 ### Debugging pods:
 
 ```bash
-# flags
-# allowed formats are: custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-file,name,template,templatefile,wide,yaml
+# flags: allowed formats are: custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-file,name,template,templatefile,wide,yaml
 kubectl get pods -A (--all-namespaces )
 kubectl get pods --show-labels
 kubectl get pods -w (--watch)
@@ -28,6 +43,10 @@ kubectl get pods -o json
 
 # list events
 kubectl describe pod/<pod_name> -n <namespace>
+
+# get pod restart counts
+kubectl get po -A --sort-by='.status.containerStatuses[0].restartCount'
+kubectl get pods -A --sort-by=.status.containerStatuses[0].restartCount!=0
 
 # running debug pods, svc in the same namespace are resolvable by DNS 
 kubectl run -ti kali --image=kalilinux/kali-rolling
