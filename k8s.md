@@ -80,7 +80,7 @@ kubectl uncordon <node_name>
  ***
 ### kubectl configs:
 
- ```bash
+```bash
 # autocompletion 
 source <(kubectl completion bash)
 kubectl completion bash > ~/.kube/kubectl_autocompletion
@@ -119,7 +119,8 @@ kubectl config use-context
  
  ***
 
- ### Get k8s objects:
+### Get k8s objects:
+
 ```bash
 # replicasets/nodes/pods/services/deployments/daemonsets/statefulsets/cronjobs
 kubectl cluster-info
@@ -136,6 +137,7 @@ kubectl create ns <namespace>
 ```
 
  ***
+ 
 ### Deployment ops:
 
 ```bash
@@ -173,22 +175,6 @@ kubectl port-forward svc/nginx-service [LOCAL_HOST_PORT:]REMOTE_PORT
 kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 ```
   ***
-
-### 101 stuff
-
-**Probes**:
-- Liveness probe checks the container health and if it fails it restarts the container (kubelet uses liveness probes to know when to restart a container)
-- Liveness probe fails => restart pod
-
-- Readiness Probe check if a POD is ready to serve trafic (kubelet uses readiness probes to know when a container is ready to start accepting traffic. A Pod is considered ready when all of its containers are ready)
-- Readiness probe fails => don't send any traffic to the pod
-
-**Requests_and_limits**:
-- CPU <k8s_CPU's> and memory <bytes> are each a resource type and form compute [resources](https://learnk8s.io/setting-cpu-memory-limits-requests), which can be requested, allocated, and consumed by containers.
-- CPU resource units **limits** and **requests** are measured in CPU units.
-- **requests** is what the container is guaranteed to get.
-- **limits** is what the container is allowed to use, and is restricted to go above limits.
-
 **CRD**:
 - A RESOURCE is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind
 - CUSTOM RESOURCES are extensions of the Kubernetes API.
