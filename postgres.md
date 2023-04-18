@@ -63,8 +63,24 @@ SELECT pg_size_pretty( pg_database_size('DB_NAME') );
 * Increase values of the `max_connections` and `shared_buffers` parameter is to directly edit `postgresql.conf` file:
 
 ```bash
-max_connections = 150 # (change requires restart)
-shared_buffers = 256MB # min 128kB # (change requires restart)
+# check default parameters usually are stored in postgresql.conf
+SELECT current_setting('effective_cache_size');
+SELECT current_setting('shared_buffers');
+SELECT current_setting('max_connections');
+
+# changes of the default settings of these configuration params requires a restart
+
+# concurrent connections and limit the scalability of the system
+max_connections(100) - maximum number of concurrent connections that the database server can accept from clients
+
+# is critical to PostgreSQL's performance, as it directly affects the amount of data that can be held in memory and reduces the need for disk I/O operations
+# As per best practice is shared_buffers = 25% of the memory in the VM/server
+shared_buffers(128MB) - the amount of memory allocated for caching data and indexes in shared memory
+
+
+# helps the query planner to make better decisions about which indexes to use and how to optimize queries
+# As per best practice is effective_cache  = RAM * 0.7
+effective_cache_size(4GB) - amount of memory the database system expects to be available for disk caching by the operating system and other processes.
 ```
 
 * PostgreSQL allocates some amount of memory on a per connection basis, typically around 5 - 10 MB per connection:
@@ -74,7 +90,7 @@ shared_buffers = 256MB # min 128kB # (change requires restart)
 # max_connections is the upper limit for the number of database connections to all databases
 SHOW max_connections;
 
-# check the setting
+# check default settings
 SELECT current_setting('max_connections');
 
 # pg_stat_activity is a table that stores PostgreSQL connection & activity stats. 
@@ -124,4 +140,18 @@ FROM employees;
 
 # list views in all schemas
 \dvS
+```
+
+### Usefull links:
+
+
+* [Tune pg settings](https://pgtune.leopard.in.ua/)
+* For a dedicated database server:
+
+```bash
+#effective_cache_size parameter to a value between 50% and 75% of the total available memory on the system a good setting 
+effective_cache_size = RAM * 0.7
+
+#shared_buffers common recommendation is to set it to 25% to 33% of the total available memory on the system a good setting
+shared_buffers_size = RAM * 0.3
 ```
