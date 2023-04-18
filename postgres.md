@@ -11,7 +11,7 @@
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
-* <ins>[Postgres](postgres.md)</ins>
+* <ins>[PostgreSQL](postgres.md)</ins>
 
 ---
 
@@ -67,6 +67,11 @@ SELECT pg_size_pretty( pg_database_size('DB_NAME') );
 SELECT current_setting('effective_cache_size');
 SELECT current_setting('shared_buffers');
 SELECT current_setting('max_connections');
+show effective_cache_size;
+show shared_buffers;
+show max_connections;
+show work_mem;
+show maintenance_work_mem;
 
 # changes of the default settings of these configuration params requires a restart
 
