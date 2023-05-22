@@ -165,11 +165,11 @@ curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.inges
 ```
 ---
 
-* Links:
+### Links:
 
-- https://kb.objectrocket.com/elasticsearch/how-to-return-all-documents-from-an-index-in-elasticsearch
-- https://logz.io/blog/10-elasticsearch-concepts/#:~:text=Documents%20are%20JSON%20objects%20that,to%20a%20row%20in%20table.
-- https://opensearch.org/docs/1.2/clients/cli/
+* https://kb.objectrocket.com/elasticsearch/how-to-return-all-documents-from-an-index-in-elasticsearch
+* https://logz.io/blog/10-elasticsearch-concepts/#:~:text=Documents%20are%20JSON%20objects%20that,to%20a%20row%20in%20table.
+* https://opensearch.org/docs/1.2/clients/cli/
  
 ```bash
                     ___ _____
