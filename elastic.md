@@ -54,8 +54,9 @@ GET /_all/_search?q=tag:http.method
 * Cluster settings:
   * Transient – Changes that will not persist after a full cluster restart
   * Persistent – Changes that will be saved after a full cluster restart
-  * Get settings: `GET /_cluster/settings` 
-  ```bash
+  * Get settings: `GET /_cluster/settings`
+
+```bash
 
   # include default settings
   GET /_cluster/settings?include_defaults=true
@@ -64,7 +65,7 @@ GET /_all/_search?q=tag:http.method
   "persistent" : { },
   "transient" : { }
   }
-  ```
+```
 
 * Elasticsearch contains multiple circuit breakers used to prevent operations from causing on OutOfMemoryError.
 
@@ -72,7 +73,8 @@ GET /_all/_search?q=tag:http.method
   - high JVM memory pressure cause circuit breaker errors, each circtuit breaker specifies a limit for how much memory it can use.
   - Elasticsearch will throw a  “CircuitBreakerException” and reject the request rather than risk crashing the entire node
 
-### Check the health of ES:
+### Check the health of ES
+
 ```bash
 curl localhost:9201/_cluster/health?pretty
 curl -X GET http://localhost:9201/_cat/nodes?v
