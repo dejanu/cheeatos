@@ -99,6 +99,8 @@ kubectl uncordon <node_name>
  ***
 ### kubectl configs:
 
+* Kubernetes [context like a pro](https://community.ops.io/dejanualex/kubectl-context-like-a-pro-2692)
+
 ```bash
 # autocompletion 
 source <(kubectl completion bash)
@@ -123,6 +125,7 @@ kubectl config set-context
 
 # remove a context
 kubectl --kubeconfig=config-demo config unset contexts.<name>
+kubectl config delete-context <context_name>
 # remove a cluster
 kubectl --kubeconfig=config-demo config unset clusters.<name>
 
