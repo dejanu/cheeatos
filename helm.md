@@ -98,8 +98,11 @@ helm list
 # delete/uninstall chart
 helm delete <release_name>
 
-# get objects from namespace
-kubectl get deployments,pods,services --namespace rabbit
+# get helmrealease for a namespace
+kubectl -n <namespace> get hr
+
+# get helm values for a chart
+helm -n <namespace> get values <chart_name>
 ```
 ---
 
