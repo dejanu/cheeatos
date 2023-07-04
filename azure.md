@@ -77,6 +77,10 @@ az aks show -g <RESOURCE_GROUP_NAME> -n <Kubernetes_service_AKS_CLUSTER_NAME> | 
 # check AKS/K8s node pool
 az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
 az aks nodepool list --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME> --resource-group <RESOURCE_GROUP_NAME>
+az aks nodepool list --resource-group <RESOURCE_GROUP_NAME> --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME>
+
+# add nodepool
+az aks nodepool add -g <RESOURCE_GROUP_NAME> --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME> --name secondpool --node-count 2
 
 # scale AKS/k8s cluster: set 
 az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
