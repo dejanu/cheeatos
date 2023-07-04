@@ -12,7 +12,7 @@ pull_request_rules:
     conditions:
       - base=main
       - label!=work-in-progress
-      - author==dejanualex
+      - author==dejanu
     actions:
       merge:
         method: merge
