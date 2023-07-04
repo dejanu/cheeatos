@@ -26,12 +26,12 @@
 * To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
 * Service mesh is an abstraction which consists of a network of **envoys** and the **istiod** - one envoy in the ingress gateway and one envoy in each pod (the istio proxy)
 * If you expose another service as type LoadBalancer and obtains a separate ip, then requesting that endpoint would still be regarded as ingress traffic but not manager by the Istio service mesh.
-* The ingress gateway is just the first workload part of the service mesh to intercept and process the request
 
+* The ingress gateway is just the first workload part of the service mesh to intercept and process the request.
 * Istio uses gateway instead of ingress:
 ```bash
 kubectl get ingresses.networking.k8s.io -A  # no resources found
-kubectl get gateways.networking.istio.io -A
+kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mesh
 ```
 * Istio envoy proxy that acts as a LB
 * Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
