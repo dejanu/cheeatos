@@ -1,0 +1,18 @@
+pull_request_rules:
+  - name: comment with default
+    conditions:
+      - label=comment
+    actions:
+      comment:
+        message: I 💙 Mergify
+        bot_account: Autobot
+        
+pull_request_rules:
+  - name: say hi to contributors if they are not part of the regularcontributors team
+    conditions:
+      - author!=@regularcontributors
+    actions:
+        comment:
+          message: |
+              Welcome to cheeatos project
+              Someone will take a look at you pull request
