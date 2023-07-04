@@ -47,6 +47,14 @@ kubectl get gateways.networking.istio.io -A
 
 * `istio-init` This init container is used to setup the iptables rules so that inbound/outbound traffic will go through the sidecar proxy
 
+* Spi-up a pod without Istio: `kubectl run mybusyboxcurl --labels="sidecar.istio.io/inject=false" --image yauritux/busybox-curl -it -- sh`
+
+* Disable the sidecar container, updating the label:
+```yml
+ podLabels:
+      sidecar.istio.io/inject: "false"
+```
+
 ### Sidecard
 
 * Set of proxies running along the services
@@ -72,7 +80,7 @@ kubectl get gateways.networking.istio.io -A
 * Istio resources:
     * VirtualService - how to route the traffic where to (which service) /foo or /bar 
     * DestinationRule - policies that apply to traffic after it has been routed through VeirutaService. What version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service.
-    * Gateway - describes the a Load Balancer (ports + Server Name Indicator)
+    * Gateway - describes the Load Balancer (ports + Server Name Indicator)
 
 ```bash
 # get all Istio resource from default namespace
