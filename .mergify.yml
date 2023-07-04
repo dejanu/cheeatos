@@ -6,7 +6,7 @@ pull_request_rules:
         comment:
           message: |
               Hey @{{ author }} to cheeatos project
-              Someone will take a look at you pull request
+              Someone will take a look at your pull request
 
   - name: automatic merge for regularcontributors in main
     conditions:
