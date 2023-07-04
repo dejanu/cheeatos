@@ -1,18 +1,18 @@
 pull_request_rules:
-  - name: comment with default
+  - name: Signal automatic merge of PR
     conditions:
-      - label=comment
-    actions:
-      comment:
-        message: I 💙 Mergify
-        bot_account: Autobot
-        
-pull_request_rules:
-  - name: say hi to contributors if they are not part of the regularcontributors team
-    conditions:
-      - author!=@regularcontributors
+      - base=main
     actions:
         comment:
           message: |
               Welcome to cheeatos project
               Someone will take a look at you pull request
+
+  - name: automatic merge for regularcontributors in main
+    conditions:
+      - base=main
+      - label!=work-in-progress
+      - author==@regularcontributors
+    actions:
+      merge:
+        method: merge
