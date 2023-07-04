@@ -5,8 +5,8 @@ pull_request_rules:
     actions:
         comment:
           message: |
-              Hey @{{ author }} to cheeatos project
-              Someone will take a look at your pull request
+              Hey @{{ author }} it seems you're a maintainer
+              I'll merge automatically your pull request
 
   - name: automatic merge for regularcontributors in main
     conditions:
