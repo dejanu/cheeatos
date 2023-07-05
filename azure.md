@@ -63,18 +63,30 @@ az ad sp credential reset --name <service_principal>
 
 # assign role to SVP
 az role assignment create --assignee "object_id" --role "contributor"
-  
+```
+* AKS:
+
+```bash
+# get supported k8s version by region
+az aks get-versions --location westeurope
+az aks get-versions --location westeurope | jq ".orchestrators[] | .orchestratorVersion"
+
+# check control plane and nodes k8s version
+az aks show -g <RESOURCE_GROUP_NAME> -n <Kubernetes_service_AKS_CLUSTER_NAME> | grep -E "orchestratorVersion|kubernetesVersion"
+
 # check AKS/K8s node pool
 az aks show --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --query agentPoolProfiles
+az aks nodepool list --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME> --resource-group <RESOURCE_GROUP_NAME>
+az aks nodepool list --resource-group <RESOURCE_GROUP_NAME> --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME>
+
+# add nodepool
+az aks nodepool add -g <RESOURCE_GROUP_NAME> --cluster-name <Kubernetes_service_AKS_CLUSTER_NAME> --name secondpool --node-count 2
 
 # scale AKS/k8s cluster: set 
 az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
 
 # get k8s cluster credentials .kube/config
 az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name>
-
-# get supported k8s version by region
-az aks get-versions --location westeurope
 ```
 ---
 

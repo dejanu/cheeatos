@@ -26,12 +26,12 @@
 * To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
 * Service mesh is an abstraction which consists of a network of **envoys** and the **istiod** - one envoy in the ingress gateway and one envoy in each pod (the istio proxy)
 * If you expose another service as type LoadBalancer and obtains a separate ip, then requesting that endpoint would still be regarded as ingress traffic but not manager by the Istio service mesh.
-* The ingress gateway is just the first workload part of the service mesh to intercept and process the request
 
+* The ingress gateway is just the first workload part of the service mesh to intercept and process the request.
 * Istio uses gateway instead of ingress:
 ```bash
 kubectl get ingresses.networking.k8s.io -A  # no resources found
-kubectl get gateways.networking.istio.io -A
+kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mesh
 ```
 * Istio envoy proxy that acts as a LB
 * Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
@@ -46,6 +46,14 @@ kubectl get gateways.networking.istio.io -A
 * Mesh traffic out of the box is mutals TLS (both client and server side). Mutal TLS = Secure communication between services inside the mesh between PODs with the Istio sidecar injected and also from mesh-external services accessing the mesh through an Ingress Gateway.
 
 * `istio-init` This init container is used to setup the iptables rules so that inbound/outbound traffic will go through the sidecar proxy
+
+* Spi-up a pod without Istio: `kubectl run mybusyboxcurl --labels="sidecar.istio.io/inject=false" --image yauritux/busybox-curl -it -- sh`
+
+* Disable the sidecar container, updating the label:
+```yml
+ podLabels:
+      sidecar.istio.io/inject: "false"
+```
 
 ### Sidecard
 
@@ -72,7 +80,7 @@ kubectl get gateways.networking.istio.io -A
 * Istio resources:
     * VirtualService - how to route the traffic where to (which service) /foo or /bar 
     * DestinationRule - policies that apply to traffic after it has been routed through VeirutaService. What version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service.
-    * Gateway - describes the a Load Balancer (ports + Server Name Indicator)
+    * Gateway - describes the Load Balancer (ports + Server Name Indicator)
 
 ```bash
 # get all Istio resource from default namespace
