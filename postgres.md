@@ -11,6 +11,7 @@
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
+* [OIDC](openID.md)
 * <ins>[PostgreSQL](postgres.md)</ins>
 
 ---
