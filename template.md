@@ -11,6 +11,10 @@
 * [ElasticSearch](elastic.md)
 * [Kubernetes](k8s.md)
 * [Istio](istio.md)
+* [OIDC](openID.md)
+* [PostgreSQL](postgres.md)
 * </ins>[TECH_NAME_HERE](tech_page_here.md)</ins>
+---
+
 
 

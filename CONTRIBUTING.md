@@ -1,7 +1,9 @@
 # Contributing
 
-## Pull Requests
-
+## Flow
+```bash
+fork -> clone -> edit -> push -> pull
+```
 ### Creating a Pull Request
 
 This page has been designed so that people can easily expand it.
@@ -20,7 +22,6 @@ to add or update a new cheat page.
     Update `index.md` page section with title and link to the new cheatsheet:
 
 ```markdown
-
 ## Cheatsheet collection
 ...
 * [TECH_NAME_HERE](tech_page_here.md)

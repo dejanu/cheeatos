@@ -64,7 +64,6 @@ ansbile <GROUP> -m shell -a "uptime" -i <HOSTS_INVENTORY>
 
 # transfer file  (sudo yum install -y libselinux-python )
 ansible <GROUP> -m copy -a "src=/path/to/file dest=/path/on/target/" -i <HOSTS_INVENTORY>
-
 ```
  
 
@@ -93,17 +92,14 @@ ansible-inventory -i <HOSTS_INVENTORY> --graph
 
 ```bash
 # ansible-playbook list tags
-
 ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> --list-tags
 ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -t <TAG_NAME>
-```
-```bash
+
 # ansible playbook run with tags
+# also we can use `--skip-tags` flag 
 ansible-playbook -l <HOSTNAME/GROUP> -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -t "<TAG_NAME>"
 ansible-playbook -l <HOSTNAME/GROUP> -i <HOSTS_INVENTORY> --tags "selected-tag" -u root <PLAYBOOK>.yml` 
 ```
-* Also we can use `--skip-tags` flag  
-*
 
 ***
 
@@ -111,7 +107,6 @@ ansible-playbook -l <HOSTNAME/GROUP> -i <HOSTS_INVENTORY> --tags "selected-tag" 
 
 ```bash
 # ansible playbook with --extra-vars
-
 ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -e "instance_name=search_term"
 ```
  
@@ -148,7 +143,7 @@ ansible-playbook -i <HOSTS_INVENTORY> <PLAYBOOK.yml> -e "instance_name=search_te
 
 ## Test/verify/lint playbooks
 
-* Fork the linter: https://github.com/adrienverge/yamllint. 
+* Fork the [linter](https://github.com/adrienverge/yamllint) 
 
 1) Dry Run using check module: `ansible-playbook <PLAYBOOK>.yml --check` or just syntax check it `ansible-module <PLAYBOOK>.yml --syntax-check`
 
@@ -192,7 +187,6 @@ ansible_ssh_pass=vagrant
 ansible_connection=ssh # actually default mode smart is OK
 ansible_user=vagrant
 ansible_pass=vagrant # or ansible_ssh_pass=vagrant
-
 ```
 
 * Print/register var/output
