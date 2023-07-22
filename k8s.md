@@ -177,6 +177,7 @@ kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ```bash
 
 # To scale down a DaemonSet one can use the following workaround: basically by adding a temporary nodeSelector that matches no nodes, making the DaemonSet pods un-schedulable on any nodes:
+
 kubectl -n <namespace> patch daemonset <name-of-daemon-set> -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
 
 # remove the NodeSelector to scale up the daemonset
@@ -227,7 +228,8 @@ kubectl get po -o=custom-columns=NAME:.metadata.name -A
 kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
 ```
 
-### Scheduling PODS on NODES:
+
+## Scheduling PODS on NODES:
 
 ```bash
 
