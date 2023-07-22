@@ -175,6 +175,7 @@ kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ### Scale down daemonset:
 
 ```bash
+
 # To scale down a DaemonSet one can use the following workaround: basically by adding a temporary nodeSelector that matches no nodes, making the DaemonSet pods un-schedulable on any nodes:
 kubectl -n <namespace> patch daemonset <name-of-daemon-set> -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
 
@@ -247,6 +248,7 @@ spec:
                 - chosen
 ```
 
+
 ### PODS and status:
 
 ```bash
@@ -256,6 +258,7 @@ kubectl get po -A -o jsonpath='{.items[*].status}'
 #A Pod's status field is a PodStatus object, which has a phase field.
 kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
 ```
+
 
 ### Taint and Node affinity:
 
