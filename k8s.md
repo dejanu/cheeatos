@@ -73,7 +73,7 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
 ```
- ***
+
 ### Nodes operations:
 
 ```bash
@@ -96,7 +96,7 @@ kubectl drain <nodename> --ignore-daemonsets
 kubectl cordon <node_name>
 kubectl uncordon <node_name>
 ```
- ***
+
 ### kubectl configs:
 
 * Kubernetes [context like a pro](https://community.ops.io/dejanualex/kubectl-context-like-a-pro-2692)
@@ -139,8 +139,6 @@ kubectl config set-credentials
 kubectl config use-context
 ```
  
- ***
-
 ### Get k8s objects:
 
 ```bash
@@ -158,8 +156,6 @@ kubectl config set-context --current --namespace=<namespace>
 kubectl create ns <namespace>
 ```
 
- ***
- 
 ### Deployment ops:
 
 ```bash
@@ -175,7 +171,16 @@ kubectl edit deployments/<deployment_name>
 # scale rs to 1 for a deployment
 kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ```
- ***
+
+### Scale down daemonset:
+
+```bash
+kubectl -n <namespace> patch daemonset <name-of-daemon-set> -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
+
+# remove the NodeSelector to scale up the daemonset
+kubectl -n <namespace> patch daemonset <name-of-daemon-set> --type json -p='[{"op": "remove", "path": "/spec/template/spec/nodeSelector/non-existing"}]
+```
+
 ### Services:
 
 ```bash
@@ -196,20 +201,19 @@ kubectl port-forward pods/<pod_name> <port_no>:<port_no>
 kubectl port-forward svc/nginx-service [LOCAL_HOST_PORT:]REMOTE_PORT
 kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 ```
-  ***
-**CRD**:
-- A RESOURCE is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind
-- CUSTOM RESOURCES are extensions of the Kubernetes API.
-- Extend the k8s API with CRD -> custom resource (CRD or Aggregated API)
+
+### CRD
 
 ```bash
-# kubectl get CRD
+# Resource = endpoint in k8s K8s API
+# Custom Resource = extension of the Kubernetes API that is not necessarily available in a default Kubernetes installation
 kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
 kubectl describe  <customresource_type> <customresource_name> -n <namespace>
 ```
 
-**Customizing outptut**:
+### Customizing outptut:
+
 ```bash
 # just name
 kubectl get po -o name -A
@@ -220,7 +224,8 @@ kubectl get po -o=custom-columns=NAME:.metadata.name -A
 # go templates are a powerful method to customize output however you want
 kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
 ```
-**Scheduling PODS on NODES**:
+
+## Scheduling PODS on NODES:
 
 ```bash
 
@@ -240,7 +245,8 @@ spec:
                 values:
                 - chosen
 ```
-**PODS and status**:
+
+## PODS and status:
 
 ```bash
 #check pods status
@@ -250,12 +256,12 @@ kubectl get po -A -o jsonpath='{.items[*].status}'
 kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
 ```
 
-**Taint and Node affinity**:
-
-* PODS get assigned to NODE using affinity feture and nodeSelector.
-* Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
+## Taint and Node affinity:
 
 ```bash
+
+# PODS get assigned to NODE using affinity feture and nodeSelector.
+# Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
 kubectl taint nodes -l LABEL=LABEL_VALUE KEY=VALUE:EFFECT
 
 kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
