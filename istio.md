@@ -18,13 +18,14 @@
 
 ### General features
 
-* Getting external traffic into your cluster can be achieved using the Service k8s object or Ingress
-* Ingress is probably the most powerful way to expose your services, but can also be the most complicated:
+* Getting external traffic into your cluster can be achieved using the [Service k8s object](https://kubernetes.io/docs/concepts/services-networking/service/) or [Ingress](https://community.ops.io/dejanualex/ingress-in-one-minute-3i00)
+
+* Ingress is probably the most powerful way to expose your services, but can also be the most complicated. To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules:
   * There are many types of Ingress controllers, from the Google Cloud Load Balancer, Nginx, Contour, ISTIO, and more. 
   * There are also plugins for Ingress controllers, like the cert-manager, that can automatically provision SSL certificates for your services.
 
-* To expose traffic we need a Ingress Controller (e.g. ISTIO) + Ingress rules
-* Service mesh is an abstraction which consists of a network of **envoys** and the **istiod** - one envoy in the ingress gateway and one envoy in each pod (the istio proxy)
+
+* Service mesh is an abstraction which consists of a network of **envoys** (data plane) and the **istiod** (control plane) - **one envoy in the ingress gateway and one envoy in each pod (the istio proxy)**
 * If you expose another service as type LoadBalancer and obtains a separate ip, then requesting that endpoint would still be regarded as ingress traffic but not manager by the Istio service mesh.
 
 * The ingress gateway is just the first workload part of the service mesh to intercept and process the request.
@@ -33,11 +34,13 @@
 kubectl get ingresses.networking.k8s.io -A  # no resources found
 kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mesh
 ```
+## Flow
+
 * Istio envoy proxy that acts as a LB
 * Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
 
 * Flow `external request -> svc (loadbalancer type) -> istio ingress pod -> istio gateway -> istio virtualservice -> application pod`
-* Side note: istio gateway and virtual service are just intrumentation to the ingress pod
+* Side note: istio gateway and virtual service are just instrumentation to the ingress pod
 
 * Istio injects a ENVOY proxy side-car container to the pods to intercept traffic from pods, this behavior is enabled using label `istio-injection=enabled` on the namespace level and `sidecar.istio.io/inject=true` on the pod level.
 
@@ -47,7 +50,7 @@ kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mes
 
 * `istio-init` This init container is used to setup the iptables rules so that inbound/outbound traffic will go through the sidecar proxy
 
-* Spi-up a pod without Istio: `kubectl run mybusyboxcurl --labels="sidecar.istio.io/inject=false" --image yauritux/busybox-curl -it -- sh`
+* Spin-up a pod without Istio: `kubectl run mybusyboxcurl --labels="sidecar.istio.io/inject=false" --image yauritux/busybox-curl -it -- sh`
 
 * Disable the sidecar container, updating the label:
 ```yml
@@ -78,13 +81,30 @@ kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mes
 * Istio routing rules provide fine-grained control over how to route traffic based on host, port, headers, uri, method, source labels and control the distribution of traffic.
 
 * Istio resources:
-    * VirtualService - how to route the traffic where to (which service) /foo or /bar 
+    * VirtualService - routing rules for traffic sent to a Kubernetes service, how to route the traffic where to (which service) /foo or /bar
+```bash
+# list virtualservices from all namespaces
+kubectl get virtualservices.networking.istio.io -A
+```
+
     * DestinationRule - policies that apply to traffic after it has been routed through VeirutaService. What version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service.
-    * Gateway - describes the Load Balancer (ports + Server Name Indicator)
+```bash
+# list destinationrules from all namespaces
+kubectl get destinationrules.networking.istio.io -
+```
+
+    * Gateway - resource describes how to route traffic from the outside world to your mesh-enabled services, typically used to expose your services to external traffic, such as incoming HTTP requests from outside the mesh. Describes the Load Balancer (ports + Server Name Indicator)
+```bash
+# list gateways from all namespaces
+kubectl get gateways.networking.istio.io -A
+```
+
+Destination rules help control traffic to specific destinations, for example, by classifying service instances according to versions. Virtual services allow you to configure the routing of requests to services in an Istio service mesh. They consist of one or several routing rules evaluated in sequence. After evaluating the routing rules for the virtual service, you can apply destination rules. 
 
 ```bash
-# get all Istio resource from default namespace
-kubectl get dr,gw,vs -n default
+# get all Istio resources
+kubectl api-resources | grep -i istio
+kubectl get istio-io -A
 
 # kind: Rule
 destinationrule.networking.istio.io/frontend created
@@ -103,14 +123,15 @@ virtualservice.networking.istio.io/frontend-vs created
 * Istio's envoy proxies generate the distributed trace SPAN for the services.
 * Istion generates detail metrics telemetry for all traffic within the mesh (proxy-level, service-level)
 * You should enable prometheus integration
-* Ehe envoy proxy sidecar automatically generates trace spans on behalf of the application it proxies - Distributed trace spans.
+* The envoy proxy sidecar automatically generates trace spans on behalf of the application it proxies - Distributed trace spans.
 
 ### Best practices
 
 * Set defaults routes for every service
 * Split large virtual services and destination rules
-* Apply destionation rules to first
-* https://istio.io/latest/docs/ops/best-practices/security/
+* Apply destionation rules to [first](https://istio.io/latest/docs/ops/best-practices/security/)
+ 
+
 
 ---
 
