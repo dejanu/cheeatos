@@ -20,6 +20,7 @@
 
 ```bash
 # understand container specs
+kubectl explain pod.spec.containers
 kubectl explain pod.spec.containers.resources
 
 # understand node specs
@@ -34,6 +35,9 @@ kubectl get componentstatuses
 
 # get version k8s
 kubectl version --short
+
+# check available API resources
+kubectl api-resources
 
 # API endpoints for health checks without formatting
 kubectl get --raw '/livez?verbose'
