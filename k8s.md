@@ -15,7 +15,16 @@
 * [PostgreSQL](postgres.md)
 
 ---
-  
+
+### Explain specs:
+
+```bash
+# understand container specs
+kubectl explain pod.spec.containers.resources
+
+# understand node specs
+kubectl explain node.spec
+```
 ### Control plane checks:
 
 ```bash
@@ -26,10 +35,24 @@ kubectl get componentstatuses
 # get version k8s
 kubectl version --short
 
-# apiserver endpoints
-#echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/healthz?verbose')" # deprecated v1.16
-echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/livez?verbose')"
-echo -e "\e[0;32m Status of APIs Server: \e[0m \n $(kubectl get --raw '/readyz?verbose')"
+# API endpoints for health checks without formatting
+kubectl get --raw '/livez?verbose'
+kubectl get --raw '/readyz?verbose'
+kubectl get --raw "/healthz?verbose"    
+
+# kubectl top nodes
+kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"
+
+# ingress endpoint
+kubectl get --raw "/apis/networking.k8s.io/v1/ingresses/"
+
+# check events
+kubectl get events --sort-by='.metadata.creationTimestamp' -A
+kubectl get events --field-selector type!=Normal -A
+kubectl get events --field-selector type=Warning -A
+
+# check events for specific pod
+kubectl get events --field-selector involvedObject.name=<pod_name> -A
 ```
 
 ### Debugging pods:
@@ -48,10 +71,10 @@ kubectl describe pod/<pod_name> -n <namespace>
 kubectl get po -A --sort-by='.status.containerStatuses[0].restartCount'
 kubectl get pods -A --sort-by=.status.containerStatuses[0].restartCount!=0
 
-# running debug pods, svc in the same namespace are resolvable by DNS 
+# running naked debug pod (svc in the same namespace are resolvable by DNS)
 kubectl run -ti kali --image=kalilinux/kali-rolling
-kubectl delete -n default pod kali
 kubectl run -n <namespace> mybusyboxcurl --image yauritux/busybox-curl -it -- sh
+kubectl delete -n default pod kali
 
 # spin up a shell inside the pod
 kubectl exec -n <namespace> -it <pod_name> -- bash
@@ -60,7 +83,7 @@ kubectl exec -n <namespace> -it <pod_name> -- bash
 kubectl exec -t -n <namespace> <pod_name> -- curl -I http://<another_pod_ip>:3030/metrics
 
 # get pod logs from all namespaces
-$for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
+for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
 
 # logs for for a specific RESOURCE: deployment is specified and that deployment has multiple pods such as a ReplicaSet
 # then only one of the pods logs will be returned
@@ -72,6 +95,20 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 # check pod running images
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
+
+# delete po with label=fluent-bit
+kubectl -n logging delete po -l app.kubernetes.io/instance=fluent-bit
+
+# delete po with label
+kubectl -n monitoring delete po -l app=prometheus-node-exporter
+
+# get pods with label app=flux from all namespaces
+kubectl get pod -A -l app=flux -oname
+kubectl -n monitoring get po -l "app=kiali" -oname
+
+# force delete pod and patch the finalizers
+kubectl -n redis delete pods <pod> --grace-period=0 --force
+kubectl -n redis patch pod <pod> -p '{"metadata":{"finalizers":null}}'
 ```
 
 ### Nodes operations:
@@ -175,8 +212,8 @@ kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ### Scale down daemonset:
 
 ```bash
-
-# To scale down a DaemonSet one can use the following workaround: basically by adding a temporary nodeSelector that matches no nodes, making the DaemonSet pods un-schedulable on any nodes:
+# to scale down a DaemonSet one can use the following workaround: 
+# basically by adding a temporary nodeSelector that matches no nodes, making the DaemonSet pods un-schedulable on any nodes:
 
 kubectl -n <namespace> patch daemonset <name-of-daemon-set> -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
 
@@ -205,7 +242,7 @@ kubectl port-forward svc/nginx-service [LOCAL_HOST_PORT:]REMOTE_PORT
 kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 ```
 
-### CRD
+### CRD:
 
 ```bash
 # Resource = endpoint in k8s K8s API
@@ -229,7 +266,7 @@ kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in nam
 ```
 
 
-## Scheduling PODS on NODES:
+### Scheduling PODS on NODES:
 
 ```bash
 
