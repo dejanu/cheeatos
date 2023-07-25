@@ -35,7 +35,7 @@
 * job = sort of task, k8s will schedule a job and it will run it once and it will not be rescheduled - 1 time, when u apply it it gets executed and that's it aka init container
 * cronjob = a job that runs on a schedule
 * ConfigMap = key/value pairs of configuration data that can be accessed by pods
-* Secret = key/value pairs of sensitive data that can be accessed by pods (encoded in base64)) so `describe` will show opaque data 
+* Secret = key/value pairs of sensitive data that can be accessed by pods (encoded in base64) so `describe` will show opaque data 
 
 ---
 
@@ -47,9 +47,9 @@
 kubectl create secret generic <secret_name> --from-literal=MYSQL_ROOT_PASSWORD=test
 kubectl get secrets <secret_name> -o yaml > sqlsecret.yml
 
-kubectl exec -it po/<pod_name> -- bash
-# test the secret 
-mysql -u root -p
+kubectl -n istio-system create secret generic ingress-cert-cacert --from-file=ca.crt
+
+kubectl get secrets -n istio-system ingress-cert-cacert -o json | jq -r '.data."ca.crt"' | base64 -d > ca.crt
 ```
 
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/k8s_objects_me.png?raw=true)
