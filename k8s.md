@@ -59,6 +59,19 @@ kubectl get events --field-selector type=Warning -A
 kubectl get events --field-selector involvedObject.name=<pod_name> -A
 ```
 
+### TLS access:
+
+```bash
+# get cert client-certificate-data info from kubeconfig
+export client=$(grep client-cert $HOME/.kube/config |cut -d" " -f 6)
+
+# get client-key-data info from kubeconfig
+export key=$(grep client-key-data $HOME/.kube/config |cut -d " " -f 6)
+
+# check what a user (e.g. bob) can do in a certain namespace:
+kubectl auth can-i create deployments --as bob --namespace developer 
+```
+
 ### Debugging pods:
 
 ```bash
