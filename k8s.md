@@ -68,8 +68,28 @@ export client=$(grep client-cert $HOME/.kube/config |cut -d" " -f 6)
 # get client-key-data info from kubeconfig
 export key=$(grep client-key-data $HOME/.kube/config |cut -d " " -f 6)
 
+# get client-key-data info from kubeconfig
+export auth=$(grep certificate-authority-data $HOME/.kube/config |cut -d " " -f 6)
+
+# encode the keys
+echo $client | base64 -d - > ./client.pem
+echo $key | base64 -d - > ./client-key.pem
+echo $auth | base64 -d - > ./ca.pem
+
+# get the API url: API_url
+kubectl config view |grep server
+
+## With the appropriate TLS keys you could run curl
+curl --cert ./client.pem --key ./client-key.pem --cacert ./ca.pem https://<API_URL>/api/v1/pods
+
 # check what a user (e.g. bob) can do in a certain namespace:
 kubectl auth can-i create deployments --as bob --namespace developer 
+
+# create token secret
+export token=$(kubectl create token default)
+
+# check the token pass -k for insecure and skip using a cert
+curl https://<API_URL>/apis --header "Authorization: Bearer $token" -k
 ```
 
 ### Debugging pods:
