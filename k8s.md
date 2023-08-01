@@ -36,8 +36,11 @@ kubectl get componentstatuses
 # get version k8s
 kubectl version --short
 
-# check available API resources
+# check available API resources: cm,deployments,ds,ingress,ns,pods,rc,rs,secrets,svc
 kubectl api-resources
+
+# check api services in the cluster: v1.certificates.k8s.io, v1.networking.io
+kubectl get apiservices
 
 # API endpoints for health checks without formatting
 kubectl get --raw '/livez?verbose'
@@ -348,6 +351,7 @@ kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
 kubectl taint nodes host1 special=true:NoSchedule
 ```
 
+* [Kubernetes cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 ---
 
 ```bash
