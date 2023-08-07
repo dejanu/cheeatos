@@ -153,6 +153,9 @@ docker logs <CONTAINER_ID> > container.log 2>&1
 
 # get container stats
 docker stats <CONTAINER_ID>
+
+# check container states e.g: OOMKilled, Dead (very usefull whend debugging)
+docker container inspect prometheus_normal | jq .[].State
 ```
 ### Docker registry
 ```bash
@@ -172,7 +175,7 @@ docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" nginx
 # manifest schem https://docs.docker.com/registry/spec/manifest-v2-2/
 # manifest command interacts solely with a Docker registry.
 # Docker manifests describe an image’s layers and the architectures it supports
- docker manifest inspect maven
+docker manifest inspect maven
 ```
 ---
 
