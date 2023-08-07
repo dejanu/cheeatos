@@ -81,6 +81,8 @@ echo $auth | base64 -d - > ./ca.pem
 
 # get the API url: API_url
 kubectl config view |grep server
+# extract the API server url
+API_SERVER=$(kubectl config view --minify -o jsonpath='{.clusters[].cluster.server}')
 
 ## With the appropriate TLS keys you could run curl
 curl --cert ./client.pem --key ./client-key.pem --cacert ./ca.pem https://<API_URL>/api/v1/pods
@@ -93,6 +95,20 @@ export token=$(kubectl create token default)
 
 # check the token pass -k for insecure and skip using a cert
 curl https://<API_URL>/apis --header "Authorization: Bearer $token" -k
+
+# extract the token for the desired user (replace <user_name> with the actual name of the user
+kubectl config view --raw -o jsonpath='{.users[?(@.name=="<cluster_username>")].user.token}'
+
+# call API server authentication endpoint
+kubectl get --raw $API_SERVER/apis/authentication.k8s.io/v1/
+kubectl get --raw https://phi-synergy-76435e55.hcp.westeurope.azmk8s.io:443/apis/authentication.k8s.io/v1/
+
+# extract the cert and the key
+kubectl config view --raw -o jsonpath='{.users[?(@.name=="<cluster_username>")].user.client-certificate-data}' | base64 -d
+kubectl config view --raw -o jsonpath='{.users[?(@.name=="<cluster_username>")].user.client-key-data}' | base64 -d
+
+# query the authorization layer using a token and user
+kubectl auth can-i --list --token=$TOKEN --as=$USER
 ```
 
 ### Debugging pods:
@@ -127,7 +143,7 @@ for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;do
 
 # logs for for a specific RESOURCE: deployment is specified and that deployment has multiple pods such as a ReplicaSet
 # then only one of the pods logs will be returned
-kubectl -n <namespace> logs deployment/<deploymet_name> --all-containers=true --since 10m
+kubectl -n <namespace> logs deployment/<deployment_name> --all-containers=true --since 10m
 
 # get logs (no_lines) from a specific POD
 kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
@@ -135,6 +151,12 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 # check pod running images
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
+
+# get all values for label e.g. run
+kubectl get pods -L run
+
+# get all pod were run label is ghost
+kubectl get pods -l run=ghost
 
 # delete po with label=fluent-bit
 kubectl -n logging delete po -l app.kubernetes.io/instance=fluent-bit
@@ -149,6 +171,12 @@ kubectl -n monitoring get po -l "app=kiali" -oname
 # force delete pod and patch the finalizers
 kubectl -n redis delete pods <pod> --grace-period=0 --force
 kubectl -n redis patch pod <pod> -p '{"metadata":{"finalizers":null}}'
+
+# check pods status
+kubectl get po -A -o jsonpath='{.items[*].status}'
+
+# a Pod's status field is a PodStatus object, which has a phase field.
+kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
 ```
 
 ### Nodes operations:
@@ -179,6 +207,9 @@ kubectl uncordon <node_name>
 * Kubernetes [context like a pro](https://community.ops.io/dejanualex/kubectl-context-like-a-pro-2692)
 
 ```bash
+# set editor ftw
+export KUBE_EDITOR=vim
+
 # autocompletion 
 source <(kubectl completion bash)
 kubectl completion bash > ~/.kube/kubectl_autocompletion
@@ -236,11 +267,12 @@ kubectl create ns <namespace>
 ### Deployment ops:
 
 ```bash
-# set editor ftw
-export KUBE_EDITOR=vim
+# create deployment
+kubectl create deployment dev-web --image=nginx:1.13.7-alpine
+kubectl create deploy ghost --image=ghost
 
-# edit resource (bad-idea)
-kubectl edit <resource_type>/<resource_name>
+# edit resource (bad-idea), this would trigger a rolling update of the deployment
+kubectl edit deployment <deployment_name>
 
 # interactive rollout
 kubectl edit deployments/<deployment_name>
@@ -254,7 +286,6 @@ kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
 ```bash
 # to scale down a DaemonSet one can use the following workaround: 
 # basically by adding a temporary nodeSelector that matches no nodes, making the DaemonSet pods un-schedulable on any nodes:
-
 kubectl -n <namespace> patch daemonset <name-of-daemon-set> -p '{"spec": {"template": {"spec": {"nodeSelector": {"non-existing": "true"}}}}}'
 
 # remove the NodeSelector to scale up the daemonset
@@ -328,17 +359,6 @@ spec:
 ```
 
 
-### PODS and status:
-
-```bash
-#check pods status
-kubectl get po -A -o jsonpath='{.items[*].status}'
-
-#A Pod's status field is a PodStatus object, which has a phase field.
-kubectl get po -A -o jsonpath='{.items[*].status}' | jq . | grep -i phase
-```
-
-
 ### Taint and Node affinity:
 
 ```bash
@@ -351,7 +371,22 @@ kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
 kubectl taint nodes host1 special=true:NoSchedule
 ```
 
+
+### Admin stuff:
+
+```bash
+# using kubeadm you can create a minimum viable Kubernetes cluster
+# control plane nodes init 
+kubeadm init
+# worker node init
+kubeadm join
+
+# create the network: e.g. Weave network
+kubectl create -f https://git.io/weave-kube
+```
+
 * [Kubernetes cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+* [Kubeconfig fields](https://kubernetes.io/docs/reference/config-api/kubeconfig.v1/)
 ---
 
 ```bash
