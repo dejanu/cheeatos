@@ -385,8 +385,11 @@ kubeadm join
 kubectl create -f https://git.io/weave-kube
 ```
 
+---
+
 * [Kubernetes cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 * [Kubeconfig fields](https://kubernetes.io/docs/reference/config-api/kubeconfig.v1/)
+* [Getting started](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
 ---
 
 ```bash
