@@ -210,6 +210,9 @@ kubectl uncordon <node_name>
 # set editor ftw
 export KUBE_EDITOR=vim
 
+# list completions
+kubectl completion -h
+
 # autocompletion 
 source <(kubectl completion bash)
 kubectl completion bash > ~/.kube/kubectl_autocompletion
