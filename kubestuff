@@ -118,3 +118,48 @@ sudo add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 # Update the package index to include the Kubernetes repository
 sudo apt-get update
+
+
+# create control plane node
+kubeadm init
+
+# create worker node
+kubeadm join
+
+======================================================================================================
+
+# show pods labels
+kubectl get po --show-labels
+
+# get all pod with a certain label e.g. system
+ kubectl get po -L system
+
+# get pod all pods with a certain value for a label e.g. system=IsolatedPod
+kubectl get po -l system=IsolatedPod
+
+# create deployment webserver yaml file based on ngnix image
+kubectl create deploy webserver --image nginx:1.22.1 --replicas=2 --dry-run=client -o yaml | tee dep.yaml
+
+# get the deployment strategy
+kubectl get deploy <deployment> -o yaml | grep -A 4 strategy
+
+# change the base image for the deployment
+kubectl set image deploy webserver nginx=nginx:1.23.1-alpine
+
+# Deployment strategies / Update strategies: RollingUpdate vs. Recreate 
+# return to a previous version
+kubectl rollout undo
+
+# view object revisions
+kubectl rollout history deploy <deployment>
+
+# get persistent volumes aka storage abstraction
+kubectl get pv
+
+# get  persistent volume claims 
+kubectl get pvc
+
+# create secret
+kubectl create secret generic mysql --from-literal=password=root
+
+# configmap can be created from literal values, or individual files
