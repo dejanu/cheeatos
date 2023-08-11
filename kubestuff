@@ -1,0 +1,165 @@
+
+# creates a local service to access a ClusterIP, usefull for troubleshooting and provides quick way to check your service
+kubectl proxy
+
+
+# Creates a resource from a file or from stdin
+kubectl create deployment nginx --image=nginx
+
+# kubectl run nginx --image=nginx
+# create po named basic with port 80 open to TCP
+kubectl run -n red --image=nginx:stable-alpine-perl --restart=OnFailure --port=80 basic
+
+# discover the IP of all pods in sec1 namespace
+kubectl -n sec1 get po -ojsonpath={.items[*].status.podIP}
+
+# discover the IP of po named basic
+kubectl get pods basic -n sec1 -o jsonpath='{.status.podIP}'
+
+# ping from 
+kubectl -n sec1 exec -it pod2 -- ping $pod1IP
+
+# Use a dry-run, e.g. 
+kubectl -n cre run --image=nginx:stable-alpine-perl basic --dry-run=client -o yaml. The --image option is required
+
+# create service
+kubectl -n red expose po basic --name=cloudacademy-svc --type="ClusterIP" --port=8080 --target-port=80
+
+# Expose a Pod in the red Namespace with the following configuration: The Service name is cloudacademy, the Service port is8080, the Target port is80, the Service type isClusterIP
+kubectl expose pod basic -n red --name=cloudacademy-svc --port=8080 --target-port=80
+
+
+
+# create service NodePort on port 32080: expose deployment for an app that runs on port 80 Service 
+
+# The command will assign a random port >= 30000. So use the Patch command to assign the port to a known, unused and desired port >= 30000
+
+kubectl -n ca1 expose deployment cloudforce --name=cloudforce-svc --type="NodePort" --port=80
+kubectl -n ca1 patch service cloudforce-svc --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":32080}]'
+
+# all the above in one command
+kubectl -n ca1 expose --type=NodePort deployment cloudforce --port 80 --name cloudforce-svc --overrides '{ "apiVersion": "v1","spec":{"ports": [{"port":80,"protocol":"TCP","targetPort":
+80,"nodePort":32080}]}}'
+
+# create a nodeport service
+kubectl -n accounting expose deployment nginx-one --type=NodePort --name=service-lab
+
+
+# spin up pod that run curl to a service
+kubectl run client -n skynet --image=appropriate/curl -it --rm --restart=Never -- curl http://t2-svc:8080 > /home/ubuntu/svc-output.txt
+
+# create deployment named rtro
+kubectl -n cal create deployment rtro --image=busybox:1.31.1
+kubectl -n cal edit deploymnet rtro
+ spec:
+      containers:
+      - args:
+        - sleep
+        - 24h
+        image: busybox:1.31.1
+        imagePullPolicy: IfNotPresent
+        name: busybox
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsGroup: 10000
+        runAsUser: 1000
+      terminationGracePeriodSeconds: 30
+======================================================================================================
+
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# drain worker node, draining will cordon the node also (do not forget to uncordon the node)
+kubectl drain --ignore-daemonsets <node>
+
+# Update the package index
+sudo apt-get update
+
+# find the latest patch release version for Kubernetes using OS package manager e.g:  1.26.3-00
+# the same as apt list -a <package name>
+apt-cache madison kubeadm
+
+
+# cancel hold
+sudo apt-mark unhold kubelet kubeadm kubectl
+
+# Install the packages
+sudo apt-get install -y kubeadm=1.26.3-00 kubelet=1.26.3-00 kubectl=1.26.3-00
+
+# prevent automatic updates to the following packages
+sudo apt-mark hold kubelet kubectl kubeadm
+
+
+# For worker nodes this upgrades the local kubelet configuration: /var/lib/kubelet/config.yaml
+sudo kubeadm upgrade node
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+
+# All containers are restarted after upgrade, because the container spec hash value is changed.
+
+
+
+# Update packages required for HTTPS package repository access
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release
+
+
+# Add the Google Cloud packages GPG key
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+# Add the Kubernetes release repository
+sudo add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+# Update the package index to include the Kubernetes repository
+sudo apt-get update
+
+
+# create control plane node
+kubeadm init
+
+# create worker node
+kubeadm join
+
+======================================================================================================
+
+# show pods labels
+kubectl get po --show-labels
+
+# get all pod with a certain label e.g. system
+ kubectl get po -L system
+
+# get pod all pods with a certain value for a label e.g. system=IsolatedPod
+kubectl get po -l system=IsolatedPod
+
+# create deployment webserver yaml file based on ngnix image
+kubectl create deploy webserver --image nginx:1.22.1 --replicas=2 --dry-run=client -o yaml | tee dep.yaml
+
+# get the deployment strategy
+kubectl get deploy <deployment> -o yaml | grep -A 4 strategy
+
+# change the base image for the deployment
+kubectl set image deploy webserver nginx=nginx:1.23.1-alpine
+
+# Deployment strategies / Update strategies: RollingUpdate vs. Recreate 
+# return to a previous version
+kubectl rollout undo
+
+# view object revisions
+kubectl rollout history deploy <deployment>
+
+# get persistent volumes aka storage abstraction
+kubectl get pv
+
+# get  persistent volume claims 
+kubectl get pvc
+
+# create secret
+kubectl create secret generic mysql --from-literal=password=root
+
+# configmap can be created from literal values, or individual files
