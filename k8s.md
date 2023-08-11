@@ -152,17 +152,14 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
 
-# get all values for label e.g. run
+# get all pod with a certain label e.g. run
 kubectl get pods -L run
 
-# get all pod were run label is ghost
+# get pod all pods with a certain value for a label e.g. run=ghost
 kubectl get pods -l run=ghost
 
 # delete po with label=fluent-bit
 kubectl -n logging delete po -l app.kubernetes.io/instance=fluent-bit
-
-# delete po with label
-kubectl -n monitoring delete po -l app=prometheus-node-exporter
 
 # get pods with label app=flux from all namespaces
 kubectl get pod -A -l app=flux -oname
@@ -194,7 +191,6 @@ kubectl label node <nodename> <labelname>-
 kubectl describe node <node_name>
 
 # DRAIN to safely EVICT all of your pods from a node before you perform maintenance on the node (e.g. kernel upgrade, hardware maintenance)
-kubectl drain <nodename>
 kubectl drain <nodename> --ignore-daemonsets
 
 # CORDON  mark node unschedulable for all pods and adds a taint node.kubernetes.io/unschedulable:NoSchedule to the node
@@ -343,9 +339,9 @@ kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in nam
 ### Scheduling PODS on NODES:
 
 ```bash
-
 # this is the job of Kubernetes scheduler (who's responsible for the best Node for that Pod to run on), but is some situations it might be needed for us to contraint this process
 
+# Nodeselector: schedule a Pod on a node based on a label
 # I want a certain POD to start on a specific NODE
 kubectl label node <nodename> <labelname>=<value> # label node e.g label=chosen
 kubectl edit deployment <deploymentname> # nodeSelector
@@ -359,16 +355,13 @@ spec:
                 operator: In
                 values:
                 - chosen
-```
-
 
 ### Taint and Node affinity:
 
-```bash
+# PODS get assigned to NODE using affinity feature and nodeSelector...
 
-# PODS get assigned to NODE using affinity feture and nodeSelector.
+# Taint are similar to labels but they have an effect associated with them.
 # Taints are used to repel Pods from specfic nodes - taint on a node allow only some pods (those with tolerations to the taint) to be scheduled on that node.
-kubectl taint nodes -l LABEL=LABEL_VALUE KEY=VALUE:EFFECT
 
 kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
 kubectl taint nodes host1 special=true:NoSchedule
@@ -386,8 +379,20 @@ kubeadm join
 
 # create the network: e.g. Weave network
 kubectl create -f https://git.io/weave-kube
+
+# creates a local service to access a ClusterIP, usefull for troubleshooting and provides quick way to check your service
+kubectl proxy
 ```
 
+### Storage:
+
+```bash
+# get persistent volumes aka storage abstraction
+kubectl get pv
+
+# get  persistent volume claims 
+kubectl get pvc
+```
 ---
 
 * [Kubernetes cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
