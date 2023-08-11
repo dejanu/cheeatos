@@ -19,6 +19,11 @@
 <em>"The package manager for k8s, provide users with a better way to manage all the Kubernetes YAML files for a k8s project"</em>
 
 * managing multiple k8s objects it's hard (versioning yaml 😔) - helm allows yml templating
+
+* Helm chart contents:
+
+![char content](https://github.com/dejanu/cheetcity/blob/gh-pages/src/helm_chart_structure.PNG?raw=true)
+
 * helm repos: https://artifacthub.io/ and https://bitnami.com/ (VMWare)
 * [Kustomize](https://kustomize.io/) (patch k8s obj) `kubectl kustomize .` vs HELM (package manager)
 * HELM2 (using **Tiller** pod inside k8s) vs HELM3 which communicates directly with K8s API server (ditch **Tiller** approach)
