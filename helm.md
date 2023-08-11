@@ -59,12 +59,13 @@ helm pull [chart URL | repo/chartname]
 
 # nice flow add repo -> fetch chart to inspect
 helm repo add cetic https://cetic.github.io/helm-charts
-helm fetch cetic/pgadmin
+# download and extract the chart
+helm fetch cetic/pgadmin --untar
 
 # install chart very usefull --dry-run
 helm install [NAME] [CHART] [flags]
 
-# pick the latest chart version
+# install latest chart version
 helm upgrade -i <release_name> <REPO_NAME>  /<CHART> --version 2.12
 
 # create chart
@@ -82,22 +83,26 @@ helm install <realease_name> bitnami/rabbitmq
 
 * Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0):
 
-* RabbitMQ chart:
+* RabbitMQ flow:
 
 ```bash
 
-# add repo
 helm repo add bitnami https://charts.bitnami.com/bitnami
-
-# install the chart, with given deployment name or auto generate deployment name
-helm install <realease_name> bitnami/rabbitmq
-helm install bitnami/rabbitmq --generate-name
+helm repo update
+helm repo list
+helm search repo bitnami
+helm fetch bitnami/rabbitmq --untar
 
 # create k8s namespace
-kubectl create namespace rabbit
-helm install <release_name> bitnami/rabbitmq --namespace rabbit
+kubectl create ns rabbit
 
-# list installed charts
+# helm install <release_name> bitnami/rabbitmq
+helm install testrabbit ./rabbitmq/ --namespace rabbit
+
+# auto generate name 
+helm install bitnami/rabbitmq --generate-name --namespace rabbit
+
+# list charts and view charts history
 helm list
 
 # delete/uninstall chart
