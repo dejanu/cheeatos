@@ -1,14 +1,19 @@
+# Creating Objects======================================================================================================
+## IMPERATIVE Paradigm - no embedded history
+# kubectl run - creates deployment or jobs
+# kubectl expose - creates services
+# kubectl set,edit,patch - top dog
+# kubectl replace -f deployment.yaml --save-config
 
-# creates a local service to access a ClusterIP, usefull for troubleshooting and provides quick way to check your service
-kubectl proxy
-
-
-# Creates a resource from a file or from stdin
+# Creates a deployment + pod
 kubectl create deployment nginx --image=nginx
 
-# kubectl run nginx --image=nginx
-# create po named basic with port 80 open to TCP
+# Create a pod (the minimum needed flag is --image)
+kubectl run nginx --image=nginx
+# Create a pod named basic with port 80 open to TCP
 kubectl run -n red --image=nginx:stable-alpine-perl --restart=OnFailure --port=80 basic
+# Create a pod using  dry-run, e.g. the --image option is required
+kubectl -run --image=nginx:stable-alpine-perl basic --dry-run=client -o yaml
 
 # discover the IP of all pods in sec1 namespace
 kubectl -n sec1 get po -ojsonpath={.items[*].status.podIP}
@@ -19,15 +24,11 @@ kubectl get pods basic -n sec1 -o jsonpath='{.status.podIP}'
 # ping from 
 kubectl -n sec1 exec -it pod2 -- ping $pod1IP
 
-# Use a dry-run, e.g. 
-kubectl -n cre run --image=nginx:stable-alpine-perl basic --dry-run=client -o yaml. The --image option is required
-
 # create service
 kubectl -n red expose po basic --name=cloudacademy-svc --type="ClusterIP" --port=8080 --target-port=80
 
 # Expose a Pod in the red Namespace with the following configuration: The Service name is cloudacademy, the Service port is8080, the Target port is80, the Service type isClusterIP
 kubectl expose pod basic -n red --name=cloudacademy-svc --port=8080 --target-port=80
-
 
 
 # create service NodePort on port 32080: expose deployment for an app that runs on port 80 Service 
@@ -69,7 +70,9 @@ kubectl -n cal edit deploymnet rtro
         runAsGroup: 10000
         runAsUser: 1000
       terminationGracePeriodSeconds: 30
-======================================================================================================
+      
+      
+### Upgrade K8s ======================================================================================================
 
 
 mkdir -p $HOME/.kube
@@ -79,6 +82,8 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # drain worker node, draining will cordon the node also (do not forget to uncordon the node)
 kubectl drain --ignore-daemonsets <node>
 
+# ssh into the worker node
+
 # Update the package index
 sudo apt-get update
 
@@ -87,7 +92,7 @@ sudo apt-get update
 apt-cache madison kubeadm
 
 
-# cancel hold
+# cancel hold on packages
 sudo apt-mark unhold kubelet kubeadm kubectl
 
 # Install the packages
@@ -120,22 +125,9 @@ sudo add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 sudo apt-get update
 
 
-# create control plane node
-kubeadm init
+#======================================================================================================
 
-# create worker node
-kubeadm join
 
-======================================================================================================
-
-# show pods labels
-kubectl get po --show-labels
-
-# get all pod with a certain label e.g. system
- kubectl get po -L system
-
-# get pod all pods with a certain value for a label e.g. system=IsolatedPod
-kubectl get po -l system=IsolatedPod
 
 # create deployment webserver yaml file based on ngnix image
 kubectl create deploy webserver --image nginx:1.22.1 --replicas=2 --dry-run=client -o yaml | tee dep.yaml
@@ -153,11 +145,6 @@ kubectl rollout undo
 # view object revisions
 kubectl rollout history deploy <deployment>
 
-# get persistent volumes aka storage abstraction
-kubectl get pv
-
-# get  persistent volume claims 
-kubectl get pvc
 
 # create secret
 kubectl create secret generic mysql --from-literal=password=root
