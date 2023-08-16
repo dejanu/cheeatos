@@ -138,12 +138,16 @@ kubectl exec -n <namespace> -it <pod_name> -- bash
 # execute cmd:e.g. curl from one pod to another
 kubectl exec -t -n <namespace> <pod_name> -- curl -I http://<another_pod_ip>:3030/metrics
 
-# get pod logs from all namespaces
+# get pods from all namespaces
 for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
 
+
+# Kubernetes will capture anything written to standard output and standard error as a log message
+kubectl -n <namespace> logs <pod_name> --all-containers
+kubectl -n <namespace> logs <pod_name> -c <container> --since 10m
+
 # logs for for a specific RESOURCE: deployment is specified and that deployment has multiple pods such as a ReplicaSet
-# then only one of the pods logs will be returned
-kubectl -n <namespace> logs deployment/<deployment_name> --all-containers=true --since 10m
+kubectl -n <namespace> logs deployment/<deployment_name> --all-containers=true --since 10m  --timestamps=true
 
 # get logs (no_lines) from a specific POD
 kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
@@ -151,6 +155,15 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 # check pod running images
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
+
+# look at the specs
+kubectl explain pod.spec.containers
+
+# get container running in a SINGLE POD
+kubectl -n <namespace> get pod <pod_name>  -o jsonpath="{.spec.containers[*].name}"
+
+# get container running in a NAMESPACE
+kubectl -n <namespace>  get pod -o jsonpath="{.items[*].spec.containers[*].name}"
 
 # get all pod with a certain label e.g. run
 kubectl get pods -L run
@@ -365,6 +378,12 @@ spec:
 
 kubectl taint nodes <node_name> <taintKey>=<taintValue>:<taintEffect>
 kubectl taint nodes host1 special=true:NoSchedule
+
+# Taint effects: NoSchedule, PreferNoSchedule and NoExecute
+kubectl taint nodes worker bubba=value:PreferNoSchedule
+# NoSchedule - prevents scheduling of new pods
+# PreferNoSchedule - prevents scheduling of new pods unless no other nodes are available
+# NoExecute - evicts all exitind pods that do not tolerate the taint
 ```
 
 

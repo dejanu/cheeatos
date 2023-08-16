@@ -31,6 +31,10 @@ docker rmi -f $(docker images -a -q)
 # remove all non-running containers
 docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 
+# check images on your host machine
+docker images
+docker system info --format '{{ .Images}}'
+
 # remove unused images
 docker image prune -a
 
@@ -140,6 +144,10 @@ docker network inspect bridge --format "{{json .Containers }}"
 }
 
 docker info --format '{{.LoggingDriver}}'
+docker info -f '{{ .DockerRootDir}}'
+# check the security module
+docker system info --format '{{ .SecurityOptions}}'
+
 docker inspect --format='{{.LogPath}}' <CONTAINER_ID>
 
 # follow logs starting from the last 10 lines onwards
@@ -177,6 +185,13 @@ docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" nginx
 # Docker manifests describe an image’s layers and the architectures it supports
 docker manifest inspect maven
 ```
+### Docker swarm stuff:
+```bash
+docker stack ls
+docker stack service <stack_name>
+docker service ps <service_name>
+```
+
 ---
 
 ```bash
