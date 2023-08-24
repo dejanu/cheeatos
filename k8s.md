@@ -9,7 +9,7 @@
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
-* <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s.html) 
+* <ins>[Kubernetes](k8s.md)<ins> -> [raw k8s](https://raw.githubusercontent.com/dejanu/sretoolkit/master/k8s_docker_stuff/kubestuff)
 * [Istio](istio.md)
 * [OIDC](openID.md)
 * [PostgreSQL](postgres.md)
