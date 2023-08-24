@@ -77,6 +77,9 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+# check kubelet status
+systemctl status kubelet.service
+
 # drain worker node, draining will cordon the node also (do not forget to uncordon the node)
 kubectl drain --ignore-daemonsets <node>
 
