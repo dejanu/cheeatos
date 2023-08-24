@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title> Kubernetes </title>
+  <style>
+    code {
+      font-family: Consolas,"courier new";
+      color: blue;
+      background-color: #f1f1f1;
+      padding: 2px;
+      font-size: 105%;
+    }
+    </style>
+</head>
+
+
+<p> Check kubelet status </p>
+<code> systemctl status kubelet.service </code>
+
+<p> Drain worker node, draining will cordon the node also (do not forget to uncordon the node) </p>
+<code>kubectl drain --ignore-daemonsets node</code>
+</html>

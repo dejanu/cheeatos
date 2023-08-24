@@ -9,7 +9,7 @@
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
-* <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s_resources.md) 
+* <ins>[Kubernetes](k8s.md)<ins> -> [k8s_objects](k8s.html) 
 * [Istio](istio.md)
 * [OIDC](openID.md)
 * [PostgreSQL](postgres.md)
@@ -252,11 +252,14 @@ kubectl --kubeconfig=config-demo config unset clusters.<name>
 kubectl config view
 kubectl config view -o jsonpath='{.users[*].name}'
                  
-# Sets a user entry in kubeconfig
+# sets a user entry in kubeconfig
 kubectl config set-credentials
 
-# Sets the current-context in a kubeconfig file
+# sets the current-context in a kubeconfig file
 kubectl config use-context
+
+# set default namespace
+kubectl config set-context --current --namespace=<namespace>
 ```
  
 ### Get k8s objects:
