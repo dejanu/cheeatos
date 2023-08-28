@@ -68,6 +68,9 @@ helm install [NAME] [CHART] [flags]
 # install latest chart version
 helm upgrade -i <release_name> <REPO_NAME>  /<CHART> --version 2.12
 
+# override values
+helm install --set replicaCount=2  <release_name> <CHART>
+
 # create chart
 helm create <chart name>
 

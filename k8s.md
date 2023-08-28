@@ -96,6 +96,9 @@ export token=$(kubectl create token default)
 # check the token pass -k for insecure and skip using a cert
 curl https://<API_URL>/apis --header "Authorization: Bearer $token" -k
 
+# get user
+kubectl config get-users
+
 # extract the token for the desired user (replace <user_name> with the actual name of the user
 kubectl config view --raw -o jsonpath='{.users[?(@.name=="<cluster_username>")].user.token}'
 
