@@ -128,7 +128,8 @@ kubectl describe pod/<pod_name> -n <namespace>
 
 # get pod restart counts
 kubectl get po -A --sort-by='.status.containerStatuses[0].restartCount'
-kubectl get pods -A --sort-by=.status.containerStatuses[0].restartCount!=0
+kubectl get po -A --sort-by=.status.containerStatuses[0].restartCount!=0
+kubectl get po -A --sort-by=.status.podIP -o wide
 
 # running naked debug pod (svc in the same namespace are resolvable by DNS)
 kubectl run -ti kali --image=kalilinux/kali-rolling
@@ -143,7 +144,6 @@ kubectl exec -t -n <namespace> <pod_name> -- curl -I http://<another_pod_ip>:303
 
 # get pods from all namespaces
 for n in $(kubectl get ns | awk 'FNR>1 {print $1}');do kubectl get pods -n $n;done
-
 
 # Kubernetes will capture anything written to standard output and standard error as a log message
 kubectl -n <namespace> logs <pod_name> --all-containers
@@ -168,14 +168,21 @@ kubectl -n <namespace> get pod <pod_name>  -o jsonpath="{.spec.containers[*].nam
 # get container running in a NAMESPACE
 kubectl -n <namespace>  get pod -o jsonpath="{.items[*].spec.containers[*].name}"
 
-# get all pod with a certain label e.g. run
+# get all pods with a certain label e.g. run
 kubectl get pods -L run
 
 # get pod all pods with a certain value for a label e.g. run=ghost
 kubectl get pods -l run=ghost
+kubectl get po -l "app=kiali" -oname
+
+# list all pods with label colour=orange or red or yellow
+kubectl get pods --selector 'colour in (orange,red,yellow)' --show-labels
 
 # delete po with label=fluent-bit
 kubectl -n logging delete po -l app.kubernetes.io/instance=fluent-bit
+
+# ovwerwrite labels
+kubectl label po <pod_name> sidecar.istio.io/inject=false --overwrite
 
 # get pods with label app=flux from all namespaces
 kubectl get pod -A -l app=flux -oname
