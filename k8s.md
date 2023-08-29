@@ -128,7 +128,8 @@ kubectl describe pod/<pod_name> -n <namespace>
 
 # get pod restart counts
 kubectl get po -A --sort-by='.status.containerStatuses[0].restartCount'
-kubectl get pods -A --sort-by=.status.containerStatuses[0].restartCount!=0
+kubectl get po -A --sort-by=.status.containerStatuses[0].restartCount!=0
+kubectl get po -A --sort-by=.status.podIP -o wide
 
 # running naked debug pod (svc in the same namespace are resolvable by DNS)
 kubectl run -ti kali --image=kalilinux/kali-rolling
