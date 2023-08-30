@@ -25,6 +25,8 @@ kubectl explain pod.spec.containers.resources
 
 # understand node specs
 kubectl explain node.spec
+
+kubectl explain <resource>.<key>
 ```
 ### Control plane checks:
 
@@ -159,8 +161,6 @@ kubectl -n <namespace> logs <pod_name> --tail 200 --timestamps=true
 kubectl get pods -A -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}'
 kubectl get pod -A -o jsonpath="{.items[*].spec.containers[*].image}"
 
-# look at the specs
-kubectl explain pod.spec.containers
 
 # get container running in a SINGLE POD
 kubectl -n <namespace> get pod <pod_name>  -o jsonpath="{.spec.containers[*].name}"
