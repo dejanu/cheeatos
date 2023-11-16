@@ -9,7 +9,7 @@
 * [Terraform](terraform.md)
 * [Helm](helm.md)
 * [ElasticSearch](elastic.md)
-* <ins>[Kubernetes](k8s.md)<ins> -> [raw k8s](https://raw.githubusercontent.com/dejanu/sretoolkit/master/k8s_docker_stuff/kubestuff)
+* <ins>[Kubernetes](k8s.md)<ins> -> [raw k8s](https://raw.githubusercontent.com/dejanu/sretoolkit/master/k8s_stuff/kubestuff)
 * [Istio](istio.md)
 * [OIDC](openID.md)
 * [PostgreSQL](postgres.md)
@@ -19,18 +19,20 @@
 ### Explain specs:
 
 ```bash
+kubectl explain <resource>.<key>
+
 # understand container specs
 kubectl explain pod.spec.containers
 kubectl explain pod.spec.containers.resources
 
 # understand node specs
 kubectl explain node.spec
-
-kubectl explain <resource>.<key>
 ```
 ### Control plane checks:
 
 ```bash
+kubectl cluster-info
+
 # get control plane status
 kubectl get cs
 kubectl get componentstatuses
@@ -265,9 +267,6 @@ kubectl config view -o jsonpath='{.users[*].name}'
 # sets a user entry in kubeconfig
 kubectl config set-credentials
 
-# sets the current-context in a kubeconfig file
-kubectl config use-context
-
 # set default namespace
 kubectl config set-context --current --namespace=<namespace>
 ```
@@ -276,14 +275,12 @@ kubectl config set-context --current --namespace=<namespace>
 
 ```bash
 # replicasets/nodes/pods/services/deployments/daemonsets/statefulsets/cronjobs
-kubectl cluster-info
 kubectl get pods
 kubectl get replicasets/rs
 kubectl get deployments
 kubectl get svc
 
-# NAMESPACE = objects which partition a single K8s cluster into multiple virtual clusters
-kubectl config view | grep namespace
+# NAMESPACE = object which partitions a single K8s cluster into multiple virtual clusters
 kubectl get ns
 kubectl config set-context --current --namespace=<namespace>
 kubectl create ns <namespace>
@@ -294,13 +291,9 @@ kubectl create ns <namespace>
 ```bash
 # create deployment
 kubectl create deployment dev-web --image=nginx:1.13.7-alpine
-kubectl create deploy ghost --image=ghost
 
-# edit resource (bad-idea), this would trigger a rolling update of the deployment
+# edit resource (bad-idea), interactive rollout this would trigger a rolling update of the deployment
 kubectl edit deployment <deployment_name>
-
-# interactive rollout
-kubectl edit deployments/<deployment_name>
 
 # scale rs to 1 for a deployment
 kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
@@ -326,7 +319,7 @@ kubectl -n <namespace> get svc
 # get service cluster-ip
 kubectl get services/<service_name> -o go-template='{{(index .spec.clusterIP)}}'
 
-# get external IP
+# get external IP of a LB service
 kubectl -n <namespace> get services -o jsonpath='{.items[*].status.loadBalancer.ingress[0].ip}'
 
 # get pod port containerPort
@@ -336,12 +329,15 @@ kubectl -n <namespace> get pod <pod_name> --template='{{(index (index .spec.cont
 kubectl port-forward pods/<pod_name> <port_no>:<port_no>
 kubectl port-forward svc/nginx-service [LOCAL_HOST_PORT:]REMOTE_PORT
 kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
+
+# creates a local service to access a ClusterIP, usefull for troubleshooting and provides quick way to check your service
+kubectl proxy
 ```
 
 ### CRD:
 
 ```bash
-# Resource = endpoint in k8s K8s API
+# Resource = endpoint in K8s API
 # Custom Resource = extension of the Kubernetes API that is not necessarily available in a default Kubernetes installation
 kubectl get crd -n <namespace>
 kubect get <customresource_name> -n <namespace>
@@ -411,9 +407,6 @@ kubeadm join
 
 # create the network: e.g. Weave network
 kubectl create -f https://git.io/weave-kube
-
-# creates a local service to access a ClusterIP, usefull for troubleshooting and provides quick way to check your service
-kubectl proxy
 ```
 
 ### Storage:
@@ -427,9 +420,15 @@ kubectl get pvc
 ```
 ---
 
-* [Kubernetes cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+### Links:
+* [Intro to kubectl](https://kubectl.docs.kubernetes.io/guides/introduction/kubectl/)
+* [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 * [Kubeconfig fields](https://kubernetes.io/docs/reference/config-api/kubeconfig.v1/)
 * [Getting started](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
+* [Kubectl book](https://kubectl.docs.kubernetes.io/) and API [mgmt](https://kubernetes.io/docs/concepts/overview/working-with-objects/object-management/)
+* [killercoda](https://killercoda.com/)
+* [play with k8s](https://labs.play-with-k8s.com/)
+* [Nice repo for CKA](https://github.com/walidshaari/Kubernetes-Certified-Administrator)
 
 ---
 

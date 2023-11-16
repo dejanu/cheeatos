@@ -162,7 +162,10 @@ SHOW autovacuum;
 * Removing orphaned large objects (LO whose OID does not appear in any oid or lo data column of the database) using [vaccumlo](https://www.postgresql.org/docs/current/vacuumlo.html) client tool:
 
 ```bash
- vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
+# install vacuumlo
+apt-get install postgresql-contrib-9.3
+
+vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
 ```
 
 ### Usefull links:
