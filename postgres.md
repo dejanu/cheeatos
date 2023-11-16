@@ -169,6 +169,7 @@ SHOW autovacuum;
 
 * [Tune pg settings](https://pgtune.leopard.in.ua/)
 * For a dedicated database server:
+
 ```bash
 #effective_cache_size parameter to a value between 50% and 75% of the total available memory on the system a good setting 
 effective_cache_size = RAM * 0.7
