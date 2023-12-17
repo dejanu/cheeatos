@@ -134,11 +134,11 @@ docker network ls
 
 # list containers in a network
 docker network inspect bridge --format "{{json .Containers }}"
-
 ```
 ### Docker logging
 ```bash
-# /etc/docker/daemon.json
+# system config: /etc/docker/daemon.json
+# user config: ~/daemon.json
 {
   "log-driver": "journald"
 }
@@ -180,7 +180,7 @@ docker search <REGISTRY>/<IMAGE>
 docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" httpd
 docker search --format "{{.Name}}: {{.StarCount}}: {{.IsOfficial}}" nginx
 
-# manifest schem https://docs.docker.com/registry/spec/manifest-v2-2/
+# manifest schema https://docs.docker.com/registry/spec/manifest-v2-2/
 # manifest command interacts solely with a Docker registry.
 # Docker manifests describe an image’s layers and the architectures it supports
 docker manifest inspect maven
