@@ -35,6 +35,11 @@
 kubectl get ingresses.networking.k8s.io -A  # no resources found
 kubectl get gateways.networking.istio.io -A # is a CRD used by Istio Service mesh
 ```
+
+* Get ALL istio objects:
+```bash
+kubectl get istio-io -A
+```
 ## Flow
 
 * Flow: `external request -> istio ingress gateway -> istio virtual service -> istio destination rule`
@@ -107,7 +112,7 @@ kubectl get virtualservices.networking.istio.io -A
     * DestinationRule - policies that apply to traffic after it has been routed through VeirutaService. What version of service /foo v1 or v2 - what happens to traffic for a destination defined in a virtual service.
 ```bash
 # list destinationrules from all namespaces
-kubectl get destinationrules.networking.istio.io -
+kubectl get destinationrules.networking.istio.io -A
 ```
 
     * Gateway - resource describes how to route traffic from the outside world to your mesh-enabled services, typically used to expose your services to external traffic, such as incoming HTTP requests from outside the mesh. Describes the Load Balancer (ports + Server Name Indicator)
