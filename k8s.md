@@ -133,7 +133,9 @@ kubectl describe pod/<pod_name> -n <namespace>
 # get pod restart counts
 kubectl get po -A --sort-by='.status.containerStatuses[0].restartCount'
 kubectl get po -A --sort-by=.status.containerStatuses[0].restartCount!=0
-kubectl get po -A --sort-by=.status.podIP -o wide
+
+# sort pod by IP
+kubectl get po -A --sort-by=.status.podIP -owide
 
 # running naked debug pod (svc in the same namespace are resolvable by DNS)
 kubectl run -ti kali --image=kalilinux/kali-rolling
@@ -176,6 +178,9 @@ kubectl get pods -L run
 # get pod all pods with a certain value for a label e.g. run=ghost
 kubectl get pods -l run=ghost
 kubectl get po -l "app=kiali" -oname
+
+# delete po with label=fluent-bit
+kubectl -n logging delete po -l app.kubernetes.io/instance=fluent-bit
 
 # list all pods with label colour=orange or red or yellow
 kubectl get pods --selector 'colour in (orange,red,yellow)' --show-labels
@@ -275,15 +280,27 @@ kubectl config set-context --current --namespace=<namespace>
 
 ```bash
 # replicasets/nodes/pods/services/deployments/daemonsets/statefulsets/cronjobs
-kubectl get pods
-kubectl get replicasets/rs
-kubectl get deployments
-kubectl get svc
+kubectl get po,deploy,svc,rs
+
 
 # NAMESPACE = object which partitions a single K8s cluster into multiple virtual clusters
 kubectl get ns
 kubectl config set-context --current --namespace=<namespace>
 kubectl create ns <namespace>
+```
+### Check limist and requests:
+
+```bash
+kubectl -n <namespace> get pod <pod_name> -o jsonpath='{.spec.containers[*].resources.limits}'
+kubectl -n <namespace> get pod <pod_name> -o jsonpath='{.spec.containers[*].resources.requests}'
+```
+
+### Get names and customize output:
+```bash
+kubectl get po -o=custom-columns=NAME:.metadata.name -A
+# Go templates are a powerful method to customize output however you want
+kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in namespace: {{.metadata.namespace}}{{"\n"}}{{end}}'
+kubectl get po -o name -A
 ```
 
 ### Deployment ops:
@@ -407,6 +424,10 @@ kubeadm join
 
 # create the network: e.g. Weave network
 kubectl create -f https://git.io/weave-kube
+
+# check weave status
+kubectl -n kube-system get po -l "name=weave-net" -owide
+for p in $(kubectl -n kube-system get po -l "name=weave-net" -oname);do echo $p;kubectl -n kube-system exec $p  -- /home/weave/weave --local status connections ;done 
 ```
 
 ### Storage:
