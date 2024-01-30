@@ -108,7 +108,7 @@ curl -X GET http://localhost:9200/_cat/master?v
 
 
 # return HEAP information
-curl -X GET localhost:9200/_cat/nodes?v=true
+curl -X GET http://localhost:9200/_cat/nodes?v=true
 curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
  
 # fixing unassigned shards
