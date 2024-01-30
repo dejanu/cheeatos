@@ -162,6 +162,10 @@ PUT _cluster/settings
 ```bash
 # return just indices
 curl -X GET "localhost:9200/_nodes/stats/indices?pretty"
+
+# return sorted indices
+curl -X GET "http://localhost:9200/_cat/indices/?s=store.size:desc"
+
 # return just os and process
 curl -X GET "localhost:9200/_nodes/stats/os,process?pretty"
 # return just process for node with IP address 10.0.0.1
