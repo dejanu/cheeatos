@@ -18,15 +18,43 @@
 
 ### ElasticSearch
 
-* INDEX = logical namespace(broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards. Indices are identified by lowercase names that refer to actions that are performed actions (such as searching and deleting) on the documents that are inside each index
+* INDEX = logical namespace (broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards. Indices are identified by lowercase names that refer to actions that are performed actions (such as searching and deleting) on the documents that are inside each index
+
 * ALIAS = a secondary name for a group of data streams or idices
 
+* SHARDS = physical data files which are split into chunks and are distributed across the cluster. Shards are a single Lucene index.
+  * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
+  * replica shards = one or more copies of your index's shards
+  * primary vs replica = replica is promoted to primary(primary cannot be on the same node as the replica)
+
+* TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model. Use tags to categorize your saved objects, then filter for related objects based on shared tags
+
+* Health:
+
 ```bash
+# cluster health
+GET _cluster/health
+GET _cluster/health?filter_path=status,*_shards
+
+# unassigned shards allocation explained
+GET _cluster/allocation/explain
+GET _cluster/allocation/explain?pretty
+
+# indices table
+GET /_cat/indices?v 
+
+# shards stuff
+POST _cluster/reroute?retry_failed
+GET _cluster/health?filter_path=status,*_shards
+
 # get indices and their status
 GET _cat/indices
 
 # get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
 GET _aliases/?pretty=true
+
+# retry to decrease unassigned_shards
+POST _cluster/reroute?retry_failed
 
 # Get a specific INDEX and return all of the documents in an index using a "match_all" qu
 GET {YOUR_INDEX}/_search
@@ -36,17 +64,6 @@ GET {YOUR_INDEX}/_search
     }
 }
 
-curl -XGET "{OPENSEARCH_URL}:9200/{YOUR_INDEX}/_search"
-```
-
-* SHARDS = physical data files which are split into chunks and are distributed across the cluster. Shards are a single Lucene index.
-  * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
-  * replica shards = one or more copies of your index's shards
-  * primary vs replica = replica is promoted to primary(primary cannot be on the same node as the replica)
-
-* TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model. Use tags to categorize your saved objects, then filter for related objects based on shared tags
-
-```bash
 # get all docs with TAG http.method
 GET /_all/_search?q=tag:http.method
 ```
@@ -76,36 +93,53 @@ GET /_all/_search?q=tag:http.method
 ### Check the health of ES
 
 ```bash
-curl localhost:9201/_cluster/health?pretty
-curl -X GET http://localhost:9201/_cat/nodes?v
-curl -X GET http://localhost:9201/_cat/master?v
-curl -XGET localhost:9200/_cluster/allocation/explain?pretty
-curl -X GET localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason
-curl -X GET localhost:9200/_cat/indices?v
+# cURL usage with auth
+curl -XGET -k -i -u 'user:password' "{OPENSEARCH_URL}:9200/{YOUR_INDEX}/_search"
+
+curl -X GET http://localhost:9200/_cat/shards?h=index,shard,prirep,state,unassigned.reason
+curl -X GET http://localhost:9200/_cat/indices?v
+
+curl -X GET http://localhost:9200/_cluster/health?pretty
+curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
+
+curl -X GET http://localhost:9200/_cat/nodes?v
+curl -X GET http://localhost:9200/_cat/master?v
+
+
 # return HEAP information
-curl -X GET localhost:9200/_cat/nodes?v=true
+curl -X GET http://localhost:9200/_cat/nodes?v=true
 curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
  
-# cluster health
-GET _cluster/health
-
-# unassigned shards allocation explained
-GET /_cluster/allocation/explain
-
-# indices table
-GET /_cat/indices?v 
-
 # fixing unassigned shards
 curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed' 
-
-# shards stuff
-POST _cluster/reroute?retry_failed
-GET _cluster/health?filter_path=status,*_shards
-GET _cluster/allocation/explain
 ```
+
+### Shards with unassigned reasons
+
+```bash
+curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
+```
+
+| Reason                  | Meaning                                                                                                                                    |
+--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+|INDEX_CREATED	          | API for creating an index introduces the problem                                                                                           |
+|CLUSTER_RECOVERED	      | Full data restoration is performed for the cluster                                                                                         |
+|INDEX_REOPENED	          | An index is enabled or disabled                                                                                                            |    
+|DANGLING_INDEX_IMPORTED	| Result of dangling index is not imported                                                                                                   |
+|NEW_INDEX_RESTORED	      | Data is restored from the snapshot to a new index                                                                                          |
+|EXISTING_INDEX_RESTORED	| Data is restored from the snapshot to a disabled index                                                                                     |
+|REPLICA_ADDED	          | Replica shards are added explicitly                                                                                                        |
+|ALLOCATION_FAILED	      | Shard assignment fails                                                                                                                     |
+|NODE_LEFT	              | The node that carries the shard is located outside of the cluster                                                                          |
+|REINITIALIZED	          | Incorrect operations (such as use of the shadow replica shard) exist in the process from moving the shard to the shard initialization      |
+|REROUTE_CANCELLED	      | The assignment is canceled because the routing is canceled explicitly                                                                      |
+|REALLOCATED_REPLICA	    | Replica location will be used, and the existing replica assignment is canceled. As a result, the shard is unassigned                       |
+
+
 
 ### CircuitBreaker due to JVM (heap)pressure:
   * High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
+  * Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
 
 ```bash
 curl -X GET "localhost:9200/_nodes/stats/breaker?pretty"
@@ -123,18 +157,7 @@ PUT _cluster/settings
 }
 ```
 
-  * Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
-
-```bash
-GET _cluster/health
-GET _cluster/health?filter_path=status,*_shards
-GET _cluster/allocation/explain?pretty
-
-# retry to decrease unassigned_shards
-POST _cluster/reroute?retry_failed
-```
-
----
+### cURL stuff
 
 ```bash
 # return just indices
