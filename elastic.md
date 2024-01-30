@@ -32,7 +32,6 @@
 * Health:
 
 ```bash
-
 # cluster health
 GET _cluster/health
 GET _cluster/health?filter_path=status,*_shards
@@ -114,6 +113,29 @@ curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
 # fixing unassigned shards
 curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed' 
 ```
+
+### Shards with unassigned reasons
+
+```bash
+curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
+```
+
+| Reason                  | Meaning                                                                                                                                    |
+--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+|INDEX_CREATED	          | API for creating an index introduces the problem                                                                                           |
+|CLUSTER_RECOVERED	      | Full data restoration is performed for the cluster                                                                                         |
+|INDEX_REOPENED	          | An index is enabled or disabled                                                                                                            |    
+|DANGLING_INDEX_IMPORTED	| Result of dangling index is not imported                                                                                                   |
+|NEW_INDEX_RESTORED	      | Data is restored from the snapshot to a new index                                                                                          |
+|EXISTING_INDEX_RESTORED	| Data is restored from the snapshot to a disabled index                                                                                     |
+|REPLICA_ADDED	          | Replica shards are added explicitly                                                                                                        |
+|ALLOCATION_FAILED	      | Shard assignment fails                                                                                                                     |
+|NODE_LEFT	              | The node that carries the shard is located outside of the cluster                                                                          |
+|REINITIALIZED	          | Incorrect operations (such as use of the shadow replica shard) exist in the process from moving the shard to the shard initialization      |
+|REROUTE_CANCELLED	      | The assignment is canceled because the routing is canceled explicitly                                                                      |
+|REALLOCATED_REPLICA	    | Replica location will be used, and the existing replica assignment is canceled. As a result, the shard is unassigned                       |
+
+
 
 ### CircuitBreaker due to JVM (heap)pressure:
   * High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
