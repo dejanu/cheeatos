@@ -171,6 +171,7 @@ vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
 ### Usefull links:
 
 * [Tune pg settings](https://pgtune.leopard.in.ua/)
+* [Error codes](https://www.postgresql.org/docs/current/errcodes-appendix.html)
 * For a dedicated database server:
 
 ```bash
