@@ -163,8 +163,11 @@ PUT _cluster/settings
 # return just indices
 curl -X GET "localhost:9200/_nodes/stats/indices?pretty"
 
-# return sorted indices
-curl -X GET "http://localhost:9200/_cat/indices/?s=store.size:desc"
+# return sorted indices by size
+curl -X GET "http://localhost:9200/_cat/indices?pretty&s=store.size:desc"
+
+# return sorted indices by date
+curl -X  GET "http://localhost:9200/_cat/indices?pretty&s=creation.date"
 
 # allocation of disk space for indices and the number of shards on each node.
 curl -X GET _cat/allocation?v
