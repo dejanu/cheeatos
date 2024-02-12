@@ -115,8 +115,9 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 
 * Cluster state =  a **red** cluster means that at least on primary shard and its replicas are not allocated to a node.
 * Ultimately, red shards cause red clusters, and red indexes cause red shards.
+* OpenSearch Service keeps trying to take automated snapshots of all indexes regardless of their status, but the snapshots fail while the red cluster status persists.
 
-* To indetify the indexes causing the red cluster status:
+* To identify the indexes causing the red cluster status:
 ```bash
 # unassigned shards allocation explained
 GET _cluster/allocation/explain
@@ -143,7 +144,17 @@ curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.re
 |REROUTE_CANCELLED	      | The assignment is canceled because the routing is canceled explicitly                                                                      |
 |REALLOCATED_REPLICA	    | Replica location will be used, and the existing replica assignment is canceled. As a result, the shard is unassigned                       |
 
+* There is a limit on how many shards a node can handle. 
 
+```bash
+# Check how many shards a node can accomodate and search 
+# cluster.max_shards_per_node setting. integer: Limits the total number of primary and replica shards for the cluster
+GET /_cluster/settings?include_defaults=true
+
+# update 
+curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
+
+```
 
 ### CircuitBreaker due to JVM (heap)pressure:
   * High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
