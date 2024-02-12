@@ -18,7 +18,9 @@
 
 ### ElasticSearch
 
-* INDEX = logical namespace (broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards. Indices are identified by lowercase names that refer to actions that are performed actions (such as searching and deleting) on the documents that are inside each index
+An OpenSearch **index** is composed of **shards**. Each document in an index is stored in the shards of an index. An index can have two types of shards, primary and replica.
+
+* INDEX = logical namespace (broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards.
 
 * ALIAS = a secondary name for a group of data streams or idices
 
@@ -35,10 +37,6 @@
 # cluster health
 GET _cluster/health
 GET _cluster/health?filter_path=status,*_shards
-
-# unassigned shards allocation explained
-GET _cluster/allocation/explain
-GET _cluster/allocation/explain?pretty
 
 # indices table
 GET /_cat/indices?v 
@@ -100,7 +98,6 @@ curl -X GET http://localhost:9200/_cat/shards?h=index,shard,prirep,state,unassig
 curl -X GET http://localhost:9200/_cat/indices?v
 
 curl -X GET http://localhost:9200/_cluster/health?pretty
-curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
 
 curl -X GET http://localhost:9200/_cat/nodes?v
 curl -X GET http://localhost:9200/_cat/master?v
@@ -116,7 +113,18 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 
 ### Shards with unassigned reasons
 
+* Cluster state =  a **red** cluster means that at least on primary shard and its replicas are not allocated to a node.
+* Ultimately, red shards cause red clusters, and red indexes cause red shards.
+
+* To indetify the indexes causing the red cluster status:
 ```bash
+# unassigned shards allocation explained
+GET _cluster/allocation/explain
+GET _cluster/allocation/explain?pretty
+
+curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
+
+# unassigned reason
 curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
 
