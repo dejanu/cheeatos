@@ -128,6 +128,7 @@ curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
 # unassigned reason
 curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
+---
 
 | Reason                  | Meaning                                                                                                                                    |
 --------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
@@ -143,6 +144,8 @@ curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.re
 |REINITIALIZED	          | Incorrect operations (such as use of the shadow replica shard) exist in the process from moving the shard to the shard initialization      |
 |REROUTE_CANCELLED	      | The assignment is canceled because the routing is canceled explicitly                                                                      |
 |REALLOCATED_REPLICA	    | Replica location will be used, and the existing replica assignment is canceled. As a result, the shard is unassigned                       |
+
+---
 
 * There is a limit on how many shards a node can handle. 
 
