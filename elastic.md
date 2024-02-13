@@ -60,13 +60,9 @@ GET _cat/indices?pretty&s=store.size:desc
 # get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
 GET _aliases/?pretty=true
 
-# shards stuff
+# shards retry allocation
 POST _cluster/reroute?retry_failed
 GET _cluster/health?filter_path=status,*_shards
-
-# retry to decrease unassigned_shards
-POST _cluster/reroute?retry_failed
-
 
 # get all docs with TAG http.method
 GET /_all/_search?q=tag:http.method
@@ -122,19 +118,21 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 * Cluster state =  a **red** cluster means that at least on primary shard and its replicas are not allocated to a node.
 * Ultimately, red shards cause red clusters, and red indexes cause red shards.
 * OpenSearch Service keeps trying to take automated snapshots of all indexes regardless of their status, but the snapshots fail while the red cluster status persists.
+* The longer we keep indices open, the more shards you use
 
 * To identify the indexes causing the red cluster status:
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
+
 ```bash
-# unassigned shards allocation explained
+# unassigned shards allocation explained and unassigned reason
 GET _cluster/allocation/explain
 GET _cluster/allocation/explain?pretty
+GET _cat/shards?h=index,shards,state,prirep,unassigned.reason
 
 curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
-
-# unassigned reason
-curl -X GET localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
+curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
+
 
 * There is a limit on how many shards a node can handle. 
 
@@ -145,7 +143,6 @@ GET /_cluster/settings?include_defaults=true
 
 # update 
 curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
-
 ```
 
 ### CircuitBreaker due to JVM (heap)pressure:
