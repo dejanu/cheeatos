@@ -62,7 +62,6 @@ GET _aliases/?pretty=true
 
 # shards retry allocation
 POST _cluster/reroute?retry_failed
-GET _cluster/health?filter_path=status,*_shards
 
 # get all docs with TAG http.method
 GET /_all/_search?q=tag:http.method
@@ -124,11 +123,16 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
 
 ```bash
+# shards status
+GET _cluster/health?filter_path=status,*_shards
+GET _cluster/health?level=shards
+
 # unassigned shards allocation explained and unassigned reason
 GET _cluster/allocation/explain
 GET _cluster/allocation/explain?pretty
 GET _cat/shards?h=index,shards,state,prirep,unassigned.reason
 
+# some with curl
 curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
 curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
@@ -211,6 +215,8 @@ curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.inges
 * [How To Return All Documents From An Index In Elasticsearch](https://kb.objectrocket.com/elasticsearch/how-to-return-all-documents-from-an-index-in-elasticsearch)
 * [Elasticsearch Concepts](https://logz.io/blog/10-elasticsearch-concepts/)
 * [OpenSearch CLI](https://opensearch.org/docs/1.2/clients/cli/)
+* [Sizing indices](https://opensearch.org/blog/optimize-opensearch-index-shard-size/)
+* [Error handling](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/handling-errors.html)
  
 ```bash
                     ___ _____
