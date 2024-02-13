@@ -39,28 +39,34 @@ GET _cluster/health
 GET _cluster/health?filter_path=status,*_shards
 
 # indices table
-GET /_cat/indices?v 
-
-# shards stuff
-POST _cluster/reroute?retry_failed
-GET _cluster/health?filter_path=status,*_shards
-
-# get indices and their status
-GET _cat/indices
-
-# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
-GET _aliases/?pretty=true
-
-# retry to decrease unassigned_shards
-POST _cluster/reroute?retry_failed
+GET /_cat/indices?v
 
 # Get a specific INDEX and return all of the documents in an index using a "match_all" qu
-GET {YOUR_INDEX}/_search
+GET INDEX_NAME/_search
 {
     "query": {
         "match_all": {}
     }
 }
+
+# Get the INDEX settings
+GET INDEX_NAME/_settings
+
+# sort indices by size or date
+GET _cat/indices
+GET _cat/indices?pretty&s=creation.date
+GET _cat/indices?pretty&s=store.size:desc
+
+# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
+GET _aliases/?pretty=true
+
+# shards stuff
+POST _cluster/reroute?retry_failed
+GET _cluster/health?filter_path=status,*_shards
+
+# retry to decrease unassigned_shards
+POST _cluster/reroute?retry_failed
+
 
 # get all docs with TAG http.method
 GET /_all/_search?q=tag:http.method
