@@ -16,18 +16,17 @@
 
 ---
 
-### ElasticSearch
+### General
 
-An OpenSearch **index** is composed of **shards**. Each document in an index is stored in the shards of an index. An index can have two types of shards, primary and replica.
+* **Indices** are the largest unit of data, OpenSearch organizes data into indices, and an index is a collection of JSON documents
 
-* INDEX = logical namespace (broken into shards in order to distribute the data and scale) which maps to one ore more primary shards and can have zero or more replica shards.
+* **Alias** a secondary name for a group of data streams or indices
 
-* ALIAS = a secondary name for a group of data streams or idices
+* Data in an index is partitioned across **shards**, the reasoning being that an index might be too large to fit on a single disk, but shards being smaller can be distributed and allocated across different nodes as needed.
 
-* SHARDS = physical data files which are split into chunks and are distributed across the cluster. Shards are a single Lucene index.
-  * you cannot delete unassigned shards, an unassigned shard is not a corrupted shard, but a missing replica
-  * replica shards = one or more copies of your index's shards
-  * primary vs replica = replica is promoted to primary(primary cannot be on the same node as the replica)
+*  **Shards** physical data files which are split into chunks and are distributed across the cluster.
+  * Searches can be run in parallel across different shards speeding up the query processing
+  * By default, OpenSearch creates a replica shard for each primary shard. (primary cannot be on the same node as the replica)
 
 * TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model. Use tags to categorize your saved objects, then filter for related objects based on shared tags
 
@@ -41,6 +40,13 @@ GET _cluster/health?filter_path=status,*_shards
 # indices table
 GET /_cat/indices?v
 
+# sort indices by size or date
+GET _cat/indices?pretty&s=creation.date
+GET _cat/indices?pretty&s=store.size:desc
+
+# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
+GET _aliases/?pretty=true
+
 # Get a specific INDEX and return all of the documents in an index using a "match_all" qu
 GET INDEX_NAME/_search
 {
@@ -51,22 +57,53 @@ GET INDEX_NAME/_search
 
 # Get the INDEX settings
 GET INDEX_NAME/_settings
+```
 
-# sort indices by size or date
-GET _cat/indices
-GET _cat/indices?pretty&s=creation.date
-GET _cat/indices?pretty&s=store.size:desc
+### Shards
 
-# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
-GET _aliases/?pretty=true
+* Shard size matters because it impacts both search latency and write performance, too many small shards will exhaust the memory (JVM Heap) too few large shards prevent OpenSearch from properly distributing requests, a good rule of thumb is to keep shard size between 10–50 GB.
+
+* When adding or searching data within an index, that index it’s in an open state, the longer you keep the indices open the more shards you use.
+
+* Very important red indexes cause red shards, and red shards cause red clusters.
+
+* Unassigned shards cannot be deleted, an unassigned shard is not a corrupted shard, but a missing replica.
+
+```bash
+# check the global cluster status for shards
+GET _cluster/health?filter_path=status,*_shards
+GET _cluster/health?level=shards
+
+# get shards for specific index (check shard size)
+GET _cat/shards/INDEX_NAME?v
+
+# unassigned shards allocation explained and unassigned reason
+GET _cluster/allocation/explain
+GET _cluster/allocation/explain?pretty
+GET _cat/shards?h=index,shards,state,prirep,unassigned.reason
 
 # shards retry allocation
 POST _cluster/reroute?retry_failed
-GET _cluster/health?filter_path=status,*_shards
 
-# get all docs with TAG http.method
-GET /_all/_search?q=tag:http.method
+# some with curl
+curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
+curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
+
+* To identify the indexes causing the red cluster status:
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
+
+* There is a limit on how many shards a node can handle. 
+
+```bash
+# Check how many shards a node can accomodate and search 
+# cluster.max_shards_per_node setting. integer: Limits the total number of primary and replica shards for the cluster
+GET /_cluster/settings?include_defaults=true
+
+# update 
+curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
+```
+
 
 * Cluster settings:
   * Transient – Changes that will not persist after a full cluster restart
@@ -111,38 +148,6 @@ curl http://dc1-elke004.sgdmz.local:9200/_nodes/thread_pool?pretty
  
 # fixing unassigned shards
 curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed' 
-```
-
-### Shards with unassigned reasons
-
-* Cluster state =  a **red** cluster means that at least on primary shard and its replicas are not allocated to a node.
-* Ultimately, red shards cause red clusters, and red indexes cause red shards.
-* OpenSearch Service keeps trying to take automated snapshots of all indexes regardless of their status, but the snapshots fail while the red cluster status persists.
-* The longer we keep indices open, the more shards you use
-
-* To identify the indexes causing the red cluster status:
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
-
-```bash
-# unassigned shards allocation explained and unassigned reason
-GET _cluster/allocation/explain
-GET _cluster/allocation/explain?pretty
-GET _cat/shards?h=index,shards,state,prirep,unassigned.reason
-
-curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
-curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
-```
-
-
-* There is a limit on how many shards a node can handle. 
-
-```bash
-# Check how many shards a node can accomodate and search 
-# cluster.max_shards_per_node setting. integer: Limits the total number of primary and replica shards for the cluster
-GET /_cluster/settings?include_defaults=true
-
-# update 
-curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
 ```
 
 ### CircuitBreaker due to JVM (heap)pressure:
@@ -211,6 +216,8 @@ curl -X GET "localhost:9200/_nodes/stats?metric=ingest&filter_path=nodes.*.inges
 * [How To Return All Documents From An Index In Elasticsearch](https://kb.objectrocket.com/elasticsearch/how-to-return-all-documents-from-an-index-in-elasticsearch)
 * [Elasticsearch Concepts](https://logz.io/blog/10-elasticsearch-concepts/)
 * [OpenSearch CLI](https://opensearch.org/docs/1.2/clients/cli/)
+* [Sizing indices](https://opensearch.org/blog/optimize-opensearch-index-shard-size/)
+* [Error handling](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/handling-errors.html)
  
 ```bash
                     ___ _____
