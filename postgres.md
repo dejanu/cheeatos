@@ -100,10 +100,13 @@ SHOW max_connections;
 SELECT current_setting('max_connections');
 
 # pg_stat_activity is a table that stores PostgreSQL connection & activity stats. 
-# count of active connections or check all sessions
-# connection = relationship between a client and DB server, aka communication channel 
-# session = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
+
+# CONNECTION = relationship between a client and DB server, aka communication channel 
+# SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
 # A connection can have multiple sessions
+
+# count of active connections or check all sessions
+SELECT datname, usename, COUNT(*) FROM pg_stat_activity where datname not in ('azuresu','postgres') and usename not in ('phiadmin') GROUP BY datname, usename ORDER BY COUNT(datname) DESC;
 select count(*) from pg_stat_activity;
 select * from pg_stat_activity;
 
