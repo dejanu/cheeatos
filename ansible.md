@@ -72,6 +72,9 @@ ansible <GROUP> -m copy -a "src=/path/to/file dest=/path/on/target/" -i <HOSTS_I
 ```bash
 # ansible view inventory
 ansible-inventory -i <HOSTS_INVENTORY> --graph
+
+# run playbook just on one machine from inventory limit
+ansible-playbook -i <HOSTS_INVENTORY> -l machine.fqdn
 ```
 * Run playbook on local host: `ansible-playbook --connection=local <PLAYBOOK>.yml`:
 
