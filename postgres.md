@@ -160,7 +160,11 @@ FROM employees;
 VACUUM FULL;
 
 # check if autovacuum is enabled
+# setting for the autovaccum can be found in /var/lib/postgresql/data/postgresql.conf
 SHOW autovacuum;
+
+# check 
+SELECT * FROM pg_settings WHERE name LIKE 'autovacuum%';
 ```
 * Removing orphaned large objects (LO whose OID does not appear in any oid or lo data column of the database) using [vaccumlo](https://www.postgresql.org/docs/current/vacuumlo.html) client tool:
 
