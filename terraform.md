@@ -142,8 +142,8 @@ resource "google_compute_instance" "vm_instance" {
 ### Action
 
 - If you have a resourge e.g. ResourceGroup create manually in Azure_portal in order to use it you must import it:
-```bash
 
+```bash
 # imported the resource group which was created manually
 terraform import azurerm_resource_group.<RG_NAME_LOWERCASE> /subscriptions/<SUBS_ID>/resourceGroups/<RG_NAME>
 ```
