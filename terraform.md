@@ -22,7 +22,23 @@
 
 * Uses a language called HCL - [HashiCorp Configuration Language](https://github.com/hashicorp/hcl).
 
-* Terraform uses **plugins** called providers to interface with the resources in the cloud provider
+* Terraform uses **plugins** called **providers** to interface with the resources in the cloud provider.
+
+* Terraform **backend** used to define the state data files: 
+  * By default, Terraform uses a backend called `local`, which stores state as a local file on disk
+  * You can configure the backend by adding the `backend` block to your configuration, e.g remote backend:
+  ```jons
+  terraform {
+  backend "remote" {
+    organization = "example_corp"
+
+    workspaces {
+      name = "my-app-prod"
+    }
+  }
+  ```
+
+* Terraform flow:
 
 ```bash
 terraform init # initialize a working directory containing the Terraform configuration files, it  will create .terraform.lock.hcl to record the provider selections it made above
@@ -39,8 +55,6 @@ terraform apply main.tfplan # apply the plan from file e.g. maint.tfplan
 # proposed destroy changes without executing them
 terraform plan -destroy -out main.destroy.tfplan
 terraform apply main.destroy.tfplan
-
-
 ```
 
 * The `init` command must be called:
