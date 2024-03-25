@@ -18,10 +18,17 @@
 
 ### Key features
 
-*  tool for building, changing, and versioning infrastructure safel, that can manage both low-level components such as compute instances, storage, and networking, and high-level components such as DNS entries and SaaS features.
+*  Tool for building, changing, and versioning infrastructure safel, that can manage both low-level components such as compute instances, storage, and networking, and high-level components such as DNS entries and SaaS features.
+
+* Uses a language called HCL - [HashiCorp Configuration Language](https://github.com/hashicorp/hcl).
+
+* Terraform uses **plugins** called providers to interface with the resources in the cloud provider
 
 ```bash
-terraform init # initialize a working directory containing the Terraform configuration files.
+terraform init # initialize a working directory containing the Terraform configuration files, it  will create .terraform.lock.hcl to record the provider selections it made above
+
+# validate if the configuration is correct
+terraform validate
 
 terraform plan # present you the difference between reality at a given time and config you intend to apply
 terraform plan -out maint.tfplan # creates an execution plan to a specified output file
@@ -32,6 +39,8 @@ terraform apply main.tfplan # apply the plan from file e.g. maint.tfplan
 # proposed destroy changes without executing them
 terraform plan -destroy -out main.destroy.tfplan
 terraform apply main.destroy.tfplan
+
+
 ```
 
 * The `init` command must be called:
