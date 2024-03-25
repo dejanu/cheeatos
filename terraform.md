@@ -24,10 +24,38 @@
 
 * Terraform uses **plugins** called **providers** to interface with the resources in the cloud provider.
 
+
+### Terraform state
+
+* By default is stored in `terraform.tfstate` file or it can be stored remotely e.g. Azure VM
+
+
+```json
+# main.tf file
+# store state remotely in Azure VM
+terraform {
+    backend "azurerm" {
+        resource_group_name = "RG_NAME"
+        storage_account_name = "STORAGE_ACCOUNT_NAME"
+        container_name = "tfstate"
+        key = "terraform.tfstate"
+    }
+
+    required_version = ">= 0.13"
+    required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "2.49.0"
+    }
+  }
+}
+```
+
 * Terraform **backend** used to define the state data files: 
   * By default, Terraform uses a backend called `local`, which stores state as a local file on disk
   * You can configure the backend by adding the `backend` block to your configuration, e.g remote backend:
-  ```jons
+  
+```json
   terraform {
   backend "remote" {
     organization = "example_corp"
@@ -36,7 +64,9 @@
       name = "my-app-prod"
     }
   }
-  ```
+```
+
+* Terraform **state** represents the current state of your infrastructure, while the Terraform **backend** determines where and how this state is stored and accessed.
 
 * Terraform flow:
 
@@ -107,30 +137,6 @@ resource "google_compute_instance" "vm_instance" {
   }
 }
 ```
-
-### Terraform state
-
-* by default is stored in `terraform.tfstate` file or it can be stored remotely e.g. Azure VM
-
-**maint.tf**
-```json
-# store state remotely in Azure VM
-terraform {
-    backend "azurerm" {
-        resource_group_name = "RG_NAME"
-        storage_account_name = "STORAGE_ACCOUNT_NAME"
-        container_name = "tfstate"
-        key = "terraform.tfstate"
-    }
-
-    required_version = ">= 0.13"
-    required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "2.49.0"
-    }
-  }
-}
 
 
 ### Action
