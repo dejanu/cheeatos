@@ -18,19 +18,15 @@
 
 ### General
 
-* **Indices** are the largest unit of data, OpenSearch organizes data into indices, and an index is a collection of JSON documents
+* **Indices** are the largest unit of data, an index is a collection of JSON documents
 
-* **Alias** a secondary name for a group of data streams or indices
+* Data in an index is partitioned across **Shards**, the reasoning being that an index might be too large to fit on a single disk, but shards being smaller can be distributed and allocated across different nodes as needed.
 
-* Data in an index is partitioned across **shards**, the reasoning being that an index might be too large to fit on a single disk, but shards being smaller can be distributed and allocated across different nodes as needed.
-
-*  **Shards** physical data files which are split into chunks and are distributed across the cluster.
+* **Shards** physical data files which are split into chunks and are distributed across the cluster.
   * Searches can be run in parallel across different shards speeding up the query processing
   * By default, OpenSearch creates a replica shard for each primary shard. (primary cannot be on the same node as the replica)
 
-* TAGS = Tagging is a common design pattern that allows us to categorize and filter items in our data model. Use tags to categorize your saved objects, then filter for related objects based on shared tags
-
-* Health:
+* Indices Health:
 
 ```bash
 # cluster health
@@ -41,14 +37,11 @@ GET _cluster/health?filter_path=status,*_shards
 GET /_cat/indices?v
 
 # sort indices by size or date
-GET _cat/indices?pretty&s=creation.date
-GET _cat/indices?pretty&s=store.size:desc
-
-# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
-GET _aliases/?pretty=true
+GET _cat/indices?v&s=store.size:desc
+GET _cat/indices?v&s=creation.date:desc
 
 # Get a specific INDEX and return all of the documents in an index using a "match_all" qu
-GET INDEX_NAME/_search
+GET <index>/_search
 {
     "query": {
         "match_all": {}
@@ -56,14 +49,17 @@ GET INDEX_NAME/_search
 }
 
 # Get the INDEX settings
-GET INDEX_NAME/_settings
+GET <index>/_settings
+
+# get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
+GET _aliases/?pretty=true
 ```
 
 ### Shards
 
 * Shard size matters because it impacts both search latency and write performance, too many small shards will exhaust the memory (JVM Heap) too few large shards prevent OpenSearch from properly distributing requests, a good rule of thumb is to keep shard size between 10–50 GB.
 
-* When adding or searching data within an index, that index it’s in an open state, the longer you keep the indices open the more shards you use.
+* When writing or searching data within an index, that index it’s in an open state, the longer you keep the indices open the more shards you use.
 
 * Very important red indexes cause red shards, and red shards cause red clusters.
 
@@ -75,7 +71,7 @@ GET _cluster/health?filter_path=status,*_shards
 GET _cluster/health?level=shards
 
 # get shards for specific index (check shard size)
-GET _cat/shards/INDEX_NAME?v
+GET _cat/shards/<index>?v
 
 # unassigned shards allocation explained and unassigned reason
 GET _cluster/allocation/explain
@@ -93,15 +89,22 @@ curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassi
 * To identify the indexes causing the red cluster status:
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
 
-* There is a limit on how many shards a node can handle. 
+* There is a limit on how many shards a node can handle. Each node can accomodate a no of shards, Check how many shards a node can accomodate and search check `max_shards_per_node` setting 
 
 ```bash
 # Check how many shards a node can accomodate and search 
 # cluster.max_shards_per_node setting. integer: Limits the total number of primary and replica shards for the cluster
 GET /_cluster/settings?include_defaults=true
 
-# update 
+# update the no of shards per node
 curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.max_shards_per_node": 1100
+  }
+}
 ```
 
 
