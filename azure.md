@@ -85,8 +85,9 @@ az aks nodepool add -g <RESOURCE_GROUP_NAME> --cluster-name <Kubernetes_service_
 # scale AKS/k8s cluster: set 
 az aks scale --resource-group RESOURCE_GROUP_NAME --name AKS_CLUSTER_NAME --node-count 4 --nodepool-name NODEPOOL_NAME
 
-# get k8s cluster credentials .kube/config
+# get/fix k8s cluster credentials .kube/config
 az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name>
+az aks get-credentials --resource-group <resourge_group_name> --name <cluster-name> --admin
 ```
 ---
 
