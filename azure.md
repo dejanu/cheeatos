@@ -63,6 +63,9 @@ az ad sp credential reset --name <service_principal>
 
 # assign role to SVP
 az role assignment create --assignee "object_id" --role "contributor"
+
+# create vm - the key will be stored into ~/.ssh defaults to id_rsa
+az vm create --name demovm --resource-group <RESOURCE_GROUP_NAME> --image Ubuntu2204 --generate-ssh-keys 
 ```
 * AKS:
 
