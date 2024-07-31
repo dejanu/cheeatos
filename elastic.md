@@ -25,6 +25,8 @@
 ```bash
 # cluster general health
 GET _cluster/health
+GET _cluster/stats
+GET _cat/nodes?v=true
 
 # shard status: no of shards in the cluster
 GET _cluster/health?filter_path=status,*_shards
