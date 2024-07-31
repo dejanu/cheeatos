@@ -58,6 +58,8 @@ GET _aliases/?pretty=true
 
 * Shard size matters because it impacts both search latency and write performance, too many small shards will exhaust the memory (JVM Heap) too few large shards prevent OpenSearch from properly distributing requests, a good rule of thumb is to keep shard size between 10–50 GB.
 
+* For fast indexing (ingestion), you need as many shards as possible; for fast searching, it is better to have as few shards as possible.
+
 * When writing or searching data within an index, that index it’s in an open state, the longer you keep the indices open the more shards you use.
 
 * Very important red indexes cause red shards, and red shards cause red clusters.
@@ -65,9 +67,12 @@ GET _aliases/?pretty=true
 * Unassigned shards cannot be deleted, an unassigned shard is not a corrupted shard, but a missing replica.
 
 ```bash
-# check the global cluster status for shards
+# shard healthcheck
 GET _cluster/health?filter_path=status,*_shards
 GET _cluster/health?level=shards
+
+# sort shards
+GET _cat/shards?v&s=store:desc
 
 # get shards for specific index (check shard size)
 GET _cat/shards/<index>?v
