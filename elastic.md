@@ -18,23 +18,20 @@
 
 ### General
 
-* **Indices** are the largest unit of data, an index is a collection of JSON documents
-
-* Data in an index is partitioned across **Shards**, the reasoning being that an index might be too large to fit on a single disk, but shards being smaller can be distributed and allocated across different nodes as needed.
-
-* **Shards** physical data files which are split into chunks and are distributed across the cluster.
-  * Searches can be run in parallel across different shards speeding up the query processing
-  * By default, OpenSearch creates a replica shard for each primary shard. (primary cannot be on the same node as the replica)
+* OpenSearch splits **indices** into **shards**. Each shard stores a subset of all **documents** in an index.
 
 * Indices Health:
 
 ```bash
-# cluster health
+# cluster general health
 GET _cluster/health
+
+# shard status: no of shards in the cluster
 GET _cluster/health?filter_path=status,*_shards
 
 # indices table
 GET /_cat/indices?v
+GET _cat/indices?v&pretty
 
 # sort indices by size or date
 GET _cat/indices?v&s=store.size:desc
@@ -106,7 +103,6 @@ PUT _cluster/settings
   }
 }
 ```
-
 
 * Cluster settings:
   * Transient – Changes that will not persist after a full cluster restart
