@@ -19,7 +19,11 @@
 ### General info
 
 * PostgreSQL - relational database RDBMS
-* Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres` 
+* Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres`
+* A CONNECTION CAN HAVE MULTIPLE SESSIONS
+    * CONNECTION = relationship between a client and DB server, aka communication channel 
+    * SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
+
 * Usefull cmds:
 
 ```bash
@@ -86,7 +90,7 @@ shared_buffers(128MB) - the amount of memory allocated for caching data and inde
 
 # helps the query planner to make better decisions about which indexes to use and how to optimize queries
 # As per best practice is effective_cache  = RAM * 0.7
-effective_cache_size(4GB) - amount of memory the database system expects to be available for disk caching by the operating system and other processes.
+effective_cache_size(4GB) # amount of memory the database system expects to be available for disk caching by the operating system and other processes.
 ```
 
 * PostgreSQL allocates some amount of memory on a per connection basis, typically around 5 - 10 MB per connection:
@@ -100,10 +104,6 @@ SHOW max_connections;
 SELECT current_setting('max_connections');
 
 # pg_stat_activity is a table that stores PostgreSQL connection & activity stats. 
-
-# CONNECTION = relationship between a client and DB server, aka communication channel 
-# SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
-# A connection can have multiple sessions
 
 # count of active connections or check all sessions
 SELECT datname, usename, COUNT(*) FROM pg_stat_activity where datname not in ('azuresu','postgres') and usename not in ('phiadmin') GROUP BY datname, usename ORDER BY COUNT(datname) DESC;
