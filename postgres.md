@@ -153,6 +153,7 @@ FROM employees;
 
 ### Reclaim storage
 
+* Periodic maintenance known as vacuuming
 * Occupied by dead tuples (row/record in a table that has been marked for deletion but has not yet been physically removed from the table) using [vacuum](https://www.postgresql.org/docs/current/sql-vacuum.html)
 
 ```bash
@@ -182,10 +183,11 @@ vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
 * For a dedicated database server:
 
 ```bash
-#effective_cache_size parameter to a value between 50% and 75% of the total available memory on the system a good setting 
+# effective_cache_size parameter to a value between 50% and 75% of the total available memory on the system a good setting 
 effective_cache_size = RAM * 0.7
 
-#shared_buffers common recommendation is to set it to 25% to 33% of the total available memory on the system a good setting
+# shared_buffers common recommendation is to set it to 25% to 33% of the total available memory on the system a good setting
 shared_buffers_size = RAM * 0.3
 ```
 * Queries for Finding the size of various object in the [DB](https://wiki.postgresql.org/wiki/Disk_Usage)
+* [Routine vacuuming](https://www.postgresql.org/docs/12/routine-vacuuming.html)
