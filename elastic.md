@@ -192,11 +192,17 @@ curl -XPOST 'localhost:9200/_cluster/reroute?retry_failed'
 ```
 
 ### CircuitBreaker due to JVM (heap)pressure:
-  * High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
-  * Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
+
+* The heap size is the amount of RAM allocated to the JVM.
+
+* High JVM memory usage can degrade cluster performance and trigger circuit breaker errors. To prevent this, we recommend taking steps to reduce memory pressure if a node’s JVM memory usage consistently exceeds 85%.
+  
+* Every shard uses memory, a small set of large shards uses fewer resources than many small shards - check health and shards status allocation
 
 ```bash
-curl -X GET "localhost:9200/_nodes/stats/breaker?pretty"
+
+# check percentage of memory that is currently used by the heap
+GET _cat/nodes?v=true&h=name,heap.current,heap.percent
 
 # each instance displays a JVM memory pressure indicator
 GET _nodes/stats?filter_path=nodes.*.jvm.mem.pools.old
@@ -204,11 +210,13 @@ GET _nodes/stats?filter_path=nodes.*.jvm.mem.pools.old
 # Use the response to calculate memory pressure as follows:
 # JVM Memory Pressure = used_in_bytes / max_in_bytes
 
+curl -X GET "localhost:9200/_nodes/stats/breaker?pretty"
 # update parent CircuitBreaker as a transient setting
 PUT _cluster/settings
 {
   "transient": {"indices.breaker.total.limit":"500mb" }
 }
+
 ```
 
 ### cURL stuff
