@@ -24,15 +24,23 @@
 
 ```bash
 GET _cluster/health
+GET _cluster/stats
+
+# human and pretty
+GET _cluster/health?pretty=true
+GET _cluster/health?human=true
 
 GET _cat/nodes?v=true
 GET _cluster/stats/nodes/opensearch-cluster-data-0 #update opensearch-cluster-data-0 node name
 
+# nodes table view for heam percent disk used and cpu
 GET _cat/nodes?v&s=master,name&h=name,master,node.role,heap.percent,disk.used_percent,cpu
 GET _cat/nodes?v=true&h=heap.current,name
 
+# nodes JVM status (GC is triggered by JVM, i.e. when the heap is getting full GC starts)
 GET _nodes/stats?filter_path=nodes.*.jvm.mem.pools.old
 ```
+
 * Indices Health:
 
 ```bash
@@ -55,11 +63,32 @@ GET <index>/_search
     }
 }
 
-# Get the INDEX settings
+# get the INDEX settings and stats
 GET <index>/_settings
+GET /<index>/_stats
+
+# get no of documents
+GET <index>/_count
+
+# get he number of docs in each and health index
+GET _cat/indices?h=index,creation.date,docs.count,health&format=json
 
 # get indices - Most Elasticsearch APIs accept an alias in place of a data stream or index name
 GET _aliases/?pretty=true
+
+
+# close index
+POST /<index>/_close
+
+# reduce replica shards to 0
+PUT /<index>/_settings
+{
+  "index" : {
+	"number_of_replicas" : 0
+  }
+}
+
+DELETE <INDEX>
 ```
 
 ### Shards
@@ -81,15 +110,20 @@ GET _aliases/?pretty=true
 GET _cluster/health?filter_path=status,*_shards
 GET _cluster/health?level=shards
 
+# table view for index and shards
+GET _cat/shards?v=true&h=index,prirep,shard,store&s=prirep,store&bytes=gb
+
 # sort shards
 GET _cat/shards?v&s=store:desc
+
+# node shard distribution 
+GET _cat/shards?v=true&s=store:desc&h=index,node,store
 
 # get shards for specific index (check shard size)
 GET _cat/shards/<index>?v
 
 # unassigned shards allocation explained and unassigned reason
 GET _cluster/allocation/explain
-GET _cluster/allocation/explain?pretty
 GET _cat/shards?h=index,shards,state,prirep,unassigned.reason
 
 # shards retry allocation
@@ -118,7 +152,7 @@ curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassi
 GET /_cluster/settings?include_defaults=true
 
 # update the no of shards per node
-curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "3000" } }'
+curl -X PUT localhost:9200/_cluster/settings -H "Content-Type: application/json" -d '{ "persistent": { "cluster.max_shards_per_node": "1100" } }'
 
 PUT _cluster/settings
 {
