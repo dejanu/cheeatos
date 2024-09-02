@@ -20,26 +20,34 @@
 
 * OpenSearch splits **indices** into **shards**. Each shard stores a subset of all **documents** in an index.
 
+* Cluster Health:
+
+```bash
+GET _cluster/health
+
+GET _cat/nodes?v=true
+GET _cluster/stats/nodes/opensearch-cluster-data-0 #update opensearch-cluster-data-0 node name
+
+GET _cat/nodes?v&s=master,name&h=name,master,node.role,heap.percent,disk.used_percent,cpu
+GET _cat/nodes?v=true&h=heap.current,name
+
+GET _nodes/stats?filter_path=nodes.*.jvm.mem.pools.old
+```
 * Indices Health:
 
 ```bash
-# cluster general health
-GET _cluster/health
-GET _cluster/stats
-GET _cat/nodes?v=true
-
-# shard status: no of shards in the cluster
-GET _cluster/health?filter_path=status,*_shards
 
 # indices table
-GET /_cat/indices?v
 GET _cat/indices?v&pretty
 
 # sort indices by size or date
 GET _cat/indices?v&s=store.size:desc
 GET _cat/indices?v&s=creation.date:desc
 
-# Get a specific INDEX and return all of the documents in an index using a "match_all" qu
+# use aliases i.e. k8s-* for indices like k8s-logging, k8s-events
+GET _cat/indices/k8s-*?v&s=creation.date:desc
+
+# return all of the DOCUMENTS in a specific INDEX using a "match_all" query
 GET <index>/_search
 {
     "query": {
@@ -56,9 +64,11 @@ GET _aliases/?pretty=true
 
 ### Shards
 
-* Shard size matters because it impacts both search latency and write performance, too many small shards will exhaust the memory (JVM Heap) too few large shards prevent OpenSearch from properly distributing requests, a good rule of thumb is to keep shard size between 10–50 GB.
+* Shard size matters because it impacts both search latency and write performance:
 
-* For fast indexing (ingestion), you need as many shards as possible; for fast searching, it is better to have as few shards as possible.
+  * For fast indexing (ingestion), you need as many shards as possible; for fast searching, it is better to have as few shards as possible.
+
+  * A small set of large shards uses fewer resources than many small shards (too many small shards will exhaust the memory - JVM Heap), however, on the other side, too few large shards prevent OpenSearch from properly distributing requests.
 
 * When writing or searching data within an index, that index it’s in an open state, the longer you keep the indices open the more shards you use.
 
@@ -67,7 +77,7 @@ GET _aliases/?pretty=true
 * Unassigned shards cannot be deleted, an unassigned shard is not a corrupted shard, but a missing replica.
 
 ```bash
-# shard healthcheck
+# shard status: no of shards in the cluster
 GET _cluster/health?filter_path=status,*_shards
 GET _cluster/health?level=shards
 
@@ -93,6 +103,13 @@ curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassi
 * To identify the indexes causing the red cluster status:
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
 
+
+### Cluster settings
+
+* Transient – Changes that will not persist after a full cluster restart
+* Persistent – Changes that will be saved after a full cluster restart
+* Get settings: `GET /_cluster/settings`
+
 * There is a limit on how many shards a node can handle. Each node can accomodate a no of shards, Check how many shards a node can accomodate and search check `max_shards_per_node` setting 
 
 ```bash
@@ -109,22 +126,6 @@ PUT _cluster/settings
     "cluster.max_shards_per_node": 1100
   }
 }
-```
-
-* Cluster settings:
-  * Transient – Changes that will not persist after a full cluster restart
-  * Persistent – Changes that will be saved after a full cluster restart
-  * Get settings: `GET /_cluster/settings`
-
-```bash
-
-  # include default settings
-  GET /_cluster/settings?include_defaults=true
-  
-  {
-  "persistent" : { },
-  "transient" : { }
-  }
 ```
 
 * Elasticsearch contains multiple circuit breakers used to prevent operations from causing on OutOfMemoryError.
@@ -190,6 +191,9 @@ curl -X  GET "http://localhost:9200/_cat/indices?pretty&s=creation.date"
 
 # allocation of disk space for indices and the number of shards on each node.
 curl -X GET _cat/allocation?v
+
+# get the current shard size
+curl -X GET _cat/shards?v=true&h=index,prirep,shard,store&s=prirep,store&bytes=gb
 
 # return just os and process
 curl -X GET "localhost:9200/_nodes/stats/os,process?pretty"
