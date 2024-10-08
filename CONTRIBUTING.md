@@ -28,4 +28,4 @@ to add or update a new cheat page.
 ...
 ```
 
-2) Update/Fix antoher cheat page
+2) Update/Fix another cheatsheet page
