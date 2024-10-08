@@ -21,8 +21,8 @@
 * PostgreSQL - relational database RDBMS
 * Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres`
 * A CONNECTION CAN HAVE MULTIPLE SESSIONS
-    * CONNECTION = relationship between a client and DB server, aka communication channel 
-    * SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
+    **CONNECTION** = relationship between a client and DB server, aka communication channel 
+    **SESSION** = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
 
 * Usefull cmds:
 
@@ -136,7 +136,7 @@ shared_buffers = 256MB # min 128kB # (change requires restart)
 table pg_hba_file_rules ;
 ```
 
-* Views-is a virtual table that is created from a `SELECT` statement. Unlike a regular table, a view does not store data on its own, but it provides a logical representation of data from one or more tables.
+* Views - is a virtual table that is created from a `SELECT` statement. Unlike a regular table, a view does not store data on its own, but it provides a logical representation of data from one or more tables.
 
 ```bash
 # create VIEW
