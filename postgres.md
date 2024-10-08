@@ -153,13 +153,10 @@ FROM employees;
 
 ### Reclaim storage
 
-* Periodic maintenance known as vacuuming
+* Periodic maintenance known as [routine vacuuming](https://www.postgresql.org/docs/12/routine-vacuuming.html)
 * Occupied by dead tuples (row/record in a table that has been marked for deletion but has not yet been physically removed from the table) using [vacuum](https://www.postgresql.org/docs/current/sql-vacuum.html)
 
 ```bash
-# VACUUM reclaims storage occupied by dead tuples
-VACUUM FULL;
-
 # check if autovacuum is enabled
 # setting for the autovaccum can be found in /var/lib/postgresql/data/postgresql.conf
 SHOW autovacuum;
@@ -167,7 +164,15 @@ SHOW autovacuum;
 # check 
 SELECT * FROM pg_settings WHERE name LIKE 'autovacuum%';
 ```
-* Removing orphaned large objects (LO whose OID does not appear in any oid or lo data column of the database) using [vaccumlo](https://www.postgresql.org/docs/current/vacuumlo.html) client tool:
+* VACUUM reclaims disk space, but it locks the table for the duration of the operation, making it unavailable for writes:
+
+```bash
+
+# particularly usefull after a large number of deletions
+VACUUM FULL;
+```
+
+*  [vaccumlo](https://www.postgresql.org/docs/current/vacuumlo.html) client tool removes orphaned large objects(such as binary data stored in `pg_largeobject`):
 
 ```bash
 # install vacuumlo
@@ -190,4 +195,3 @@ effective_cache_size = RAM * 0.7
 shared_buffers_size = RAM * 0.3
 ```
 * Queries for Finding the size of various object in the [DB](https://wiki.postgresql.org/wiki/Disk_Usage)
-* [Routine vacuuming](https://www.postgresql.org/docs/12/routine-vacuuming.html)
