@@ -20,10 +20,11 @@
 
 * PostgreSQL - relational database RDBMS
 * Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres`
-* A CONNECTION CAN HAVE MULTIPLE SESSIONS
-    **CONNECTION** = relationship between a client and DB server, aka communication channel 
-    **SESSION** = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
-
+* A CONNECTION CAN HAVE MULTIPLE SESSIONS:
+```
+CONNECTION = relationship between a client and DB server, aka communication channel 
+SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
+```
 * Usefull cmds:
 
 ```bash
