@@ -18,7 +18,7 @@
 
 ### Key features
 
-*  Tool for building, changing, and versioning infrastructure safel, that can manage both low-level components such as compute instances, storage, and networking, and high-level components such as DNS entries and SaaS features.
+* Tool for building/changing/versioning infrastructure, can manage both low-level components such as compute instances, storage, and networking, and high-level components such as DNS entries and SaaS features.
 
 * Uses a language called HCL - [HashiCorp Configuration Language](https://github.com/hashicorp/hcl).
 
