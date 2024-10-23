@@ -67,7 +67,7 @@ SELECT pg_size_pretty( pg_database_size('DB_NAME') );
 
 ### Connections
 
-* Increase values of the `max_connections` and `shared_buffers` parameter is to directly edit `postgresql.conf` file:
+* Increase values of the `max_connections` and `shared_buffers` parameter edit directly `postgresql.conf` file:
 
 ```bash
 # check default parameters usually are stored in postgresql.conf
@@ -119,6 +119,7 @@ SELECT sum(numbackends) FROM pg_stat_database;
 SELECT count(distinct(numbackends)) FROM pg_stat_database;
 
 # check idle connections (open connections that are in the idle state, that also have an open transaction)
+select * from pg_stat_activity where (state = 'idle')
 select * from pg_stat_activity where (state = 'idle in transaction') and xact_start is not null;
 SELECT name, value FROM v$parameter WHERE name = 'sessions';
 
