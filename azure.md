@@ -26,6 +26,9 @@
 * Commands:
 
 ```bash
+# login in a AAD tenant
+az login --tenant <directory_domain>
+
 # get account details e.g. subscribtion,tenant id 
 az account show
 az account show -o table
@@ -96,7 +99,9 @@ az aks get-credentials --resource-group <resourge_group_name> --name <cluster-na
 ---
 
 * Azure Management Groups - containers that help you manage access, policy, and compliance for multiple subscriptions
-* Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis.
+
+* Azure Subscriptions -  authenticates and authorizes user to use resources, and a subscription is linked to an Azure account, which in turn is an identity in Azure Active Directory (AD). Hence, a subscription is an agreement between an organization and Microsoft to use resources, for which charges are either paid on a per-license basis or a cloud-based, resource-consumption basis. (DEPRECATED)
+* All Azure subscriptions have a trust relationship with a Microsoft Entra tenant (Microsoft Entra ID formerly Azure Active Directory)
 * Azure Resources Groups - logical collections of virtual machines, storage accounts, virtual networks, web apps, databases, and/or database servers
 * Service principal - identity created for use with applications, hosted services, and automated tools to access Azure resources instead of havving apps signs is as a fully privileged user.
 
