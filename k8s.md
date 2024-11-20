@@ -275,6 +275,7 @@ kubectl config set-credentials
 
 # set default namespace
 kubectl config set-context --current --namespace=<namespace>
+kubectl config set-context $(kubectl config current-context) --namespace=<namespace>
 ```
  
 ### Get k8s objects:
