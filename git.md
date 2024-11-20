@@ -24,22 +24,6 @@
 * [oshitgit](https://ohshitgit.com/)
 * [101](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
 
-* Git has 3 levels of **configuration**:
-  - SYSTEM: configurations for multiple users
-  - GLOBAL: configurations used for one user all repo on one host
-  - LOCAL: configuration for one repo
-  
-```bash
-# list the configuration: cat ~/.gitconfig 😉
-git config --list 
-
-# edit global configuration 
-git config –e --global
-
-# get/add the user name
-git config user.name
-git config --global user.name "YOUR_NAME"
-```
   
 * Primitive objects:
   * `commit` — object which contains the reference to another tree object
@@ -55,18 +39,33 @@ git config --global user.name "YOUR_NAME"
 
 ## Configure Git
 
+* Git has 3 levels of **configuration**:
+  - SYSTEM: configurations for multiple users
+  - GLOBAL: configurations used for one user all repo on one host
+  - LOCAL: configuration for one repo
+  
 ```bash
+# list the configuration: cat ~/.gitconfig 😉
+git config --list 
 
-$ git config --global user.name <YOUR NAME>
-$ git config --global user.email <YOUR MAIL>
+# edit global configuration 
+git config –e --global
 
-#disable SSL verification if you encounter SSL certificate problem: self signed certificate
-$ git config --global http.sslVerify false
+# get/add the user name
+git config user.name
+git config --global user.name "YOUR_NAME"
+git config --global user.email "MAIL"
 
-# use other ssh key
+# Disable SSL verification if you encounter SSL certificate problem: self signed certificate
+git config --global http.sslVerify false
+```
+* SSH
+
+```bash
+# Use other ssh key
 git -c core.sshCommand="ssh -i ~/.ssh/<PRIVATE_KEY>" clone git@github.com:dejanu/sretoolkit.git
 
-# update ~/.ssh/config
+# Update ~/.ssh/config
 
 Host github.com
     Hostname github.com
@@ -78,8 +77,8 @@ Host github.com
 
 ## Commands
 
-* `checkout` and `reset` are generally used for making local or private 'undos', they'll modify the history of a repo and can cause conflicts when pushing to remote
-* `revert` is considered a safer operation for 'public undos' as it creates new history which can be shared remotely and doesn't overwrite history remote
+* `checkout` and `reset` are generally used for making **local or private undos**, they'll modify the history of a repo and can cause conflicts when pushing to remote
+* `revert` is considered a safer operation for **public undos** as it creates new history which can be shared remotely and doesn't overwrite history remote
 
 ```bash
 # view/add remote
@@ -120,7 +119,6 @@ git reset --head X 2 == git reset HEAD^^
 
 # UNDO last commit and REMOVE changes, combine both git reset and git checkout in a single command
 git reset --hard HEAD~1 
-
 
 # create a new commit which usually has the inverse effect of the commit being reverted.
 git revert HEAD --no-edit | git revert HASH
