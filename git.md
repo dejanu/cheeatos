@@ -24,22 +24,21 @@
 * [oshitgit](https://ohshitgit.com/)
 * [101](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
 
-* Git has 3 levels of configuration:
+* Git has 3 levels of **configuration**:
   - SYSTEM: configurations for multiple users
   - GLOBAL: configurations used for one user all repo on one host
   - LOCAL: configuration for one repo
   
 ```bash
-#list the configuration
+# list the configuration: cat ~/.gitconfig 😉
 git config --list 
 
-#edit global configuration 
-git config –e  --global
+# edit global configuration 
+git config –e --global
 
 # get/add the user name
 git config user.name
-git config --global user.name "NAME"
-
+git config --global user.name "YOUR_NAME"
 ```
   
 * Primitive objects:
