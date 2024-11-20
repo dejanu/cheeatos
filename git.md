@@ -45,7 +45,6 @@ SYSTEM: configurations for multiple users
 GLOBAL: configurations used for one user all repo on one host
 LOCAL: configuration for one repo
 
-
 ```bash
 # list the configuration: cat ~/.gitconfig 😉
 git config --list 
@@ -61,7 +60,9 @@ git config --global user.email "MAIL"
 # Disable SSL verification if you encounter SSL certificate problem: self signed certificate
 git config --global http.sslVerify false
 ```
-* SSH
+***
+
+## SSH stuff
 
 ```bash
 # Use other ssh key
@@ -74,9 +75,7 @@ Host github.com
     PreferredAuthentications publickey
     IdentityFile ~/.ssh/<private_key>
 ```
-
 ***
-
 ## Commands
 
 * `checkout` and `reset` are generally used for making **local or private undos**, they'll modify the history of a repo and can cause conflicts when pushing to remote
@@ -110,12 +109,10 @@ git reset HEAD <filename>
 git restore --staged <file>
 
 # Reset current HEAD to the specified state (MIXED the default one)
-git-reset
+git reset
 
 # UNDO last commit and PRESERVE changes
-git reset --soft HEAD^ == git reset --soft HEAD^1
-git reset --soft HEAD~1 
-
+git reset --soft HEAD^ == git reset --soft HEAD~1
 # much wow (undo 2 commits) 
 git reset --head X 2 == git reset HEAD^^ 
 
