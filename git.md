@@ -40,10 +40,12 @@
 ## Configure Git
 
 * Git has 3 levels of **configuration**:
-  - SYSTEM: configurations for multiple users
-  - GLOBAL: configurations used for one user all repo on one host
-  - LOCAL: configuration for one repo
-  
+
+SYSTEM: configurations for multiple users
+GLOBAL: configurations used for one user all repo on one host
+LOCAL: configuration for one repo
+
+
 ```bash
 # list the configuration: cat ~/.gitconfig 😉
 git config --list 
