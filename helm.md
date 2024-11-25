@@ -45,9 +45,6 @@ helm repo list
 helm repo update
 helm search repo <CHART> --versions
 
-# list  all of the releases in all namespaces
-helm list -A
-
 # Retrieve a package from a package repository, and download it locally to a tgz file
 # Download a chart from a repository and (optionally) unpack it in local directory
 helm pull [chart URL | repo/chartname]
@@ -59,6 +56,12 @@ helm fetch cetic/pgadmin --untar
 
 # install chart very usefull --dry-run
 helm install [NAME] [CHART] [flags]
+
+# list  all of the releases in all namespaces
+helm list -A
+
+# re-read chart configuration information
+helm status <release_name>
 
 # inspect chart info
 helm show all [CHART]
