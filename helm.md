@@ -64,10 +64,14 @@ helm list -A
 helm status <release_name>
 
 # inspect chart info
-helm show all [CHART]
+helm show all <CHART>
 
-# override values
+# inspect chart values
+helm show values <CHART>
+
+# override chart configuration values
 helm install --set replicaCount=2  <release_name> <CHART>
+helm install -f values.yaml <release_name> <CHART>
 
 # create chart
 helm create <chart name>
@@ -77,7 +81,7 @@ helm upgrade -i <RELEASE_NAME>  <REPO>/<CHART> --version 2.16
 
 # Install chart:
 helm install bitnami/mysql --generate-name
-helm install <realease_name> bitnami/rabbitmq
+helm install <release_name> bitnami/rabbitmq
 ```
 
 * When installing Helm, make sure you're installing version 3. Version 2 still works, but it needs a server-side component called **Tiller**, which ties your helm installation to a single cluster. Helm 3 removed this need with the addition of several CRDs, but it's not supported in all Kubernetes versions.
