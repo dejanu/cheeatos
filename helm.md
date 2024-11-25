@@ -30,29 +30,24 @@
 * HELM2 (using **Tiller** pod inside k8s) vs HELM3 which communicates directly with K8s API server (ditch **Tiller** approach)
 
 ```bash
-## REPOSITORY = chart repository is a location where packaged charts can be stored and share
-## CHART = bundle/collection of one or more Kubernetes manifests, a chart is a Helm pacakge.
-## RELEASE = instance of a chart running in a k8s cluster.
+## REPOSITORY = HTTP server where packaged charts can be stored and shared
+## CHART = bundle/collection of one or more Kubernetes manifests, a chart is a Helm pacakge
+## RELEASE = instance of a chart running in a k8s cluster
+
 
 # add chart repo <REPO_NAME> has been added to your repositories
 # downloads an index file that lists all the available charts in the repository
 helm repo add [REPO_NAME] [URL]
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
-# Make sure we get the latest list of charts
-helm repo update 
-
-# list repos
-helm repo list
-# list charts
-helm list -A
-
-# add/list/update repositories: 
+# add/list/update repositories (make sure we get the latest list of charts)
 helm repo add [REPO_NAME] [URL]
 helm repo list
-# Make sure we get the latest list of charts
 helm repo update
 helm search repo <CHART> --versions
+
+# list  all of the releases in all namespaces
+helm list -A
 
 # Retrieve a package from a package repository, and download it locally to a tgz file
 # Download a chart from a repository and (optionally) unpack it in local directory
