@@ -19,13 +19,13 @@
 
 <em>"The package manager for k8s, provide users with a better way to manage all the Kubernetes YAML files for a k8s project"</em>
 
-* managing multiple k8s objects it's hard (versioning yaml 😔) - helm allows yml templating
+* Managing multiple k8s objects it's hard (versioning yaml 😔) - helm allows yml templating
 
 * Helm chart contents:
 
 ![char content](https://github.com/dejanu/cheetcity/blob/gh-pages/src/helm_chart_structure.PNG?raw=true)
 
-* helm repos: https://artifacthub.io/ and https://bitnami.com/ (VMWare)
+* Helm repos: [Artifact Hub](https://artifacthub.io/packages/search?kind=0) and https://bitnami.com/ (VMWare)
 * [Kustomize](https://kustomize.io/) (patch k8s obj) `kubectl kustomize .` vs HELM (package manager)
 * HELM2 (using **Tiller** pod inside k8s) vs HELM3 which communicates directly with K8s API server (ditch **Tiller** approach)
 
@@ -33,7 +33,6 @@
 ## REPOSITORY = HTTP server where packaged charts can be stored and shared
 ## CHART = bundle/collection of one or more Kubernetes manifests, a chart is a Helm pacakge
 ## RELEASE = instance of a chart running in a k8s cluster
-
 
 # add chart repo <REPO_NAME> has been added to your repositories
 # downloads an index file that lists all the available charts in the repository
@@ -61,8 +60,8 @@ helm fetch cetic/pgadmin --untar
 # install chart very usefull --dry-run
 helm install [NAME] [CHART] [flags]
 
-# install latest chart version
-helm upgrade -i <release_name> <REPO_NAME>  /<CHART> --version 2.12
+# inspect chart info
+helm show all [CHART]
 
 # override values
 helm install --set replicaCount=2  <release_name> <CHART>
@@ -70,7 +69,7 @@ helm install --set replicaCount=2  <release_name> <CHART>
 # create chart
 helm create <chart name>
 
-# pick the latest chart and update him : Release "<RELEASE_NAME>  " does not exist. Installing it now.
+# install latest chart and update it: Release "<RELEASE_NAME> " does not exist. Installing it now.
 helm upgrade -i <RELEASE_NAME>  <REPO>/<CHART> --version 2.16
 
 # Install chart:
@@ -80,12 +79,10 @@ helm install <realease_name> bitnami/rabbitmq
 
 * When installing Helm, make sure you're installing version 3. Version 2 still works, but it needs a server-side component called **Tiller**, which ties your helm installation to a single cluster. Helm 3 removed this need with the addition of several CRDs, but it's not supported in all Kubernetes versions.
 
-* Helm chart **repositories** [Artifact Hub](https://artifacthub.io/packages/search?kind=0):
 
 * RabbitMQ flow:
 
 ```bash
-
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 helm repo list
