@@ -276,6 +276,13 @@ kubectl config set-credentials
 # set default namespace
 kubectl config set-context --current --namespace=<namespace>
 kubectl config set-context $(kubectl config current-context) --namespace=<namespace>
+
+# merging two config files(one for each cluster) 
+# create backup for current config
+cp ~/.kube/config ~/.kube/config.bak
+
+KUBECONFIG=~/.kube/config:/path/to/new/config kubectl config view --flatten > ~/intermediate_config
+mv ~/intermediate_config ~/.kube/config
 ```
  
 ### Get k8s objects:
@@ -305,18 +312,6 @@ kubectl get po -A -o go-template='{{range .items}} --> {{.metadata.name}} in nam
 kubectl get po -o name -A
 ```
 
-### Deployment ops:
-
-```bash
-# create deployment
-kubectl create deployment dev-web --image=nginx:1.13.7-alpine
-
-# edit resource (bad-idea), interactive rollout this would trigger a rolling update of the deployment
-kubectl edit deployment <deployment_name>
-
-# scale rs to 1 for a deployment
-kubectl -n <namespace> scale deployment <deployment_name> --replicas=1
-```
 
 ### Scale down daemonset:
 
@@ -430,16 +425,6 @@ kubectl create -f https://git.io/weave-kube
 # check weave status
 kubectl -n kube-system get po -l "name=weave-net" -owide
 for p in $(kubectl -n kube-system get po -l "name=weave-net" -oname);do echo $p;kubectl -n kube-system exec $p  -- /home/weave/weave --local status connections ;done 
-```
-
-### Storage:
-
-```bash
-# get persistent volumes aka storage abstraction
-kubectl get pv
-
-# get  persistent volume claims 
-kubectl get pvc
 ```
 ---
 

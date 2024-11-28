@@ -43,7 +43,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add [REPO_NAME] [URL]
 helm repo list
 helm repo update
-helm search repo <CHART> --versions
+helm search repo <REPO>/<CHART> --versions
 
 # Retrieve a package from a package repository, and download it locally to a tgz file
 # Download a chart from a repository and (optionally) unpack it in local directory
