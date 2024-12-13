@@ -134,6 +134,20 @@ POST _cluster/reroute?retry_failed
 curl -X GET http://localhost:9200/_cluster/allocation/explain?pretty
 curl -X GET http://localhost:9200/_cat/shards?h=index,shards,state,prirep,unassigned.reason
 ```
+* Manually move shard (reroute) from one node to another:
+```json
+POST _cluster/reroute
+{
+ "commands": [
+   {
+     "move": {
+       "index": "jaeger-span-2024-11-29", "shard": 0,
+       "from_node": "opensearch-cluster-data-5", "to_node": "opensearch-cluster-data-7"
+     }
+   }
+ ]
+}
+```
 
 * To identify the indexes causing the red cluster status:
 ![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
