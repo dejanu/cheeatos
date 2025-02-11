@@ -188,8 +188,9 @@ vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
 
 * [Tune pg settings](https://pgtune.leopard.in.ua/)
 * [Error codes](https://www.postgresql.org/docs/current/errcodes-appendix.html)
-* For a dedicated database server:
+* [ENV vars](https://www.postgresql.org/docs/14/libpq-envars.html) to avoid hard-coding database connection information
 
+* For a dedicated database server:
 ```bash
 # effective_cache_size parameter to a value between 50% and 75% of the total available memory on the system a good setting 
 effective_cache_size = RAM * 0.7
