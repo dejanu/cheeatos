@@ -60,6 +60,9 @@ helm install [NAME] [CHART] [flags]
 # list  all of the releases in all namespaces
 helm list -A
 
+# impersonate user cluster-admin
+helm list -A --kube-as-user cluster-admin
+
 # re-read chart configuration information
 helm status <release_name>
 
