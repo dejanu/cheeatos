@@ -13,7 +13,7 @@
 * [Istio](istio.md)
 * [OIDC](openID.md)
 * [PostgreSQL](postgres.md)
-* [Terraform](terraform.md)
+* [GitHub Copilot](copilot.md)
 
 ---
 
