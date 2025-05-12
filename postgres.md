@@ -21,7 +21,7 @@
 
 * PostgreSQL - relational database RDBMS
 * Connecto to DB: `psql -U <user_name> oddba -h <DB_HOSTNAME> -d postgres`
-* A CONNECTION CAN HAVE MULTIPLE SESSIONS:
+* **A CONNECTION CAN HAVE MULTIPLE SESSIONS**:
 ```
 CONNECTION = relationship between a client and DB server, aka communication channel 
 SESSION = period of time, duration between client connecting and disconnecting to/from DB server aka state of the information exchange
@@ -182,6 +182,22 @@ VACUUM FULL;
 apt-get install postgresql-contrib-9.3
 
 vacuumlo --dry-run -U <user> --host=<FQDN for DB> -p 5432 '<DB_NAME>'
+```
+
+### Query
+
+*  PostgreSQL query execution mechanism is fairly intricate, SQL queries are declarative ( you describe the data you want to retrieve) and postgres
+fogires out a plan for how to get it for you. Query planning + execution. 
+
+* A query plan is a tree of nodes, to get the plan of a query use [EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)
+```bash
+# understand the plan for this select query
+EXPLAIN SELECT * FROM databases WHERE id = 1;
+```
+
+* Performance best-practices ([Post-upgrade recommendations](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_UpgradeDBInstance.PostgreSQL.MajorVersion.html#USER_UpgradeDBInstance.PostgreSQL.MajorVersion.Upgrade.postupgrade)). Use [ANALYZE](https://www.postgresql.org/docs/current/sql-analyze.html) collects statistics about the contents of tables in the database, and stores the results in the `pg_statistic` system catalog. Subsequently, the query planner uses these statistics to help determine the most efficient execution plans for queries.
+```
+ANALYZE VERBOSE;
 ```
 
 ### Usefull links:
