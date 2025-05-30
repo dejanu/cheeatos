@@ -46,25 +46,20 @@
 ### HTTP
 
 * Parms/Query string:
+
 ```bash
 http://example.com?key1=value1&key2=value2
 ```
 
 * Authorization HTTP:
 
-    - Authorization: Basic <data>
-```bash
-    <data>=base64encode("username:password")
-```
+Authorization: Basic <data> `<data>=base64encode("username:password")`
 
-     - Authorization: Bearer <data>
-
-```bash
-    JsonWebToken (JWT)
-```
+Authorization: Bearer <data> `JsonWebToken (JWT)`
 ---
 
 * **Authorization Code Flow**
+
 * Implicit Flow
 * Hybrid Flow
 
