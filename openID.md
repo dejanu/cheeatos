@@ -67,8 +67,6 @@ Authorization: Bearer <data> `JsonWebToken (JWT)`
 * Hybrid Flow
 
 
-```bash
-
 This is the initial step, where we select to login, and where scope defines which claims will be included in our identity-token.
 
 A 'claim' is metadata about a user, i.e. typically a client will request access to the user 'profile', i.e. request a token with the scope 'profile'. See OIDC Scopes for a list of standardized scopes. Some typical scopes are:
@@ -82,7 +80,7 @@ Scopes are translated into 'claims' in the ID-token, i.e. metadata that the iden
 This client identify itself as 'client1'. You will see this ID in the following login screen.
 
 The client is configured with OIDC_AUTH_URL=https://keycloak.student2.oidc.eficode.academy/auth/realms/myrealm/protocol/openid-connect/auth. This is the authorization endpoint of the identity-provider which the client trusts for managing identities.
-```
+
 
 ## Authorization Code Flow
 
