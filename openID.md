@@ -24,24 +24,24 @@
 
 * Identity Provider: keycloak (provides a single sign-on experience), Social logins (Facebook, Google, etc.)
 
-* Identity:
-    * Is comprised of **Claims** == atributes of identity
+* Identity: Is comprised of **Claims** (atributes of identity)
+
 ---
 ### Flows:
 
     * Services -- standards -- User Identity Management
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc.png?raw=true)
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc.PNG?raw=true)
 
 
     * Authorization server (Github) and a potected resource (Repository)
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc2.png?raw=true)
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc2.PNG?raw=true)
 
 - OAuth2 standard access token: HTML bearer token
 - OpenID: Identiy provider provides an ID-token (somehow like a digital signed certificate)
 - Client/service are the receiver of ID-token (from IdP) and the access token are passed to the protected resource.
 
     * Authorization server (Github) and a potected resource (Repository)
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc3.png?raw=true)
+![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc3.PNG?raw=true)
 
 ### HTTP
 
