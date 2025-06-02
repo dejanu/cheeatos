@@ -88,7 +88,6 @@ git remote add origin remote_repository_URL
 git remote set-url origin git://new.url.  //change the url repo
 git remote remove origin
 
-
 #  shorthand for git checkout -b [branch] [remotename]/[branch]
 git checkout --track origin/remote_branch
 git fetch <remote> <rbranch>:<lbranch> 
@@ -126,6 +125,12 @@ git revert HEAD --no-edit | git revert HASH
 git branch -m <oldname> <newname>
 git push origin -u <newname>
 git push origin --delete <oldname>
+
+# rebase: rewrite branch's history by moving or combining a sequence of commits to a new base commit
+# SQUASH:  interactive rebase, allows you to edit, squash, last 2 commits
+git rebase -i HEAD^^ 
+## pick commit_hash FIRST_COMMIT
+## squash commit_hash SECOND_COMMIT 
 ```
 
 ***
