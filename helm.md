@@ -54,9 +54,6 @@ helm repo add cetic https://cetic.github.io/helm-charts
 # download and extract the chart
 helm fetch cetic/pgadmin --untar
 
-# install chart very usefull --dry-run
-helm install [NAME] [CHART] [flags]
-
 # list  all of the releases in all namespaces
 helm list -A
 
@@ -72,19 +69,29 @@ helm show all <CHART>
 # inspect chart values
 helm show values <CHART>
 
+# fetch metadata for a current release
+helm get metadata RELEASE_NAME [flags]
+
 # override chart configuration values
 helm install --set replicaCount=2  <release_name> <CHART>
 helm install -f values.yaml <release_name> <CHART>
 
-# create chart
-helm create <chart name>
+# install chart very usefull --dry-run
+helm install [NAME] [CHART] [flags]
 
-# install latest chart and update it: Release "<RELEASE_NAME> " does not exist. Installing it now.
+# vanilla install chart
+helm install bitnami/rabbitmq --generate-name
+helm install <release_name> bitnami/rabbitmq
+
+# install and create namespace
+helm install kube-green kube-green/kube-green --namespace kube-green --create-namespace
+
+# install latest chart and updates it: Release "<RELEASE_NAME> " does not exist. Installing it now.
+# upgrade a release
 helm upgrade -i <RELEASE_NAME>  <REPO>/<CHART> --version 2.16
 
-# Install chart:
-helm install bitnami/mysql --generate-name
-helm install <release_name> bitnami/rabbitmq
+# create chart
+helm create <chart name>
 ```
 
 * When installing Helm, make sure you're installing version 3. Version 2 still works, but it needs a server-side component called **Tiller**, which ties your helm installation to a single cluster. Helm 3 removed this need with the addition of several CRDs, but it's not supported in all Kubernetes versions.
