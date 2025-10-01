@@ -46,9 +46,9 @@ kubectl get istio-io -A
 * Flow: `external request -> istio ingress gateway -> istio virtual service -> istio destination rule`
 * Flow: `external request -> svc (loadbalancer type) -> istio ingress pod -> istio gateway -> istio virtualservice -> application pod`
 
-* Istio injects a Envoy proxy sidecar proxy container to the pods to intercept traffic from pods, this behavior is enabled using label `istio-injection=enabled` on the namespace level and `sidecar.istio.io/inject=true` on the pod level.
+* Istio injects a sidecar proxy (based on Envoy) container to the pods to intercept traffic from pods, this behavior is enabled using label `istio-injection=enabled` on the namespace level and `sidecar.istio.io/inject=true` annotation  on the pod level.
 
-* To enable automatic sidecar injection at the namespace level:
+* To enable [automatic sidecar injection](https://istio.io/latest/blog/2019/data-plane-setup/) at the namespace level:
 
 ```bash
 # automatic sidecar injection of istioinaction namespace
@@ -67,6 +67,8 @@ kubectl get namespace -L istio-injection
  podLabels:
       sidecar.istio.io/inject: "false"
 ```
+
+* Spin a pod without sidecar injection: `kubectl run nakedpod -it --image=alpine:latest --restart=Never  --overrides='{"metadata":{"annotations":{"sidecar.istio.io/inject":"false"}}}' -- sh`
 
 * Mesh traffic out of the box is mutals TLS (both client and server side). Mutal TLS = Secure communication between services inside the mesh between PODs with the Istio sidecar injected and also from mesh-external services accessing the mesh through an Ingress Gateway.
 
