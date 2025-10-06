@@ -10,12 +10,12 @@ This page has been designed so that people can easily expand it.
 To request us to review changes that you create, you will need to create a [pull request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github)
 to add or update a new cheat page.
 
-* Enroll in [hactoberfest](https://hacktoberfest.digitalocean.com/register) ✨
+* Enroll in [hacktoberfest](https://hacktoberfest.digitalocean.com/register) ✨
 
 1) Add a new cheat page:
     * Step one:
 
-    Copy `template.md` to `<TECH_NAME>.md` and add knowledge (tips and triks) using markdown 
+    Copy `template.md` to `<TECH_NAME>.md` and add knowledge (tips and tricks) using markdown 
 
     * Step two:
 
