@@ -50,7 +50,7 @@ docker rm $(docker ps -aq -f status=exited) && docker image prune -a
 {% raw %}
 ```bash
 ## docker list containers using Pretty-print containers using a Go template instead of using | and awk
-docker ps --format "{{.Names}} with {{.Status}}"
+docker ps --format "{{{.Names}}} with {{{.Status}}}"
 docker ps --format '{{ .ID }}'
 
 # as a table
@@ -85,6 +85,7 @@ docker inspect network bridge --format "{{json .Containers }}" | python -m json.
 docker ps --format "table {{.Names}} {{.Status}}"
 ```
 {% endraw %}
+
 
 ### Docker images/registry 
 ```bash
