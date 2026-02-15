@@ -348,14 +348,36 @@ kubectl port-forward svc/nginx-service 80:8080 -n kube-public&
 kubectl proxy
 ```
 
-### CRD:
+### KREW:
 
 ```bash
-# Resource = endpoint in K8s API
-# Custom Resource = extension of the Kubernetes API that is not necessarily available in a default Kubernetes installation
-kubectl get crd -n <namespace>
-kubect get <customresource_name> -n <namespace>
-kubectl describe  <customresource_type> <customresource_name> -n <namespace>
+# update the plugin list
+kubectl krew update
+
+# list index
+kubectl krew index list
+
+# check plugin info
+kubectl krew info INDEX_NAME/PLUGIN_NAME
+
+# add index
+kubectl krew index add foo https://github.com/foo/custom-index.git
+
+# remove index foo
+kubectl krew index remove foo
+
+# remove krew index default
+kubectl krew index remove default
+
+# search index
+kubectl krew search
+
+# install plugin bar from index foo
+kubectl krew install foo/bar
+
+# uninstall plugin
+kubectl krew uninstall PLUGIN_NAME
+
 ```
 
 ### Customizing outptut:
