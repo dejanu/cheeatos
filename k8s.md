@@ -351,6 +351,10 @@ kubectl proxy
 ### KREW:
 
 ```bash
+
+# kubectl plugin list
+kubectl krew list
+
 # update the plugin list
 kubectl krew update
 
