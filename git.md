@@ -23,12 +23,14 @@
 * [D3 visual](http://onlywei.github.io/explain-git-with-d3/)
 * [oshitgit](https://ohshitgit.com/)
 * [101](https://www.git-tower.com/learn/git/faq/restoring-deleted-files)
+* [Linux git presentation @ Google](https://www.youtube.com/watch?v=idLyobOhtO4)
 
   
 * Primitive objects:
+  * **Git tracks content not files**: Git’s object store is based on the hashed computation of the contents of its objects, not on the file or directory names from the user’s original file layout. 
   * `commit` — object which contains the reference to another tree object
-  * `tree` — object which contains references to other blobs or subtrees.
-  * `blob` — object used for storing the contents of a single file.
+  * `tree` — object which contains references to other blobs or subtrees
+  * `blob` — object used for storing the contents of a single file
   ```bash
   git add => BLOB
   git commit ==> COMMIT + TREE
@@ -37,13 +39,14 @@
 * `git pull` == `git fetch` + `git merge`
 * `git checkout -b` = `git branch` + `git checkout`
 
+![git-transport](https://github.com/dejanu/cheetcity/blob/gh-pages/src/git-transport.png?raw=true)
+
 ## Configure Git
 
 * Git has 3 levels of **configuration**:
-
-**SYSTEM** (configurations for multiple users)
-**GLOBAL** (configurations used for one user all repo on one host)
-**LOCAL** (configuration for one repo)
+  * **SYSTEM** (configurations for multiple users)
+  * **GLOBAL** (configurations used for one user all repo on one host)
+  * **LOCAL** (configuration for one repo)
 
 ```bash
 # list the configuration: cat ~/.gitconfig 😉
