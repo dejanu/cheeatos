@@ -39,7 +39,7 @@
 * `git pull` == `git fetch` + `git merge`
 * `git checkout -b` = `git branch` + `git checkout`
 
-![git-transport](https://github.com/dejanu/cheeatos/blob/gh-pages/src/git-transport.png?raw=true)
+![git-transport](https://github.com/dejanu/cheeatos/blob/gh-pages/src/git_transport.png?raw=true)
 
 ## Configure Git
 
