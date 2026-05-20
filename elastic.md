@@ -150,7 +150,7 @@ POST _cluster/reroute
 ```
 
 * To identify the indexes causing the red cluster status:
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/shards.PNG?raw=true)
+![alt text](https://github.com/dejanu/cheeatos/blob/gh-pages/src/shards.PNG?raw=true)
 
 
 ### Cluster settings

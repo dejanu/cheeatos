@@ -110,7 +110,7 @@ az aks get-credentials --resource-group <resourge_group_name> --name <cluster-na
 
 Azure subscription and resource groups:
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/azure_hierachy.png?raw=true)
+![alt text](https://github.com/dejanu/cheeatos/blob/gh-pages/src/azure_hierachy.png?raw=true)
 
 ---
 
