@@ -31,12 +31,12 @@
 
 Services -- standards -- User Identity Management
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc.PNG?raw=true)
+![alt text](https://github.com/dejanu/cheeatos/blob/gh-pages/src/oidc.PNG?raw=true)
 
 
 Authorization server (Github) and a potected resource (Repository)
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc2.PNG?raw=true)
+![alt text](https://github.com/dejanu/cheeatos/blob/gh-pages/src/oidc2.PNG?raw=true)
 
 - OAuth2 standard access token: HTML bearer token
 - OpenID: Identiy provider provides an ID-token (somehow like a digital signed certificate)
@@ -44,7 +44,7 @@ Authorization server (Github) and a potected resource (Repository)
 
 Authorization server (Github) and a potected resource (Repository)
 
-![alt text](https://github.com/dejanu/cheetcity/blob/gh-pages/src/oidc3.PNG?raw=true)
+![alt text](https://github.com/dejanu/cheeatos/blob/gh-pages/src/oidc3.PNG?raw=true)
 
 ### HTTP
 

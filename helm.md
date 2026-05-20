@@ -23,7 +23,7 @@
 
 * Helm chart contents:
 
-![char content](https://github.com/dejanu/cheetcity/blob/gh-pages/src/helm_chart_structure.PNG?raw=true)
+![char content](https://github.com/dejanu/cheeatos/blob/gh-pages/src/helm_chart_structure.PNG?raw=true)
 
 * Helm repos: [Artifact Hub](https://artifacthub.io/packages/search?kind=0) and https://bitnami.com/ (VMWare)
 * [Kustomize](https://kustomize.io/) (patch k8s obj) `kubectl kustomize .` vs HELM (package manager)

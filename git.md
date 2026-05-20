@@ -39,14 +39,14 @@
 * `git pull` == `git fetch` + `git merge`
 * `git checkout -b` = `git branch` + `git checkout`
 
-![git-transport](https://github.com/dejanu/cheetcity/blob/gh-pages/src/git-transport.png?raw=true)
+![git-transport](https://github.com/dejanu/cheeatos/blob/gh-pages/src/git-transport.png?raw=true)
 
 ## Configure Git
 
 * Git has 3 levels of **configuration**:
-  * **SYSTEM** (configurations for multiple users)
-  * **GLOBAL** (configurations used for one user all repo on one host)
-  * **LOCAL** (configuration for one repo)
+  * `SYSTEM` (configurations for multiple users)
+  * `GLOBAL` (configurations used for one user all repo on one host)
+  * `LOCAL` (configuration for one repo)
 
 ```bash
 # list the configuration: cat ~/.gitconfig 😉
@@ -123,6 +123,9 @@ git reset --hard HEAD~1
 
 # create a new commit which usually has the inverse effect of the commit being reverted.
 git revert HEAD --no-edit | git revert HASH
+
+# revert last 2 commits
+git revert HEAD~2..HEAD
 
 # rename local branch, push it and delete the old branch
 git branch -m <oldname> <newname>
@@ -212,6 +215,8 @@ git branch -r --no-merged
 # check commit
 git show COMMIT_HASH
 
+# list all objects (commits, trees, blobs) in the repo
+git rev-list --objects --all
 ```
 ---
 
