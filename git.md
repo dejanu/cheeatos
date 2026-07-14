@@ -88,7 +88,7 @@ Host github.com
 # view/add remote
 git remote -v
 git remote add origin remote_repository_URL
-git remote set-url origin git://new.url.  //change the url repo
+git remote set-url origin git://new.url  #change the url repo
 git remote remove origin
 
 #  shorthand for git checkout -b [branch] [remotename]/[branch]
@@ -110,19 +110,22 @@ git reset HEAD <filename>
 # UNDO (unstage) changes in staging area 
 git restore --staged <file>
 
-# Reset current HEAD to the specified state (MIXED the default one)
+# Reset current HEAD to the specified state (MIXED: default one which unstange the changes)
 git reset
 
 # UNDO last commit and PRESERVE changes
-git reset --soft HEAD^ == git reset --soft HEAD~1
+git reset --soft HEAD^ 
+git reset --soft HEAD~1
+
 # much wow (undo 2 commits) 
-git reset --head X 2 == git reset HEAD^^ 
+git reset HEAD^^ 
 
 # UNDO last commit and REMOVE changes, combine both git reset and git checkout in a single command
 git reset --hard HEAD~1 
 
 # create a new commit which usually has the inverse effect of the commit being reverted.
-git revert HEAD --no-edit | git revert HASH
+git revert HEAD --no-edit
+git revert HASH
 
 # revert last 2 commits
 git revert HEAD~2..HEAD
