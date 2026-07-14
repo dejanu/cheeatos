@@ -118,7 +118,9 @@ git reset --soft HEAD^
 git reset --soft HEAD~1
 
 # much wow (undo 2 commits) 
-git reset HEAD^^ 
+git reset HEAD^^
+git reset HEAD~2
+
 
 # UNDO last commit and REMOVE changes, combine both git reset and git checkout in a single command
 git reset --hard HEAD~1 
