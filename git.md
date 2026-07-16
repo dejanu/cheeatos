@@ -63,6 +63,26 @@ git config --global user.email "MAIL"
 # Disable SSL verification if you encounter SSL certificate problem: self signed certificate
 git config --global http.sslVerify false
 ```
+
+## Worktree
+
+* Worktrees are a local-only concept — they have nothing to do with pushing/pulling
+* Worktree is a separate directory with its own files and **branch** - sharing the same repository history and remote as your main checkout.
+
+```bash
+git branch
+git worktree list
+
+# create a worktree and new branch
+git worktree add -b feat/new-feature ../worktree-new-feature
+
+# create a worktree based on an existing branc
+git worktree add ../worktree-existing-branch feat/existing-branch 
+
+# delete worktree will not delete the branch
+git worktree remove ABSOLUTE_PATH
+
+```
 ***
 
 ## SSH stuff
